@@ -14,6 +14,7 @@
 </p>
 
 <p align="center">
+  <a href="https://quickrun.org/run?repo=laxxx-lab%2Flx-family-planner"><img alt="Dieses Repository mit QuickRun starten" src="https://quickrun.org/badge.svg"></a>
   <a href="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml"><img alt="Qualitätsprüfung" src="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml/badge.svg"></a>
   <img alt="Aktuelles Release 1.20.0" src="https://img.shields.io/badge/Release-1.20.0-17483F">
   <img alt="Node.js 22+" src="https://img.shields.io/badge/Node.js-22%2B-43853D?logo=nodedotjs&logoColor=white">
