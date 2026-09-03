@@ -47,5 +47,5 @@ Before opening the pull request:
 3. update the app and confirm `/app/data` and `/app/backups` remain intact,
 4. test the dashboard, login, calendar and Android download link.
 
-The package is pinned to the published `1.19.0` multi-architecture digest:
-`sha256:2b5f1711916f7f0f2531ae81bfd13edf87afa8a82a5a244d71bc12b988d48400`.
+The package is pinned to the published `1.20.1` multi-architecture digest:
+`sha256:112364abbf1f00b2921d3812c9b2baef1fe76afa5e98476c9cfa01735fd12844`.
