@@ -41,6 +41,7 @@ import i18n from '../i18n';
 import { formatDateTime } from '../utils/formatting';
 import { birthdayEventsForMembers } from '../../shared/birthdays.js';
 import { expandCalendarEventSeries } from '../../shared/calendarRecurrence.js';
+import { shoppingItemIcon } from '../../shared/shoppingItemIcons.js';
 import {
   DEFAULT_PUBLIC_ACCESS,
   EMPTY_INTEGRATIONS,
@@ -1728,7 +1729,7 @@ export function FamilyProvider({ children }) {
       const record = await createResource('shoppingItems', {
         id: makeId('shop'),
         category: 'Vorräte',
-        icon: '🛒',
+        icon: shoppingItemIcon(item.name),
         quantity: i18n.t('context:defaults.shoppingQuantity'),
         isSelected: true,
         inCart: false,
@@ -1848,7 +1849,7 @@ export function FamilyProvider({ children }) {
       id: makeId('shop'),
       name,
       category: 'Vorräte',
-      icon: '🥘',
+      icon: shoppingItemIcon(name, '🥘'),
       quantity: '1x',
       isSelected: true,
       inCart: false,

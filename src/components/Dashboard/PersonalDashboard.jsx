@@ -15,6 +15,7 @@ import {
   UtensilsCrossed
 } from 'lucide-react';
 import { useFamily } from '../../context/FamilyContext';
+import { displayShoppingItemIcon } from '../../../shared/shoppingItemIcons.js';
 import { initialTrashEvents } from '../Calendar/TrashCalendarView';
 import ChildDashboard from './ChildDashboard';
 import PetDashboard from './PetDashboard';
@@ -507,7 +508,7 @@ export default function PersonalDashboard() {
                   key={item.id}
                   onClick={() => setActiveTab('shopping')}
                 >
-                  <span>{item.icon || '🛒'}</span>
+                  <span>{displayShoppingItemIcon(item.name, item.icon)}</span>
                   <strong>{item.name}</strong>
                   <small>{item.quantity || '1×'}</small>
                 </button>

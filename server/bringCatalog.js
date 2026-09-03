@@ -1,4 +1,5 @@
 import BringApi from 'bring-shopping';
+import { shoppingItemIcon } from '../shared/shoppingItemIcons.js';
 
 const CATALOG_TTL_MS = 12 * 60 * 60 * 1000;
 const CATALOG_TIMEOUT_MS = 8_000;
@@ -286,7 +287,7 @@ export function normalizeBringCatalog(
             id: cleanLabel(item?.itemId, `${sectionIndex}-${itemIndex}`),
             name: itemName,
             category: name,
-            icon
+            icon: shoppingItemIcon(itemName, icon)
           };
         })
         .filter(Boolean);

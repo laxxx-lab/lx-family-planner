@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useFamily } from '../../context/FamilyContext';
+import { displayShoppingItemIcon } from '../../../shared/shoppingItemIcons.js';
 import {
   eventAudienceMembers,
   eventSpansToday
@@ -552,7 +553,7 @@ export default function KitchenTabletView() {
                   key={item.id}
                   onClick={event => toggleShoppingInCart(item.id, event)}
                 >
-                  <span>{item.icon || '🛒'}</span>
+                  <span>{displayShoppingItemIcon(item.name, item.icon)}</span>
                   <strong>{item.name}</strong>
                   <small>{item.quantity || '1'}</small>
                 </button>

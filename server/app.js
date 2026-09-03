@@ -47,6 +47,7 @@ import {
 } from '../shared/notificationEvents.js';
 import { releaseNotesForVersion } from '../shared/releaseNotes.js';
 import { PRODUCT_NAME } from '../shared/brand.js';
+import { shoppingItemIcon } from '../shared/shoppingItemIcons.js';
 import { loadBringCatalog } from './bringCatalog.js';
 import {
   calDavRequest,
@@ -4828,7 +4829,7 @@ function mapBringItems(response, source = 'bring') {
       id: bringItemId(item.name),
       name: cleanText(item.name, 'Artikel', 160),
       quantity: cleanText(item.specification, '1x', 160),
-      icon: '🛒',
+      icon: shoppingItemIcon(item.name),
       category: 'Bring!',
       isSelected: true,
       inCart: false,
@@ -4841,7 +4842,7 @@ function mapBringItems(response, source = 'bring') {
       id: bringItemId(item.name),
       name: cleanText(item.name, 'Artikel', 160),
       quantity: cleanText(item.specification, '', 160),
-      icon: '✓',
+      icon: shoppingItemIcon(item.name),
       category: 'Verlauf',
       isSelected: true,
       inCart: true,

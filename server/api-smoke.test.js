@@ -39,6 +39,7 @@ const [
     saveNativePushDevice
   },
   { normalizeBringCatalog },
+  { displayShoppingItemIcon, shoppingItemIcon },
   { getInstructionDurationMinutes, parseInstructionSteps },
   { parseICalendar },
   { nextTaskDueDate },
@@ -48,6 +49,7 @@ const [
   import('./app.js'),
   import('./database.js'),
   import('./bringCatalog.js'),
+  import('../shared/shoppingItemIcons.js'),
   import('../shared/recipeInstructions.js'),
   import('../shared/icsCalendar.js'),
   import('../shared/taskRecurrence.js'),
@@ -269,9 +271,24 @@ test('Bring catalog is normalized, grouped and deduplicated', () => {
   assert.equal(catalog.total, 2);
   assert.equal(catalog.sections[0].icon, '🥛');
   assert.deepEqual(
+    catalog.sections[0].items.map(item => item.icon),
+    ['🥚']
+  );
+  assert.deepEqual(
     catalog.sections.flatMap(section => section.items.map(item => item.name)),
     ['Eier', 'Brötchen']
   );
+});
+
+test('shopping icons describe individual products instead of only their department', () => {
+  assert.equal(shoppingItemIcon('Eier'), '🥚');
+  assert.equal(shoppingItemIcon('Butter'), '🧈');
+  assert.equal(shoppingItemIcon('Vollmilch'), '🥛');
+  assert.equal(shoppingItemIcon('Käse'), '🧀');
+  assert.equal(shoppingItemIcon('Tomaten'), '🍅');
+  assert.equal(shoppingItemIcon('Pasta'), '🍝');
+  assert.equal(displayShoppingItemIcon('Butter', '🥛'), '🧈');
+  assert.equal(displayShoppingItemIcon('Eigene Überraschung', '🎈'), '🎈');
 });
 
 test('recipe instructions are cleaned and scheduled in a useful order', () => {

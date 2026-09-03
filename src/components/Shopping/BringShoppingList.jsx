@@ -19,6 +19,10 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useFamily } from '../../context/FamilyContext';
 import BringAccountModal from './BringAccountModal';
+import {
+  displayShoppingItemIcon,
+  shoppingItemIcon
+} from '../../../shared/shoppingItemIcons.js';
 
 const POPULAR_NAMES = [
   ['Eier', 'Eggs'],
@@ -144,7 +148,7 @@ export default function BringShoppingList() {
           ...item,
           sectionId: section.id,
           category: section.name,
-          icon: section.icon
+          icon: shoppingItemIcon(item.name, item.icon || section.icon)
         }))
       ),
     [bringCatalog.sections]
@@ -156,7 +160,7 @@ export default function BringShoppingList() {
         id: `remembered-${item.id}`,
         name: item.name,
         category: item.category || t('catalog.customCategory'),
-        icon: item.icon || '🛒',
+        icon: displayShoppingItemIcon(item.name, item.icon),
         aliases: ''
       })),
     [shoppingItems, t]
@@ -258,7 +262,7 @@ export default function BringShoppingList() {
         id: `custom-${normalizeSearch(cleanName)}`,
         name: cleanName,
         category: currentSection?.name || 'Eigene Artikel',
-        icon: currentSection?.icon || '🛒'
+          icon: shoppingItemIcon(cleanName, currentSection?.icon || '🛒')
       }
     );
   };
@@ -379,7 +383,7 @@ export default function BringShoppingList() {
                 className="market-active-item"
                 onClick={event => toggleShoppingInCart(item.id, event)}
               >
-                <span className="market-item-icon">{item.icon || '🛒'}</span>
+                <span className="market-item-icon">{displayShoppingItemIcon(item.name, item.icon)}</span>
                 <span className="market-item-copy">
                   <strong>{item.name}</strong>
                   <small>{item.quantity || '1x'}</small>
@@ -412,7 +416,7 @@ export default function BringShoppingList() {
                     key={item.id}
                     onClick={event => toggleShoppingInCart(item.id, event)}
                   >
-                    <span>{item.icon || '✓'}</span>
+                    <span>{displayShoppingItemIcon(item.name, item.icon, '✓')}</span>
                     <span>{item.name}</span>
                     <small>{t('list.backToList')}</small>
                   </button>
@@ -471,7 +475,7 @@ export default function BringShoppingList() {
                   onClick={() => addChoice(item)}
                   disabled={alreadyActive || Boolean(addingName)}
                 >
-                  <span className="market-catalog-icon">{item.icon || '🛒'}</span>
+                  <span className="market-catalog-icon">{displayShoppingItemIcon(item.name, item.icon)}</span>
                   <span>
                     <strong>{item.name}</strong>
                     <small>{item.category}</small>

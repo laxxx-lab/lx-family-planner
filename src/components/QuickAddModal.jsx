@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFamily } from '../context/FamilyContext';
+import { shoppingItemIcon } from '../../shared/shoppingItemIcons.js';
 import {
   X,
   Calendar,
@@ -163,7 +164,7 @@ export default function QuickAddModal() {
           name: title,
           category,
           quantity,
-          icon: '🛒'
+          icon: shoppingItemIcon(title)
         });
       } else if (type === 'task') {
         created = await addTask({
