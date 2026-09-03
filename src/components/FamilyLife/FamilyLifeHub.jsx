@@ -14,11 +14,15 @@ import {
   GraduationCap,
   HeartHandshake,
   Medal,
+  MapPin,
+  Mail,
   MessageCircleHeart,
+  Phone,
   PiggyBank,
   Pencil,
   Plus,
   RotateCw,
+  Search,
   ShieldAlert,
   Sparkles,
   Star,
@@ -47,6 +51,7 @@ const SECTIONS = [
   { id: 'routines', labelKey: 'sections.routines', icon: AlarmClock },
   { id: 'money', labelKey: 'sections.money', icon: PiggyBank },
   { id: 'school', labelKey: 'sections.school', icon: GraduationCap },
+  { id: 'contacts', labelKey: 'sections.contacts', icon: Phone },
   { id: 'polls', labelKey: 'sections.polls', icon: Vote },
   { id: 'safety', labelKey: 'sections.safety', icon: ShieldAlert }
 ];
@@ -61,6 +66,24 @@ const SCHOOL_KIND = {
   exam: { labelKey: 'school.kinds.exam', icon: '🧠' },
   bag: { labelKey: 'school.kinds.bag', icon: '🎒' }
 };
+const SUBJECT_COLORS = [
+  { value: '#3d7ea6', labelKey: 'school.colors.ocean' },
+  { value: '#648b62', labelKey: 'school.colors.meadow' },
+  { value: '#bd8a3d', labelKey: 'school.colors.ochre' },
+  { value: '#b66457', labelKey: 'school.colors.terracotta' },
+  { value: '#786da6', labelKey: 'school.colors.indigo' },
+  { value: '#ad6681', labelKey: 'school.colors.berry' },
+  { value: '#60798a', labelKey: 'school.colors.slate' }
+];
+const CONTACT_CATEGORIES = [
+  { id: 'medical', icon: '🩺' },
+  { id: 'services', icon: '🛠️' },
+  { id: 'school', icon: '🎓' },
+  { id: 'authorities', icon: '🏛️' },
+  { id: 'insurance', icon: '🛡️' },
+  { id: 'emergency', icon: '🚨' },
+  { id: 'other', icon: '☎️' }
+];
 
 function localDateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -71,6 +94,11 @@ function localDateKey(date = new Date()) {
 
 function euro(cents = 0) {
   return formatCurrency(Number(cents || 0) / 100, 'EUR');
+}
+
+function subjectColor(value) {
+  const normalized = String(value || '').toLocaleLowerCase();
+  return SUBJECT_COLORS.find(color => color.value === normalized)?.value || '';
 }
 
 function lastSevenDateKeys() {
@@ -150,6 +178,7 @@ export default function FamilyLifeHub() {
     familyPolls,
     encouragements,
     familyMissions,
+    familyContacts,
     familySettings,
     kidProfiles,
     addFamilyLifeRecord,
@@ -219,11 +248,23 @@ export default function FamilyLifeHub() {
     period: '1',
     room: '',
     teacher: '',
-    details: ''
+    details: '',
+    color: ''
   });
   const [editingSchoolItemId, setEditingSchoolItemId] = useState('');
   const [cancellationDates, setCancellationDates] = useState({});
   const [activeLessonId, setActiveLessonId] = useState('');
+  const [contactSearch, setContactSearch] = useState('');
+  const [contactCategoryFilter, setContactCategoryFilter] = useState('all');
+  const [editingContactId, setEditingContactId] = useState('');
+  const [contactForm, setContactForm] = useState({
+    name: '',
+    category: 'other',
+    phone: '',
+    email: '',
+    address: '',
+    notes: ''
+  });
   const [pollForm, setPollForm] = useState({
     question: '',
     options: t('polls.form.defaultOptions'),
@@ -287,9 +328,10 @@ export default function FamilyLifeHub() {
       ? selectedKidProfile.schoolEnabled === true
       : mySchoolItems.length > 0;
   const visibleSections =
-    isAdult || schoolEnabled
-      ? SECTIONS
-      : SECTIONS.filter(item => item.id !== 'school');
+    SECTIONS.filter(item =>
+      (item.id !== 'school' || isAdult || schoolEnabled) &&
+      (item.id !== 'contacts' || isAdult)
+    );
   const timetableLessons = mySchoolItems
     .filter(item => item.kind === 'lesson')
     .sort((left, right) =>
@@ -321,6 +363,22 @@ export default function FamilyLifeHub() {
   const activeLessonDateCancelled = activeTimetableLesson?.cancellations?.includes(
     activeLessonCancellationDate
   );
+  const visibleFamilyContacts = familyContacts
+    .filter(contact =>
+      contactCategoryFilter === 'all' || contact.category === contactCategoryFilter
+    )
+    .filter(contact => {
+      const query = contactSearch.trim().toLocaleLowerCase();
+      if (!query) return true;
+      return [
+        contact.name,
+        contact.phone,
+        contact.email,
+        contact.address,
+        contact.notes
+      ].some(value => String(value || '').toLocaleLowerCase().includes(query));
+    })
+    .sort((left, right) => left.name.localeCompare(right.name, undefined, { sensitivity: 'base' }));
   useEffect(() => {
     if (!isAdult && !schoolEnabled && section === 'school') {
       setSection('today');
@@ -453,8 +511,50 @@ export default function FamilyLifeHub() {
       : await addFamilyLifeRecord('schoolItems', payload);
     if (saved) {
       setEditingSchoolItemId('');
-      setSchoolForm(previous => ({ ...previous, title: '', subject: '', details: '' }));
+      setSchoolForm(previous => ({
+        ...previous,
+        title: '',
+        subject: '',
+        details: '',
+        color: ''
+      }));
     }
+  };
+
+  const resetContactForm = () => {
+    setEditingContactId('');
+    setContactForm({
+      name: '',
+      category: 'other',
+      phone: '',
+      email: '',
+      address: '',
+      notes: ''
+    });
+  };
+
+  const saveFamilyContact = async event => {
+    event.preventDefault();
+    const saved = editingContactId
+      ? await updateFamilyLifeRecord('familyContacts', editingContactId, contactForm)
+      : await addFamilyLifeRecord('familyContacts', contactForm);
+    if (saved) resetContactForm();
+  };
+
+  const editFamilyContact = contact => {
+    setEditingContactId(contact.id);
+    setContactForm({
+      name: contact.name || '',
+      category: contact.category || 'other',
+      phone: contact.phone || '',
+      email: contact.email || '',
+      address: contact.address || '',
+      notes: contact.notes || ''
+    });
+    document.getElementById('family-contact-editor')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
   };
 
   const editSchoolItem = item => {
@@ -472,7 +572,8 @@ export default function FamilyLifeHub() {
       period: String(Number(item.period) || 1),
       room: item.room || '',
       teacher: item.teacher || '',
-      details: item.details || ''
+      details: item.details || '',
+      color: subjectColor(item.color)
     });
     document.getElementById('school-item-editor')?.scrollIntoView({
       behavior: 'smooth',
@@ -495,7 +596,8 @@ export default function FamilyLifeHub() {
       endTime: '',
       room: '',
       teacher: '',
-      details: ''
+      details: '',
+      color: ''
     }));
     document.getElementById('school-item-editor')?.scrollIntoView({
       behavior: 'smooth',
@@ -1123,11 +1225,13 @@ export default function FamilyLifeHub() {
                             {lessonsInSlot.map(lesson => {
                               const cancelled = lesson.cancellations?.includes(currentDate);
                               const lessonActionsOpen = activeLessonId === lesson.id;
+                              const lessonColor = subjectColor(lesson.color);
                               return (
                                 <button
                                   key={lesson.id}
                                   type="button"
-                                  className={`school-lesson-card ${cancelled ? 'is-cancelled' : ''} ${lessonActionsOpen ? 'is-actions-open' : ''}`}
+                                  className={`school-lesson-card ${lessonColor ? 'has-custom-color' : ''} ${cancelled ? 'is-cancelled' : ''} ${lessonActionsOpen ? 'is-actions-open' : ''}`}
+                                  style={lessonColor ? { '--school-lesson-color': lessonColor } : undefined}
                                   onClick={() => isAdult && setActiveLessonId(previous =>
                                     previous === lesson.id ? '' : lesson.id
                                   )}
@@ -1345,6 +1449,38 @@ export default function FamilyLifeHub() {
                         placeholder={t('school.form.teacherPlaceholder')}
                       />
                     </div>
+                    <div className="school-color-field">
+                      <div>
+                        <span>{t('school.form.colorLabel')}</span>
+                        <div className="school-color-palette" role="group" aria-label={t('school.form.colorLabel')}>
+                          {SUBJECT_COLORS.map(color => (
+                            <button
+                              key={color.value}
+                              type="button"
+                              className={schoolForm.color === color.value ? 'is-selected' : ''}
+                              style={{ '--school-color-swatch': color.value }}
+                              onClick={() => setSchoolForm(previous => ({
+                                ...previous,
+                                color: color.value
+                              }))}
+                              aria-pressed={schoolForm.color === color.value}
+                              aria-label={t(color.labelKey)}
+                              title={t(color.labelKey)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                      <p>{t('school.form.colorHint')}</p>
+                      {schoolForm.color && (
+                        <button
+                          type="button"
+                          className="family-life-secondary"
+                          onClick={() => setSchoolForm(previous => ({ ...previous, color: '' }))}
+                        >
+                          {t('school.form.colorReset')}
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <input
@@ -1366,7 +1502,13 @@ export default function FamilyLifeHub() {
                       className="family-life-secondary"
                       onClick={() => {
                         setEditingSchoolItemId('');
-                        setSchoolForm(previous => ({ ...previous, title: '', subject: '', details: '' }));
+                        setSchoolForm(previous => ({
+                          ...previous,
+                          title: '',
+                          subject: '',
+                          details: '',
+                          color: ''
+                        }));
                       }}
                     >
                       {t('school.form.cancel')}
@@ -1376,6 +1518,175 @@ export default function FamilyLifeHub() {
               </form>
             </section>
           )}
+        </div>
+      )}
+
+      {section === 'contacts' && isAdult && (
+        <div className="family-life-section family-contacts-section">
+          <section className="family-life-panel family-contacts-directory">
+            <PanelHeader
+              kicker={t('contacts.kicker')}
+              title={t('contacts.title')}
+              icon={Phone}
+            >
+              <span className="family-contacts-count">
+                {t('contacts.count', { count: familyContacts.length })}
+              </span>
+            </PanelHeader>
+            <p className="family-contacts-intro">{t('contacts.intro')}</p>
+            <div className="family-contacts-toolbar">
+              <label className="family-contacts-search">
+                <Search size={17} aria-hidden="true" />
+                <input
+                  type="search"
+                  value={contactSearch}
+                  onChange={event => setContactSearch(event.target.value)}
+                  placeholder={t('contacts.searchPlaceholder')}
+                />
+              </label>
+              <select
+                value={contactCategoryFilter}
+                onChange={event => setContactCategoryFilter(event.target.value)}
+                aria-label={t('contacts.categoryFilterAria')}
+              >
+                <option value="all">{t('contacts.allCategories')}</option>
+                {CONTACT_CATEGORIES.map(category => (
+                  <option key={category.id} value={category.id}>
+                    {category.icon} {t(`contacts.categories.${category.id}`)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {visibleFamilyContacts.length ? (
+              <div className="family-contacts-grid">
+                {visibleFamilyContacts.map(contact => {
+                  const category = CONTACT_CATEGORIES.find(item => item.id === contact.category) ||
+                    CONTACT_CATEGORIES.at(-1);
+                  return (
+                    <article key={contact.id} className="family-contact-card">
+                      <div className="family-contact-card-heading">
+                        <span className="family-contact-category-icon" aria-hidden="true">{category.icon}</span>
+                        <div>
+                          <span className="family-contact-category">
+                            {t(`contacts.categories.${category.id}`)}
+                          </span>
+                          <h3>{contact.name}</h3>
+                        </div>
+                      </div>
+                      <div className="family-contact-details">
+                        {contact.phone && (
+                          <a href={`tel:${contact.phone.replace(/[^+0-9]/g, '')}`}>
+                            <Phone size={15} /> {contact.phone}
+                          </a>
+                        )}
+                        {contact.email && (
+                          <a href={`mailto:${contact.email}`}>
+                            <Mail size={15} /> {contact.email}
+                          </a>
+                        )}
+                        {contact.address && (
+                          <span><MapPin size={15} /> {contact.address}</span>
+                        )}
+                        {contact.notes && <p>{contact.notes}</p>}
+                      </div>
+                      <div className="family-contact-actions">
+                        {contact.phone && (
+                          <a className="family-contact-call" href={`tel:${contact.phone.replace(/[^+0-9]/g, '')}`}>
+                            <Phone size={15} /> {t('contacts.call')}
+                          </a>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => editFamilyContact(contact)}
+                          aria-label={t('contacts.editAria', { name: contact.name })}
+                        >
+                          <Pencil size={15} />
+                        </button>
+                        <button
+                          type="button"
+                          className="is-delete"
+                          onClick={() => deleteFamilyLifeRecord('familyContacts', contact.id)}
+                          aria-label={t('contacts.deleteAria', { name: contact.name })}
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="family-contacts-empty">
+                <Phone size={25} />
+                <strong>{familyContacts.length ? t('contacts.noMatchesTitle') : t('contacts.emptyTitle')}</strong>
+                <p>{familyContacts.length ? t('contacts.noMatchesText') : t('contacts.emptyText')}</p>
+              </div>
+            )}
+          </section>
+
+          <section className="family-life-panel" id="family-contact-editor">
+            <PanelHeader
+              kicker={t('contacts.form.kicker')}
+              title={editingContactId ? t('contacts.form.editTitle') : t('contacts.form.title')}
+              icon={UsersRound}
+            />
+            <form onSubmit={saveFamilyContact} className="family-life-form family-contact-form">
+              <div className="form-row">
+                <input
+                  value={contactForm.name}
+                  onChange={event => setContactForm(previous => ({ ...previous, name: event.target.value }))}
+                  placeholder={t('contacts.form.namePlaceholder')}
+                  required
+                />
+                <select
+                  value={contactForm.category}
+                  onChange={event => setContactForm(previous => ({ ...previous, category: event.target.value }))}
+                  aria-label={t('contacts.form.categoryAria')}
+                >
+                  {CONTACT_CATEGORIES.map(category => (
+                    <option key={category.id} value={category.id}>
+                      {category.icon} {t(`contacts.categories.${category.id}`)}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-row">
+                <input
+                  type="tel"
+                  value={contactForm.phone}
+                  onChange={event => setContactForm(previous => ({ ...previous, phone: event.target.value }))}
+                  placeholder={t('contacts.form.phonePlaceholder')}
+                />
+                <input
+                  type="email"
+                  value={contactForm.email}
+                  onChange={event => setContactForm(previous => ({ ...previous, email: event.target.value }))}
+                  placeholder={t('contacts.form.emailPlaceholder')}
+                />
+              </div>
+              <input
+                value={contactForm.address}
+                onChange={event => setContactForm(previous => ({ ...previous, address: event.target.value }))}
+                placeholder={t('contacts.form.addressPlaceholder')}
+              />
+              <textarea
+                value={contactForm.notes}
+                onChange={event => setContactForm(previous => ({ ...previous, notes: event.target.value }))}
+                placeholder={t('contacts.form.notesPlaceholder')}
+              />
+              <div className="school-form-actions">
+                <button className="family-life-primary">
+                  <Plus size={16} /> {editingContactId ? t('contacts.form.save') : t('contacts.form.submit')}
+                </button>
+                {editingContactId && (
+                  <button type="button" className="family-life-secondary" onClick={resetContactForm}>
+                    {t('contacts.form.cancel')}
+                  </button>
+                )}
+              </div>
+            </form>
+          </section>
         </div>
       )}
 

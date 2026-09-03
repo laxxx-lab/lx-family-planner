@@ -4,6 +4,7 @@
     "routines": "Rutyny",
     "money": "Kieszonkowe",
     "school": "Szkoła",
+    "contacts": "Kontakty",
     "polls": "Głosowanie",
     "safety": "Bezpiecznie i spokojnie"
   },
@@ -139,6 +140,9 @@
       "exam": "Sprawdzian",
       "bag": "Sprawdzenie plecaka"
     },
+    "colors": {
+      "ocean": "Oceaniczny", "meadow": "Łąkowa zieleń", "ochre": "Ochra", "terracotta": "Terakota", "indigo": "Indygo", "berry": "Jagodowy", "slate": "Łupek"
+    },
     "deleteAria": "Usuń wpis szkolny",
     "emptyKind": "Nic jeszcze nie wpisano.",
     "form": {
@@ -153,11 +157,20 @@
       "roomPlaceholder": "Sala (opcjonalnie)",
       "teacherPlaceholder": "Nauczyciel (opcjonalnie)",
       "detailsPlaceholder": "Książka, materiały lub krótka notatka",
+        "colorLabel": "Kolor przedmiotu",
+        "colorHint": "Delikatnie oznacza ten przedmiot w planie lekcji.",
+        "colorReset": "Kolor domyślny",
         "submit": "Dodaj wpis",
         "editTitle": "Edytuj wpis szkolny",
         "save": "Zapisz zmiany",
         "cancel": "Anuluj"
     }
+  },
+  "contacts": {
+    "kicker": "Ważne numery pod ręką", "title": "Rodzinna książka telefoniczna", "intro": "Lekarze, szkoła, ubezpieczenia i inne ważne kontakty w jednym prywatnym miejscu.",
+    "count_one": "{{count}} kontakt", "count_other": "{{count}} kontaktów", "searchPlaceholder": "Szukaj nazwy, numeru lub słowa kluczowego", "categoryFilterAria": "Filtruj kategorię kontaktu", "allCategories": "Wszystkie kategorie", "emptyTitle": "Brak kontaktów", "emptyText": "Zachowaj tutaj najważniejsze dane kontaktowe rodziny.", "noMatchesTitle": "Brak pasującego kontaktu", "noMatchesText": "Zmień wyszukiwanie lub kategorię.", "call": "Zadzwoń", "editAria": "Edytuj {{name}}", "deleteAria": "Usuń {{name}}",
+    "categories": { "medical": "Lekarze i zdrowie", "services": "Usługi", "school": "Szkoła i opieka", "authorities": "Urzędy", "insurance": "Ubezpieczenia", "emergency": "Nagły wypadek", "other": "Inne" },
+    "form": { "kicker": "Gotowi, gdy to ważne", "title": "Dodaj kontakt", "editTitle": "Edytuj kontakt", "namePlaceholder": "Nazwa lub organizacja", "categoryAria": "Kategoria kontaktu", "phonePlaceholder": "Numer telefonu (opcjonalnie)", "emailPlaceholder": "Adres e-mail (opcjonalnie)", "addressPlaceholder": "Adres (opcjonalnie)", "notesPlaceholder": "Notatka, dostępność lub numer referencyjny (opcjonalnie)", "submit": "Zapisz kontakt", "save": "Zapisz zmiany", "cancel": "Anuluj" }
   },
   "polls": {
     "kicker": "Każdy głos się liczy",

@@ -4,6 +4,7 @@
     "routines": "Routinen",
     "money": "Taschengeld",
     "school": "Schule",
+    "contacts": "Telefonbuch",
     "polls": "Abstimmen",
     "safety": "Sicher & ruhig"
   },
@@ -139,6 +140,15 @@
       "exam": "Klassenarbeit",
       "bag": "Ranzen-Check"
     },
+    "colors": {
+      "ocean": "Ozeanblau",
+      "meadow": "Wiesengrün",
+      "ochre": "Ocker",
+      "terracotta": "Terrakotta",
+      "indigo": "Indigo",
+      "berry": "Beere",
+      "slate": "Schiefergrau"
+    },
     "deleteAria": "Schuleintrag löschen",
     "emptyKind": "Noch nichts eingetragen.",
     "form": {
@@ -153,10 +163,53 @@
       "roomPlaceholder": "Raum (optional)",
       "teacherPlaceholder": "Lehrkraft (optional)",
       "detailsPlaceholder": "Buch, Material oder kurze Notiz",
+        "colorLabel": "Fachfarbe",
+        "colorHint": "Markiert dieses Fach dezent im Stundenplan.",
+        "colorReset": "Standardfarbe",
         "submit": "Eintragen",
         "editTitle": "Schuleintrag bearbeiten",
         "save": "Änderungen speichern",
         "cancel": "Abbrechen"
+    }
+  },
+  "contacts": {
+    "kicker": "Wichtige Nummern griffbereit",
+    "title": "Familien-Telefonbuch",
+    "intro": "Ärzte, Schule, Versicherungen und weitere wichtige Anlaufstellen an einem sicheren Ort.",
+    "count_one": "{{count}} Kontakt",
+    "count_other": "{{count}} Kontakte",
+    "searchPlaceholder": "Name, Nummer oder Stichwort suchen",
+    "categoryFilterAria": "Kontaktkategorie filtern",
+    "allCategories": "Alle Kategorien",
+    "emptyTitle": "Noch kein Kontakt",
+    "emptyText": "Lege die wichtigsten Nummern für eure Familie hier ab.",
+    "noMatchesTitle": "Kein passender Kontakt",
+    "noMatchesText": "Passe die Suche oder die Kategorie an.",
+    "call": "Anrufen",
+    "editAria": "{{name}} bearbeiten",
+    "deleteAria": "{{name}} löschen",
+    "categories": {
+      "medical": "Ärzte & Medizin",
+      "services": "Dienstleistungen",
+      "school": "Schule & Betreuung",
+      "authorities": "Behörden",
+      "insurance": "Versicherungen",
+      "emergency": "Notfall",
+      "other": "Sonstiges"
+    },
+    "form": {
+      "kicker": "Für den Ernstfall vorbereitet",
+      "title": "Kontakt hinzufügen",
+      "editTitle": "Kontakt bearbeiten",
+      "namePlaceholder": "Name oder Einrichtung",
+      "categoryAria": "Kontaktkategorie",
+      "phonePlaceholder": "Telefonnummer (optional)",
+      "emailPlaceholder": "E-Mail-Adresse (optional)",
+      "addressPlaceholder": "Adresse (optional)",
+      "notesPlaceholder": "Hinweis, Erreichbarkeit oder Aktenzeichen (optional)",
+      "submit": "Kontakt speichern",
+      "save": "Änderungen speichern",
+      "cancel": "Abbrechen"
     }
   },
   "polls": {

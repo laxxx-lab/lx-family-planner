@@ -3258,6 +3258,7 @@ export function FamilyProvider({ children }) {
         familyPolls: 'poll',
         encouragements: 'encouragement',
         familyMissions: 'family-mission',
+        familyContacts: 'family-contact',
         familySettings: 'family-settings',
         kidProfiles: 'kid-profile'
       };
@@ -3627,6 +3628,7 @@ export function FamilyProvider({ children }) {
     familyPolls: resources.familyPolls,
     encouragements: resources.encouragements,
     familyMissions: resources.familyMissions,
+    familyContacts: resources.familyContacts,
     familySettings: resources.familySettings,
     kidProfiles: resources.kidProfiles,
     addFamilyLifeRecord,

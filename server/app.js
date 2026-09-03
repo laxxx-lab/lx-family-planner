@@ -364,6 +364,15 @@ const PROFILE_MODULE_IDS = new Set([
   'cloud',
   'mail'
 ]);
+const SCHOOL_SUBJECT_COLORS = new Set([
+  '#3d7ea6',
+  '#648b62',
+  '#bd8a3d',
+  '#b66457',
+  '#786da6',
+  '#ad6681',
+  '#60798a'
+]);
 const ADULT_MANAGED_RESOURCES = new Set([
   'tasks',
   'rewards',
@@ -377,6 +386,7 @@ const ADULT_MANAGED_RESOURCES = new Set([
   'familyPolls',
   'encouragements',
   'familyMissions',
+  'familyContacts',
   'familySettings',
   'kidProfiles'
 ]);
@@ -4133,6 +4143,7 @@ function bootstrapForSession(session) {
     bootstrap.resources.tasks = bootstrap.resources.tasks.filter(
       task => !managedMemberIds.has(task.memberId)
     );
+    bootstrap.resources.familyContacts = [];
     for (const type of PROFILE_SCOPED_FAMILY_LIFE_TYPES) {
       bootstrap.resources[type] = member.role === 'pet'
         ? []
@@ -4344,6 +4355,7 @@ const FAMILY_LIFE_TYPES = new Set([
   'familyPolls',
   'encouragements',
   'familyMissions',
+  'familyContacts',
   'familySettings',
   'kidProfiles'
 ]);
@@ -4591,6 +4603,9 @@ function sanitizeFamilyLifeRecord(req, type, value, existing = null) {
       period: Math.max(0, Math.min(20, Math.trunc(Number(input.period || 0)))),
       room: cleanText(input.room, '', 80),
       teacher: cleanText(input.teacher, '', 100),
+      color: SCHOOL_SUBJECT_COLORS.has(String(input.color || '').toLowerCase())
+        ? String(input.color).toLowerCase()
+        : '',
       cancellations: kind === 'lesson' ? cancellations : [],
       completed: Boolean(existing?.completed && kind !== 'lesson' && kind !== 'exam'),
       createdAt: Number(existing?.createdAt || input.createdAt || now)
@@ -4679,6 +4694,31 @@ function sanitizeFamilyLifeRecord(req, type, value, existing = null) {
         : [],
       dueDate: cleanDate(input.dueDate, ''),
       createdAt: Number(existing?.createdAt || input.createdAt || now)
+    };
+  }
+  if (type === 'familyContacts') {
+    const category = [
+      'medical',
+      'services',
+      'school',
+      'authorities',
+      'insurance',
+      'emergency',
+      'other'
+    ].includes(input.category)
+      ? input.category
+      : 'other';
+    return {
+      ...existing,
+      ...input,
+      name: requireText(input.name, translate('fields.contactName'), 100),
+      category,
+      phone: cleanText(input.phone, '', 40),
+      email: cleanText(input.email, '', 160),
+      address: cleanText(input.address, '', 400),
+      notes: cleanText(input.notes, '', 1000),
+      createdAt: Number(existing?.createdAt || input.createdAt || now),
+      updatedAt: now
     };
   }
   if (type === 'familySettings') {
@@ -8066,6 +8106,13 @@ export function createApp() {
           ? []
           : records.filter(record => record.memberId === member.id);
       }
+    }
+    if (
+      req.params.type === 'familyContacts' &&
+      activeMember &&
+      !isAdultMember(activeMember)
+    ) {
+      records = [];
     }
     res.json({
       success: true,

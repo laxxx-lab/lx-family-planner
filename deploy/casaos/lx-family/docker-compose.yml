@@ -2,7 +2,7 @@ name: lx-family
 
 services:
   lx-family:
-    image: ghcr.io/laxxx-lab/lx-family-planner:1.20.0
+    image: ghcr.io/laxxx-lab/lx-family-planner:1.20.1
     container_name: lx-family
     restart: unless-stopped
     environment:
@@ -103,11 +103,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.20.0"
-  update_at: "2026-08-27"
+  version: "1.20.1"
+  update_at: "2026-09-03"
   release_notes:
-    en_US: Adds encrypted family moves, a family recycle bin and faster calendar entry.
-    de_DE: Ergänzt verschlüsselte Familienumzüge, den Familienpapierkorb und schnellere Termineingaben.
+    en_US: Adds an adult-only Family Phone Book and a calmer, curated timetable colour system.
+    de_DE: Ergänzt ein Telefonbuch nur für Erwachsene und eine ruhige, abgestimmte Fachfarbpalette.
   website: https://github.com/laxxx-lab/lx-family-planner
   repo: https://github.com/laxxx-lab/lx-family-planner
   support: https://github.com/laxxx-lab/lx-family-planner/issues

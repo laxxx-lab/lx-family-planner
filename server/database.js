@@ -44,6 +44,7 @@ const RECORD_TYPES = new Set([
   'familyPolls',
   'encouragements',
   'familyMissions',
+  'familyContacts',
   'familySettings',
   'kidProfiles'
 ]);

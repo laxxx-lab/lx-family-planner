@@ -6,6 +6,19 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.20.1] — 2026-09-03
+
+### Family phone book and a calmer timetable
+
+- Parents can keep important numbers for doctors, school, care providers,
+  authorities, insurance and emergencies in a searchable Family Phone Book.
+  Children and managed profiles cannot read this adult-only directory.
+- Timetable subjects use a restrained, curated palette with a fine accent line
+  and colour dot instead of broad colour blocks. This keeps the timetable
+  readable while making subjects easier to recognise.
+- The subject palette is validated by the server, so imported or outdated
+  arbitrary colours cannot make a timetable look inconsistent.
+
 ## [1.20.0] — 2026-08-27
 
 ### Safer family moves and everyday recovery

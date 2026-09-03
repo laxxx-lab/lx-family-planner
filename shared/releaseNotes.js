@@ -1,4 +1,63 @@
 const RELEASE_NOTES = {
+  '1.20.1': {
+    version: '1.20.1',
+    eyebrow: 'Kleines Update für einen klaren Familienalltag',
+    title: 'Telefonbuch und Stundenplan sind jetzt aufgeräumter',
+    intro:
+      'Wichtige Kontakte liegen direkt bei eurer Familie, und der Stundenplan bleibt auch mit Farben angenehm ruhig.',
+    highlights: [
+      {
+        id: 'family-phone-book',
+        title: 'Telefonbuch direkt in LX',
+        description:
+          'Eltern können wichtige Kontakte wie Schule, Arztpraxis, Notfallnummern und Dienstleistungen mit Telefon, E-Mail, Adresse und Notiz zentral hinterlegen.'
+      },
+      {
+        id: 'timetable-colour-system',
+        title: 'Ruhige Fächerfarben',
+        description:
+          'Der Stundenplan nutzt eine abgestimmte, professionelle Farbpalette. Farben setzen nur kleine Akzente und lenken nicht vom Unterricht ab.'
+      },
+      {
+        id: 'safe-subject-colours',
+        title: 'Einheitlich auf jedem Gerät',
+        description:
+          'Neue Fächerfarben werden vom Server auf die feste Palette geprüft. So bleibt der Stundenplan bei allen Familienmitgliedern klar und konsistent.'
+      }
+    ],
+    closing:
+      'Bestehende Kontakte, Fächer, Termine, Profile und Einstellungen bleiben unverändert erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'A small update for a clearer family day',
+        title: 'The phone book and timetable are now tidier',
+        intro:
+          'Important contacts now live right with your family, while the timetable stays calm even with colours.',
+        highlights: [
+          {
+            id: 'family-phone-book',
+            title: 'Phone book directly in LX',
+            description:
+              'Parents can keep important contacts such as schools, doctors, emergency numbers and services with their phone, email, address and notes in one place.'
+          },
+          {
+            id: 'timetable-colour-system',
+            title: 'Calm subject colours',
+            description:
+              'The timetable uses a refined, professional colour palette. Colours add small accents without distracting from lessons.'
+          },
+          {
+            id: 'safe-subject-colours',
+            title: 'Consistent on every device',
+            description:
+              'The server validates new subject colours against the fixed palette, keeping the timetable clear and consistent for every family member.'
+          }
+        ],
+        closing:
+          'Existing contacts, subjects, events, profiles and settings remain unchanged.'
+      }
+    }
+  },
   '1.20.0': {
     version: '1.20.0',
     eyebrow: 'Sicher umziehen, entspannt wiederherstellen',

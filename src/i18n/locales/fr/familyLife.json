@@ -4,6 +4,7 @@
     "routines": "Routines",
     "money": "Argent de poche",
     "school": "École",
+    "contacts": "Répertoire",
     "polls": "Vote",
     "safety": "En sécurité & au calme"
   },
@@ -139,6 +140,9 @@
       "exam": "Contrôle",
       "bag": "Vérification du cartable"
     },
+    "colors": {
+      "ocean": "Bleu océan", "meadow": "Vert prairie", "ochre": "Ocre", "terracotta": "Terre cuite", "indigo": "Indigo", "berry": "Baie", "slate": "Ardoise"
+    },
     "deleteAria": "Supprimer l'entrée scolaire",
     "emptyKind": "Rien de saisi pour le moment.",
     "form": {
@@ -153,11 +157,20 @@
       "roomPlaceholder": "Salle (facultatif)",
       "teacherPlaceholder": "Enseignant (facultatif)",
       "detailsPlaceholder": "Livre, matériel ou courte note",
+        "colorLabel": "Couleur de la matière",
+        "colorHint": "Marque discrètement cette matière dans l'emploi du temps.",
+        "colorReset": "Couleur par défaut",
         "submit": "Ajouter l'entrée",
         "editTitle": "Modifier l'entrée scolaire",
         "save": "Enregistrer les modifications",
         "cancel": "Annuler"
     }
+  },
+  "contacts": {
+    "kicker": "Numéros importants à portée de main", "title": "Répertoire familial", "intro": "Médecins, école, assurances et autres contacts importants dans un endroit privé.",
+    "count_one": "{{count}} contact", "count_other": "{{count}} contacts", "searchPlaceholder": "Rechercher un nom, numéro ou mot-clé", "categoryFilterAria": "Filtrer la catégorie de contact", "allCategories": "Toutes les catégories", "emptyTitle": "Aucun contact", "emptyText": "Conservez ici les coordonnées les plus importantes de votre famille.", "noMatchesTitle": "Aucun contact correspondant", "noMatchesText": "Modifiez la recherche ou la catégorie.", "call": "Appeler", "editAria": "Modifier {{name}}", "deleteAria": "Supprimer {{name}}",
+    "categories": { "medical": "Médecins et santé", "services": "Services", "school": "École et garde", "authorities": "Administrations", "insurance": "Assurances", "emergency": "Urgence", "other": "Autre" },
+    "form": { "kicker": "Prêt quand cela compte", "title": "Ajouter un contact", "editTitle": "Modifier le contact", "namePlaceholder": "Nom ou organisme", "categoryAria": "Catégorie de contact", "phonePlaceholder": "Numéro de téléphone (facultatif)", "emailPlaceholder": "Adresse e-mail (facultatif)", "addressPlaceholder": "Adresse (facultatif)", "notesPlaceholder": "Note, disponibilité ou référence (facultatif)", "submit": "Enregistrer le contact", "save": "Enregistrer les modifications", "cancel": "Annuler" }
   },
   "polls": {
     "kicker": "Chaque vote compte",

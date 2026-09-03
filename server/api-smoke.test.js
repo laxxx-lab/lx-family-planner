@@ -2223,6 +2223,7 @@ test('family flow stays isolated, authorized and internally consistent', async (
         endTime: '09:30',
         room: 'A 12',
         teacher: 'Frau Beispiel',
+        color: '#648b62',
         cancellations: [futureLessonDateKey, '2020-01-01']
       })
     },
@@ -2230,6 +2231,7 @@ test('family flow stays isolated, authorized and internally consistent', async (
   );
   assert.equal(lesson.body.record.period, 2);
   assert.equal(lesson.body.record.endTime, '09:30');
+  assert.equal(lesson.body.record.color, '#648b62');
   assert.deepEqual(lesson.body.record.cancellations, [futureLessonDateKey]);
   const schoolProfileSetting = await request(
     `/api/kids/${childOne.id}/style`,
@@ -2268,6 +2270,24 @@ test('family flow stays isolated, authorized and internally consistent', async (
     },
     201
   );
+  const familyContact = await request(
+    '/api/resources/familyContacts',
+    {
+      method: 'POST',
+      headers: authenticatedHeaders,
+      body: JSON.stringify({
+        name: 'Kinderarzt Muster',
+        category: 'medical',
+        phone: '0123 456789',
+        email: 'praxis@example.test',
+        address: 'Musterweg 1',
+        notes: 'Impfpass mitnehmen'
+      })
+    },
+    201
+  );
+  assert.equal(familyContact.body.record.category, 'medical');
+  assert.equal(familyContact.body.record.phone, '0123 456789');
   await request(
     '/api/resources/encouragements',
     {
@@ -2395,6 +2415,10 @@ test('family flow stays isolated, authorized and internally consistent', async (
     },
     403
   );
+  const childContacts = await request('/api/resources/familyContacts', {
+    headers: authenticatedHeaders
+  });
+  assert.deepEqual(childContacts.body.records, []);
   const routineStep = await request(
     `/api/routines/${routine.body.record.id}/toggle`,
     {
@@ -2479,6 +2503,7 @@ test('family flow stays isolated, authorized and internally consistent', async (
   });
   assert.equal(familyLifeBootstrap.body.resources.dailyRoutines.length, 1);
   assert.equal(familyLifeBootstrap.body.resources.schoolItems.length, 2);
+  assert.equal(familyLifeBootstrap.body.resources.familyContacts.length, 1);
   assert.equal(
     familyLifeBootstrap.body.resources.pocketMoneyTransactions.length,
     1

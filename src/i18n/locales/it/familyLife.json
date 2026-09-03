@@ -4,6 +4,7 @@
     "routines": "Routine",
     "money": "Paghetta",
     "school": "Scuola",
+    "contacts": "Rubrica",
     "polls": "Votazione",
     "safety": "Sicuri e tranquilli"
   },
@@ -139,6 +140,9 @@
       "exam": "Verifica",
       "bag": "Controllo zaino"
     },
+    "colors": {
+      "ocean": "Blu oceano", "meadow": "Verde prato", "ochre": "Ocra", "terracotta": "Terracotta", "indigo": "Indaco", "berry": "Bacca", "slate": "Ardesia"
+    },
     "deleteAria": "Elimina voce scolastica",
     "emptyKind": "Ancora nulla inserito.",
     "form": {
@@ -153,11 +157,20 @@
       "roomPlaceholder": "Aula (facoltativo)",
       "teacherPlaceholder": "Insegnante (facoltativo)",
       "detailsPlaceholder": "Libro, materiali o una breve nota",
+        "colorLabel": "Colore della materia",
+        "colorHint": "Evidenzia delicatamente questa materia nell'orario.",
+        "colorReset": "Colore predefinito",
         "submit": "Aggiungi voce",
         "editTitle": "Modifica elemento scolastico",
         "save": "Salva modifiche",
         "cancel": "Annulla"
     }
+  },
+  "contacts": {
+    "kicker": "Numeri importanti a portata di mano", "title": "Rubrica familiare", "intro": "Medici, scuola, assicurazioni e altri contatti importanti in un luogo privato.",
+    "count_one": "{{count}} contatto", "count_other": "{{count}} contatti", "searchPlaceholder": "Cerca nome, numero o parola chiave", "categoryFilterAria": "Filtra la categoria del contatto", "allCategories": "Tutte le categorie", "emptyTitle": "Nessun contatto", "emptyText": "Conserva qui i recapiti più importanti della tua famiglia.", "noMatchesTitle": "Nessun contatto corrispondente", "noMatchesText": "Prova a modificare la ricerca o la categoria.", "call": "Chiama", "editAria": "Modifica {{name}}", "deleteAria": "Elimina {{name}}",
+    "categories": { "medical": "Medici e salute", "services": "Servizi", "school": "Scuola e assistenza", "authorities": "Autorità", "insurance": "Assicurazioni", "emergency": "Emergenza", "other": "Altro" },
+    "form": { "kicker": "Pronti quando conta", "title": "Aggiungi contatto", "editTitle": "Modifica contatto", "namePlaceholder": "Nome o organizzazione", "categoryAria": "Categoria del contatto", "phonePlaceholder": "Numero di telefono (facoltativo)", "emailPlaceholder": "Indirizzo e-mail (facoltativo)", "addressPlaceholder": "Indirizzo (facoltativo)", "notesPlaceholder": "Nota, disponibilità o riferimento (facoltativo)", "submit": "Salva contatto", "save": "Salva modifiche", "cancel": "Annulla" }
   },
   "polls": {
     "kicker": "Ogni voto conta",

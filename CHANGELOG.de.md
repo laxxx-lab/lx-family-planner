@@ -4,6 +4,19 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.20.1] – 2026-09-03
+
+### Familien-Telefonbuch und ruhiger Stundenplan
+
+- Eltern können wichtige Nummern für Ärzte, Schule, Betreuung, Behörden,
+  Versicherungen und Notfälle in einem durchsuchbaren Familien-Telefonbuch
+  hinterlegen. Kinder- und verwaltete Profile sehen dieses Verzeichnis nicht.
+- Fächer im Stundenplan erhalten eine zurückhaltende, abgestimmte Palette mit
+  feiner Farbkante und Farbpunkt statt großer Farbflächen. So bleiben Fächer
+  schnell erkennbar, ohne den Plan unruhig wirken zu lassen.
+- Der Server akzeptiert nur die abgestimmte Fachpalette. Alte oder importierte
+  freie Farben können den Stundenplan dadurch nicht mehr uneinheitlich machen.
+
 ## [1.20.0] – 2026-08-27
 
 ### Sicherer Familienumzug und Wiederherstellen im Alltag

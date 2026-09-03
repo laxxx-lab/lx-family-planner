@@ -4,6 +4,7 @@
     "routines": "Routines",
     "money": "Pocket money",
     "school": "School",
+    "contacts": "Phone book",
     "polls": "Vote",
     "safety": "Safe & calm"
   },
@@ -139,6 +140,15 @@
       "exam": "Class test",
       "bag": "Bag check"
     },
+    "colors": {
+      "ocean": "Ocean blue",
+      "meadow": "Meadow green",
+      "ochre": "Ochre",
+      "terracotta": "Terracotta",
+      "indigo": "Indigo",
+      "berry": "Berry",
+      "slate": "Slate"
+    },
     "deleteAria": "Delete school entry",
     "emptyKind": "Nothing entered yet.",
     "form": {
@@ -153,10 +163,53 @@
       "roomPlaceholder": "Room (optional)",
       "teacherPlaceholder": "Teacher (optional)",
       "detailsPlaceholder": "Book, materials or a short note",
+        "colorLabel": "Subject colour",
+        "colorHint": "Gently marks this subject in the timetable.",
+        "colorReset": "Default colour",
         "submit": "Add entry",
         "editTitle": "Edit school item",
         "save": "Save changes",
         "cancel": "Cancel"
+    }
+  },
+  "contacts": {
+    "kicker": "Important numbers at hand",
+    "title": "Family phone book",
+    "intro": "Doctors, school, insurance and other important contacts in one private place.",
+    "count_one": "{{count}} contact",
+    "count_other": "{{count}} contacts",
+    "searchPlaceholder": "Search name, number or keyword",
+    "categoryFilterAria": "Filter contact category",
+    "allCategories": "All categories",
+    "emptyTitle": "No contact yet",
+    "emptyText": "Keep your family's most important contact details here.",
+    "noMatchesTitle": "No matching contact",
+    "noMatchesText": "Try adjusting the search or category.",
+    "call": "Call",
+    "editAria": "Edit {{name}}",
+    "deleteAria": "Delete {{name}}",
+    "categories": {
+      "medical": "Doctors & medical",
+      "services": "Services",
+      "school": "School & care",
+      "authorities": "Authorities",
+      "insurance": "Insurance",
+      "emergency": "Emergency",
+      "other": "Other"
+    },
+    "form": {
+      "kicker": "Prepared when it matters",
+      "title": "Add contact",
+      "editTitle": "Edit contact",
+      "namePlaceholder": "Name or organisation",
+      "categoryAria": "Contact category",
+      "phonePlaceholder": "Phone number (optional)",
+      "emailPlaceholder": "Email address (optional)",
+      "addressPlaceholder": "Address (optional)",
+      "notesPlaceholder": "Note, availability or reference number (optional)",
+      "submit": "Save contact",
+      "save": "Save changes",
+      "cancel": "Cancel"
     }
   },
   "polls": {

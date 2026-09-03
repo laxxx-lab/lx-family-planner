@@ -4,6 +4,7 @@
     "routines": "Routines",
     "money": "Zakgeld",
     "school": "School",
+    "contacts": "Telefoonboek",
     "polls": "Stemmen",
     "safety": "Veilig & rustig"
   },
@@ -139,6 +140,9 @@
       "exam": "Proefwerk",
       "bag": "Tascontrole"
     },
+    "colors": {
+      "ocean": "Oceaanblauw", "meadow": "Weidegroen", "ochre": "Oker", "terracotta": "Terracotta", "indigo": "Indigo", "berry": "Bes", "slate": "Leigrijs"
+    },
     "deleteAria": "Schoolitem verwijderen",
     "emptyKind": "Nog niets ingevuld.",
     "form": {
@@ -153,11 +157,20 @@
       "roomPlaceholder": "Lokaal (optioneel)",
       "teacherPlaceholder": "Leraar (optioneel)",
       "detailsPlaceholder": "Boek, materialen of een korte notitie",
+        "colorLabel": "Vak-kleur",
+        "colorHint": "Markeert dit vak subtiel in het rooster.",
+        "colorReset": "Standaardkleur",
         "submit": "Item toevoegen",
         "editTitle": "Schoolitem bewerken",
         "save": "Wijzigingen opslaan",
         "cancel": "Annuleren"
     }
+  },
+  "contacts": {
+    "kicker": "Belangrijke nummers bij de hand", "title": "Familietelefoonboek", "intro": "Artsen, school, verzekeringen en andere belangrijke contacten op één privéplek.",
+    "count_one": "{{count}} contact", "count_other": "{{count}} contacten", "searchPlaceholder": "Zoek naam, nummer of trefwoord", "categoryFilterAria": "Contactcategorie filteren", "allCategories": "Alle categorieën", "emptyTitle": "Nog geen contact", "emptyText": "Bewaar hier de belangrijkste contactgegevens van je familie.", "noMatchesTitle": "Geen passend contact", "noMatchesText": "Pas de zoekopdracht of categorie aan.", "call": "Bellen", "editAria": "{{name}} bewerken", "deleteAria": "{{name}} verwijderen",
+    "categories": { "medical": "Artsen en zorg", "services": "Diensten", "school": "School en opvang", "authorities": "Overheid", "insurance": "Verzekeringen", "emergency": "Noodgeval", "other": "Overig" },
+    "form": { "kicker": "Voorbereid als het telt", "title": "Contact toevoegen", "editTitle": "Contact bewerken", "namePlaceholder": "Naam of organisatie", "categoryAria": "Contactcategorie", "phonePlaceholder": "Telefoonnummer (optioneel)", "emailPlaceholder": "E-mailadres (optioneel)", "addressPlaceholder": "Adres (optioneel)", "notesPlaceholder": "Notitie, bereikbaarheid of referentie (optioneel)", "submit": "Contact opslaan", "save": "Wijzigingen opslaan", "cancel": "Annuleren" }
   },
   "polls": {
     "kicker": "Elke stem telt",

@@ -25,6 +25,7 @@ export const EMPTY_RESOURCES = {
   familyPolls: [],
   encouragements: [],
   familyMissions: [],
+  familyContacts: [],
   familySettings: [],
   kidProfiles: []
 };

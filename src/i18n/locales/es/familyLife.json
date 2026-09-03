@@ -4,6 +4,7 @@
     "routines": "Rutinas",
     "money": "Paga semanal",
     "school": "Colegio",
+    "contacts": "Agenda",
     "polls": "Votar",
     "safety": "Seguro y tranquilo"
   },
@@ -139,6 +140,9 @@
       "exam": "Examen",
       "bag": "Revisión de la mochila"
     },
+    "colors": {
+      "ocean": "Azul océano", "meadow": "Verde prado", "ochre": "Ocre", "terracotta": "Terracota", "indigo": "Índigo", "berry": "Baya", "slate": "Pizarra"
+    },
     "deleteAria": "Eliminar entrada del colegio",
     "emptyKind": "Todavía no hay nada introducido.",
     "form": {
@@ -153,11 +157,20 @@
       "roomPlaceholder": "Aula (opcional)",
       "teacherPlaceholder": "Profesor/a (opcional)",
       "detailsPlaceholder": "Libro, materiales o una nota breve",
+        "colorLabel": "Color de la asignatura",
+        "colorHint": "Marca suavemente esta asignatura en el horario.",
+        "colorReset": "Color predeterminado",
         "submit": "Añadir entrada",
         "editTitle": "Editar entrada escolar",
         "save": "Guardar cambios",
         "cancel": "Cancelar"
     }
+  },
+  "contacts": {
+    "kicker": "Números importantes a mano", "title": "Agenda familiar", "intro": "Médicos, colegio, seguros y otros contactos importantes en un lugar privado.",
+    "count_one": "{{count}} contacto", "count_other": "{{count}} contactos", "searchPlaceholder": "Buscar nombre, número o palabra clave", "categoryFilterAria": "Filtrar categoría de contacto", "allCategories": "Todas las categorías", "emptyTitle": "Aún no hay contacto", "emptyText": "Guarda aquí los datos de contacto más importantes de tu familia.", "noMatchesTitle": "No hay contacto coincidente", "noMatchesText": "Prueba a cambiar la búsqueda o la categoría.", "call": "Llamar", "editAria": "Editar {{name}}", "deleteAria": "Eliminar {{name}}",
+    "categories": { "medical": "Médicos y salud", "services": "Servicios", "school": "Colegio y cuidado", "authorities": "Administración", "insurance": "Seguros", "emergency": "Emergencia", "other": "Otros" },
+    "form": { "kicker": "Preparados cuando importa", "title": "Añadir contacto", "editTitle": "Editar contacto", "namePlaceholder": "Nombre u organización", "categoryAria": "Categoría de contacto", "phonePlaceholder": "Número de teléfono (opcional)", "emailPlaceholder": "Dirección de correo (opcional)", "addressPlaceholder": "Dirección (opcional)", "notesPlaceholder": "Nota, disponibilidad o referencia (opcional)", "submit": "Guardar contacto", "save": "Guardar cambios", "cancel": "Cancelar" }
   },
   "polls": {
     "kicker": "Cada voto cuenta",
