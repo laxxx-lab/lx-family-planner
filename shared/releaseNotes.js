@@ -1,4 +1,51 @@
 const RELEASE_NOTES = {
+  '1.20.2': {
+    version: '1.20.2',
+    eyebrow: 'Kleiner Android-Hotfix',
+    title: 'Die Familienreise bleibt vollständig im Blick',
+    intro:
+      'Auf dem Handy sind jetzt alle Bereiche der Familienreise sofort sichtbar und bequem antippbar.',
+    highlights: [
+      {
+        id: 'mobile-family-journey-menu',
+        title: 'Alle Bereiche ohne Seitwärts-Suchen',
+        description:
+          'Wochenblick, Routinen, Taschengeld, Schule, Telefonbuch, Abstimmen und Sicherheit liegen als kompaktes Zwei-Zeilen-Menü vor.'
+      },
+      {
+        id: 'mobile-family-journey-touch-targets',
+        title: 'Leicht auf dem Handy bedienen',
+        description:
+          'Die Navigation bleibt beim Scrollen erreichbar und bietet für jeden Bereich eine ausreichend große Touch-Fläche.'
+      }
+    ],
+    closing:
+      'Alle Familieninhalte, Fächer, Kontakte, Termine und Einstellungen bleiben unverändert erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'A small Android hotfix',
+        title: 'The Family Journey stays fully in view',
+        intro:
+          'Every Family Journey area is now immediately visible and easy to tap on a phone.',
+        highlights: [
+          {
+            id: 'mobile-family-journey-menu',
+            title: 'Every area without sideways searching',
+            description:
+              'Weekly view, routines, pocket money, school, phone book, polls and safety are arranged in a compact two-row menu.'
+          },
+          {
+            id: 'mobile-family-journey-touch-targets',
+            title: 'Easy to use on a phone',
+            description:
+              'The navigation remains available while scrolling and gives every area a sufficiently large touch target.'
+          }
+        ],
+        closing:
+          'All family content, subjects, contacts, events and settings remain unchanged.'
+      }
+    }
+  },
   '1.20.1': {
     version: '1.20.1',
     eyebrow: 'Kleines Update für einen klaren Familienalltag',

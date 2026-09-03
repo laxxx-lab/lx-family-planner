@@ -4,6 +4,14 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.20.2] – 2026-09-03
+
+### Mobiler Familienreise-Hotfix
+
+- Das vollständige Familienreise-Menü bleibt auf Android-Handys immer sichtbar.
+  Die sieben Bereiche liegen als kompaktes, fixes Zwei-Zeilen-Raster vor,
+  statt seitlich in einer schwer entdeckbaren Leiste zu verschwinden.
+
 ## [1.20.1] – 2026-09-03
 
 ### Familien-Telefonbuch und ruhiger Stundenplan

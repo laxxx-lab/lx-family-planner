@@ -6,6 +6,14 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.20.2] — 2026-09-03
+
+### Mobile Family Journey hotfix
+
+- The complete Family Journey navigation is now always visible on Android
+  phones. Its seven areas are arranged in a compact, sticky two-row grid
+  instead of a horizontally hidden scrolling strip.
+
 ## [1.20.1] — 2026-09-03
 
 ### Family phone book and a calmer timetable
