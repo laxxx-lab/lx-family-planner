@@ -19023,7 +19023,11 @@ textarea {
   .family-life-person select { width: 100%; }
   .family-life-nav {
     top: 4px;
-    grid-template-columns: repeat(6, 82px);
+    /* Seven areas are available for adults. On phones they stay in one
+       compact, two-row control instead of becoming a horizontally hidden
+       strip that has to be discovered by scrolling. */
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
     padding: 5px;
     border-radius: 17px;
   }
@@ -19033,12 +19037,14 @@ textarea {
     grid-template-columns: 1fr;
   }
   .family-life-nav button {
-    min-height: 57px;
+    min-height: 54px;
     flex-direction: column;
     gap: 3px;
-    padding: 7px 4px;
+    padding: 6px 3px;
     border-radius: 13px;
-    font-size: .64rem;
+    font-size: clamp(.58rem, 2.5vw, .67rem);
+    line-height: 1.08;
+    text-align: center;
   }
   .family-life-panel { padding: 17px 14px; border-radius: 21px; }
   .weekly-metrics { grid-template-columns: repeat(2, 1fr); }
