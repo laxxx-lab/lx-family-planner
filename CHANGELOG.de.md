@@ -4,6 +4,17 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.20.3] – 2026-09-03
+
+### Produkt-Symbole für den Einkauf
+
+- Einkaufsartikel erhalten jetzt ein passendes Symbol für das tatsächliche
+  Produkt, statt ein gemeinsames Bereichssymbol zu teilen. Eier, Butter, Käse,
+  Obst, Gemüse, Getränke und Haushaltsartikel sind schneller erkennbar.
+- Die Verbesserung gilt für Katalog, Einkaufsliste, Dashboard und Küchenansicht.
+  Alte allgemeine Symbole werden korrigiert, bewusst gewählte eigene Symbole
+  bleiben erhalten.
+
 ## [1.20.2] – 2026-09-03
 
 ### Mobiler Familienreise-Hotfix

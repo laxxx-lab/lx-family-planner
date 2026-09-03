@@ -1,4 +1,51 @@
 const RELEASE_NOTES = {
+  '1.20.3': {
+    version: '1.20.3',
+    eyebrow: 'Kleiner Einkaufs-Hotfix',
+    title: 'Der Einkauf ist auf einen Blick verständlich',
+    intro:
+      'Typische Lebensmittel und Haushaltsartikel erhalten passende Symbole, damit die Liste schneller lesbar wird.',
+    highlights: [
+      {
+        id: 'shopping-product-icons',
+        title: 'Passende Symbole für typische Produkte',
+        description:
+          'Eier, Butter, Milch, Käse, Brot, Obst, Gemüse, Nudeln, Getränke und Haushaltsartikel sind an eigenen Symbolen erkennbar.'
+      },
+      {
+        id: 'shopping-icons-everywhere',
+        title: 'Überall gleich gut erkennbar',
+        description:
+          'Katalog, Einkaufsliste, Dashboard und Küchenansicht verwenden dieselbe Produktzuordnung. Eigene Symbole bleiben erhalten.'
+      }
+    ],
+    closing:
+      'Einkaufslisten, Mengen, Kategorien und bewusst vergebene eigene Symbole bleiben unverändert erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'A small shopping hotfix',
+        title: 'Shopping is easier to scan at a glance',
+        intro:
+          'Common food and household items now receive fitting icons, making the list faster to read.',
+        highlights: [
+          {
+            id: 'shopping-product-icons',
+            title: 'Fitting icons for common products',
+            description:
+              'Eggs, butter, milk, cheese, bread, fruit, vegetables, pasta, drinks and household supplies each have recognisable icons.'
+          },
+          {
+            id: 'shopping-icons-everywhere',
+            title: 'Consistent everywhere',
+            description:
+              'The catalog, shopping list, dashboard and kitchen display use the same product mapping. Custom icons stay untouched.'
+          }
+        ],
+        closing:
+          'Shopping lists, quantities, categories and intentional custom icons remain unchanged.'
+      }
+    }
+  },
   '1.20.2': {
     version: '1.20.2',
     eyebrow: 'Kleiner Android-Hotfix',

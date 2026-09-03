@@ -1,7 +1,7 @@
 {
   "name": "lx-family-planner",
   "private": true,
-  "version": "1.20.2",
+  "version": "1.20.3",
   "description": "LX Family is a private self-hosted Family OS with dedicated spaces for parents, children, grandparents and pets.",
   "homepage": "https://github.com/laxxx-lab/lx-family-planner",
   "repository": {

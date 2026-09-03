@@ -6,6 +6,17 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.20.3] — 2026-09-03
+
+### Shopping item icon hotfix
+
+- Shopping items now receive a fitting symbol for the actual product rather
+  than sharing one department icon. Eggs, butter, cheese, fruit, vegetables,
+  drinks and household supplies are easier to scan at a glance.
+- The improvement applies to the catalog, shopping list, dashboard and kitchen
+  display. Existing generic icons are corrected while intentional custom icons
+  remain untouched.
+
 ## [1.20.2] — 2026-09-03
 
 ### Mobile Family Journey hotfix

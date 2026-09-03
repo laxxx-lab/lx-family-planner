@@ -15,13 +15,13 @@ test('the login screen keeps release notes out of the sign-in flow', () => {
     path.join(projectRoot, 'src', 'components', 'Auth', 'FamilyLoginScreen.jsx'),
     'utf8'
   );
-  assert.equal(version, '1.20.2');
+  assert.equal(version, '1.20.3');
   assert.doesNotMatch(login, /ReleasePreviewCard/);
   assert.deepEqual(
     notes.highlights.map(highlight => highlight.id),
     [
-      'mobile-family-journey-menu',
-      'mobile-family-journey-touch-targets'
+      'shopping-product-icons',
+      'shopping-icons-everywhere'
     ]
   );
 });
