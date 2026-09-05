@@ -141,7 +141,7 @@
       "bag": "Revisión de la mochila"
     },
     "colors": {
-      "ocean": "Azul océano", "meadow": "Verde prado", "ochre": "Ocre", "terracotta": "Terracota", "indigo": "Índigo", "berry": "Baya", "slate": "Pizarra"
+      "ocean": "Azul océano", "meadow": "Verde prado", "ochre": "Ocre", "terracotta": "Terracota", "indigo": "Índigo", "berry": "Baya", "slate": "Pizarra", "sky": "Azul cielo", "jade": "Jade", "fern": "Verde helecho", "amber": "Ámbar", "coral": "Coral", "rose": "Rosa", "lilac": "Lila", "steel": "Azul acero", "cocoa": "Cacao"
     },
     "deleteAria": "Eliminar entrada del colegio",
     "emptyKind": "Todavía no hay nada introducido.",

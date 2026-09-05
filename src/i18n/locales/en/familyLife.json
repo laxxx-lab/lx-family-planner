@@ -147,7 +147,10 @@
       "terracotta": "Terracotta",
       "indigo": "Indigo",
       "berry": "Berry",
-      "slate": "Slate"
+      "slate": "Slate",
+      "sky": "Sky blue", "jade": "Jade", "fern": "Fern green",
+      "amber": "Amber", "coral": "Coral", "rose": "Rose",
+      "lilac": "Lilac", "steel": "Steel blue", "cocoa": "Cocoa"
     },
     "deleteAria": "Delete school entry",
     "emptyKind": "Nothing entered yet.",

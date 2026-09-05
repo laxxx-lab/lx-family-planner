@@ -4,6 +4,20 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.21.0] – 2026-09-05
+
+### Besser sichtbare Fächerfarben
+
+- Jedes Fach kann jetzt seine eigene Farbe im Stundenplan eines Kindes
+  behalten. Die erweiterte, abgestimmte Palette bietet sechzehn gut lesbare
+  Farben und verhindert weiterhin beliebige, unruhige Importfarben.
+- Stundenkarten erhalten eine klare Farbkante, einen passenden Rahmen und
+  eine sehr leichte Flächentönung. Fächer sind sofort unterscheidbar, ohne
+  den Plan in große Farbflächen zu verwandeln.
+- Bereits gespeicherte Farben bleiben erhalten. Eine Fachfarbe wird erst dann
+  für alle Stunden desselben Fachs verwendet, wenn sie im Eintragseditor
+  bewusst gewählt oder geändert wird.
+
 ## [1.20.3] – 2026-09-03
 
 ### Produkt-Symbole für den Einkauf

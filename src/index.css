@@ -18463,9 +18463,12 @@ textarea {
 
 .school-lesson-card.has-custom-color {
   position: relative;
-  border-color: var(--border-color);
-  background: var(--bg-card);
-  box-shadow: inset 3px 0 0 var(--school-lesson-color);
+  border-color: color-mix(in srgb, var(--school-lesson-color) 32%, var(--border-color));
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--school-lesson-color) 13%, var(--bg-card)),
+      color-mix(in srgb, var(--school-lesson-color) 5%, var(--bg-card)) 76%);
+  box-shadow: inset 5px 0 0 var(--school-lesson-color);
 }
 
 .school-lesson-card.has-custom-color.is-actions-open,
@@ -18473,21 +18476,8 @@ textarea {
   border-color: var(--school-lesson-color);
   background:
     linear-gradient(90deg,
-      color-mix(in srgb, var(--school-lesson-color) 7%, var(--bg-card)),
-      var(--bg-card) 48%);
-}
-
-.school-lesson-card.has-custom-color::after {
-  position: absolute;
-  top: 7px;
-  right: 7px;
-  width: 6px;
-  height: 6px;
-  border: 2px solid var(--bg-card);
-  border-radius: 999px;
-  background: var(--school-lesson-color);
-  box-shadow: 0 1px 4px color-mix(in srgb, var(--school-lesson-color) 38%, transparent);
-  content: '';
+      color-mix(in srgb, var(--school-lesson-color) 20%, var(--bg-card)),
+      color-mix(in srgb, var(--school-lesson-color) 8%, var(--bg-card)) 68%);
 }
 
 .school-lesson-card strong,

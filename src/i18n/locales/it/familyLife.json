@@ -141,7 +141,7 @@
       "bag": "Controllo zaino"
     },
     "colors": {
-      "ocean": "Blu oceano", "meadow": "Verde prato", "ochre": "Ocra", "terracotta": "Terracotta", "indigo": "Indaco", "berry": "Bacca", "slate": "Ardesia"
+      "ocean": "Blu oceano", "meadow": "Verde prato", "ochre": "Ocra", "terracotta": "Terracotta", "indigo": "Indaco", "berry": "Bacca", "slate": "Ardesia", "sky": "Azzurro cielo", "jade": "Giada", "fern": "Verde felce", "amber": "Ambra", "coral": "Corallo", "rose": "Rosa", "lilac": "Lilla", "steel": "Blu acciaio", "cocoa": "Cacao"
     },
     "deleteAria": "Elimina voce scolastica",
     "emptyKind": "Ancora nulla inserito.",

@@ -6,6 +6,19 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.21.0] — 2026-09-05
+
+### Subject colours that are easier to see
+
+- Every subject can now keep its own colour across a child's timetable.
+  The expanded, curated palette offers sixteen readable choices and prevents
+  arbitrary imported colours from making the timetable inconsistent.
+- Lesson cards use a clear colour edge, a matching outline and a very light
+  tint. Subjects are easier to distinguish at a glance without turning the
+  timetable into blocks of solid colour.
+- Existing lesson colours are kept. A subject colour only becomes shared when
+  it is deliberately selected or changed in the lesson editor.
+
 ## [1.20.3] — 2026-09-03
 
 ### Shopping item icon hotfix

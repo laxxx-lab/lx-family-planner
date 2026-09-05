@@ -45,6 +45,11 @@ import {
   getWeekdayNames
 } from '../../utils/formatting';
 import { eventIsForMember } from '../../../shared/calendarAudience.js';
+import {
+  SCHOOL_SUBJECT_COLORS,
+  normalizeSchoolSubjectKey,
+  resolveSchoolSubjectColor
+} from '../../../shared/schoolSubjectColors.js';
 
 const SECTIONS = [
   { id: 'today', labelKey: 'sections.today', icon: Sparkles },
@@ -66,15 +71,6 @@ const SCHOOL_KIND = {
   exam: { labelKey: 'school.kinds.exam', icon: '🧠' },
   bag: { labelKey: 'school.kinds.bag', icon: '🎒' }
 };
-const SUBJECT_COLORS = [
-  { value: '#3d7ea6', labelKey: 'school.colors.ocean' },
-  { value: '#648b62', labelKey: 'school.colors.meadow' },
-  { value: '#bd8a3d', labelKey: 'school.colors.ochre' },
-  { value: '#b66457', labelKey: 'school.colors.terracotta' },
-  { value: '#786da6', labelKey: 'school.colors.indigo' },
-  { value: '#ad6681', labelKey: 'school.colors.berry' },
-  { value: '#60798a', labelKey: 'school.colors.slate' }
-];
 const CONTACT_CATEGORIES = [
   { id: 'medical', icon: '🩺' },
   { id: 'services', icon: '🛠️' },
@@ -94,11 +90,6 @@ function localDateKey(date = new Date()) {
 
 function euro(cents = 0) {
   return formatCurrency(Number(cents || 0) / 100, 'EUR');
-}
-
-function subjectColor(value) {
-  const normalized = String(value || '').toLocaleLowerCase();
-  return SUBJECT_COLORS.find(color => color.value === normalized)?.value || '';
 }
 
 function lastSevenDateKeys() {
@@ -252,6 +243,7 @@ export default function FamilyLifeHub() {
     color: ''
   });
   const [editingSchoolItemId, setEditingSchoolItemId] = useState('');
+  const [schoolColorWasChosen, setSchoolColorWasChosen] = useState(false);
   const [cancellationDates, setCancellationDates] = useState({});
   const [activeLessonId, setActiveLessonId] = useState('');
   const [contactSearch, setContactSearch] = useState('');
@@ -327,6 +319,7 @@ export default function FamilyLifeHub() {
     Object.hasOwn(selectedKidProfile, 'schoolEnabled')
       ? selectedKidProfile.schoolEnabled === true
       : mySchoolItems.length > 0;
+  const schoolSubjectColors = selectedKidProfile?.schoolSubjectColors || {};
   const visibleSections =
     SECTIONS.filter(item =>
       (item.id !== 'school' || isAdult || schoolEnabled) &&
@@ -510,7 +503,27 @@ export default function FamilyLifeHub() {
       ? await updateFamilyLifeRecord('schoolItems', editingSchoolItemId, payload)
       : await addFamilyLifeRecord('schoolItems', payload);
     if (saved) {
+      const subjectKey = normalizeSchoolSubjectKey(schoolForm.subject);
+      const storedSubjectColor = subjectKey
+        ? schoolSubjectColors[subjectKey] || ''
+        : '';
+      if (
+        schoolColorWasChosen &&
+        subjectKey &&
+        storedSubjectColor !== schoolForm.color
+      ) {
+        const nextSchoolSubjectColors = { ...schoolSubjectColors };
+        if (schoolForm.color) {
+          nextSchoolSubjectColors[subjectKey] = schoolForm.color;
+        } else {
+          delete nextSchoolSubjectColors[subjectKey];
+        }
+        await updateKidProfile(selectedId, {
+          schoolSubjectColors: nextSchoolSubjectColors
+        });
+      }
       setEditingSchoolItemId('');
+      setSchoolColorWasChosen(false);
       setSchoolForm(previous => ({
         ...previous,
         title: '',
@@ -560,6 +573,7 @@ export default function FamilyLifeHub() {
   const editSchoolItem = item => {
     if (!isAdult) return;
     setEditingSchoolItemId(item.id);
+    setSchoolColorWasChosen(false);
     setActiveLessonId(item.id);
     setSchoolForm({
       kind: item.kind || 'homework',
@@ -573,7 +587,11 @@ export default function FamilyLifeHub() {
       room: item.room || '',
       teacher: item.teacher || '',
       details: item.details || '',
-      color: subjectColor(item.color)
+      color: resolveSchoolSubjectColor(
+        item.subject,
+        schoolSubjectColors,
+        item.color
+      )
     });
     document.getElementById('school-item-editor')?.scrollIntoView({
       behavior: 'smooth',
@@ -584,6 +602,7 @@ export default function FamilyLifeHub() {
   const startLessonForSlot = (weekday, period) => {
     if (!isAdult) return;
     setEditingSchoolItemId('');
+    setSchoolColorWasChosen(false);
     setActiveLessonId('');
     setSchoolForm(previous => ({
       ...previous,
@@ -1225,7 +1244,11 @@ export default function FamilyLifeHub() {
                             {lessonsInSlot.map(lesson => {
                               const cancelled = lesson.cancellations?.includes(currentDate);
                               const lessonActionsOpen = activeLessonId === lesson.id;
-                              const lessonColor = subjectColor(lesson.color);
+                              const lessonColor = resolveSchoolSubjectColor(
+                                lesson.subject,
+                                schoolSubjectColors,
+                                lesson.color
+                              );
                               return (
                                 <button
                                   key={lesson.id}
@@ -1384,7 +1407,17 @@ export default function FamilyLifeHub() {
                   </select>
                   <input
                     value={schoolForm.subject}
-                    onChange={event => setSchoolForm(previous => ({ ...previous, subject: event.target.value }))}
+                    onChange={event => {
+                      const subject = event.target.value;
+                      setSchoolColorWasChosen(false);
+                      setSchoolForm(previous => ({
+                        ...previous,
+                        subject,
+                        color: schoolSubjectColors[
+                          normalizeSchoolSubjectKey(subject)
+                        ] || ''
+                      }));
+                    }}
                     placeholder={t('school.form.subjectPlaceholder')}
                   />
                 </div>
@@ -1453,16 +1486,19 @@ export default function FamilyLifeHub() {
                       <div>
                         <span>{t('school.form.colorLabel')}</span>
                         <div className="school-color-palette" role="group" aria-label={t('school.form.colorLabel')}>
-                          {SUBJECT_COLORS.map(color => (
+                          {SCHOOL_SUBJECT_COLORS.map(color => (
                             <button
                               key={color.value}
                               type="button"
                               className={schoolForm.color === color.value ? 'is-selected' : ''}
                               style={{ '--school-color-swatch': color.value }}
-                              onClick={() => setSchoolForm(previous => ({
-                                ...previous,
-                                color: color.value
-                              }))}
+                              onClick={() => {
+                                setSchoolColorWasChosen(true);
+                                setSchoolForm(previous => ({
+                                  ...previous,
+                                  color: color.value
+                                }));
+                              }}
                               aria-pressed={schoolForm.color === color.value}
                               aria-label={t(color.labelKey)}
                               title={t(color.labelKey)}
@@ -1475,7 +1511,10 @@ export default function FamilyLifeHub() {
                         <button
                           type="button"
                           className="family-life-secondary"
-                          onClick={() => setSchoolForm(previous => ({ ...previous, color: '' }))}
+                          onClick={() => {
+                            setSchoolColorWasChosen(true);
+                            setSchoolForm(previous => ({ ...previous, color: '' }));
+                          }}
                         >
                           {t('school.form.colorReset')}
                         </button>
@@ -1502,6 +1541,7 @@ export default function FamilyLifeHub() {
                       className="family-life-secondary"
                       onClick={() => {
                         setEditingSchoolItemId('');
+                        setSchoolColorWasChosen(false);
                         setSchoolForm(previous => ({
                           ...previous,
                           title: '',

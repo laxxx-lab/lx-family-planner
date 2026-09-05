@@ -141,7 +141,7 @@
       "bag": "Sprawdzenie plecaka"
     },
     "colors": {
-      "ocean": "Oceaniczny", "meadow": "Łąkowa zieleń", "ochre": "Ochra", "terracotta": "Terakota", "indigo": "Indygo", "berry": "Jagodowy", "slate": "Łupek"
+      "ocean": "Oceaniczny", "meadow": "Łąkowa zieleń", "ochre": "Ochra", "terracotta": "Terakota", "indigo": "Indygo", "berry": "Jagodowy", "slate": "Łupek", "sky": "Błękit nieba", "jade": "Jadeit", "fern": "Zieleń paproci", "amber": "Bursztyn", "coral": "Koral", "rose": "Róż", "lilac": "Liliowy", "steel": "Stalowy błękit", "cocoa": "Kakao"
     },
     "deleteAria": "Usuń wpis szkolny",
     "emptyKind": "Nic jeszcze nie wpisano.",

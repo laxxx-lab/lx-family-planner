@@ -141,7 +141,7 @@
       "bag": "Vérification du cartable"
     },
     "colors": {
-      "ocean": "Bleu océan", "meadow": "Vert prairie", "ochre": "Ocre", "terracotta": "Terre cuite", "indigo": "Indigo", "berry": "Baie", "slate": "Ardoise"
+      "ocean": "Bleu océan", "meadow": "Vert prairie", "ochre": "Ocre", "terracotta": "Terre cuite", "indigo": "Indigo", "berry": "Baie", "slate": "Ardoise", "sky": "Bleu ciel", "jade": "Jade", "fern": "Vert fougère", "amber": "Ambre", "coral": "Corail", "rose": "Rose", "lilac": "Lilas", "steel": "Bleu acier", "cocoa": "Cacao"
     },
     "deleteAria": "Supprimer l'entrée scolaire",
     "emptyKind": "Rien de saisi pour le moment.",

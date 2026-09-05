@@ -2259,6 +2259,24 @@ test('family flow stays isolated, authorized and internally consistent', async (
     }
   );
   assert.equal(schoolProfileSetting.body.record.schoolEnabled, true);
+  const schoolSubjectColors = await request(
+    `/api/kids/${childOne.id}/style`,
+    {
+      method: 'PUT',
+      headers: authenticatedHeaders,
+      body: JSON.stringify({
+        schoolSubjectColors: {
+          '  Mathe  ': '#3d7ea6',
+          Englisch: '#786da6',
+          Ungueltig: '#ffffff'
+        }
+      })
+    }
+  );
+  assert.deepEqual(schoolSubjectColors.body.record.schoolSubjectColors, {
+    mathe: '#3d7ea6',
+    englisch: '#786da6'
+  });
   const poll = await request(
     '/api/resources/familyPolls',
     {

@@ -48,6 +48,7 @@ import {
 import { releaseNotesForVersion } from '../shared/releaseNotes.js';
 import { PRODUCT_NAME } from '../shared/brand.js';
 import { shoppingItemIcon } from '../shared/shoppingItemIcons.js';
+import { normalizeSchoolSubjectColors } from '../shared/schoolSubjectColors.js';
 import { loadBringCatalog } from './bringCatalog.js';
 import {
   calDavRequest,
@@ -4775,6 +4776,11 @@ function sanitizeFamilyLifeRecord(req, type, value, existing = null) {
       schoolEnabled: Object.hasOwn(input, 'schoolEnabled')
         ? Boolean(input.schoolEnabled)
         : existing?.schoolEnabled,
+      schoolSubjectColors: normalizeSchoolSubjectColors(
+        Object.hasOwn(input, 'schoolSubjectColors')
+          ? input.schoolSubjectColors
+          : existing?.schoolSubjectColors
+      ),
       updatedAt: now
     };
   }

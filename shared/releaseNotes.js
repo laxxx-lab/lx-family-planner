@@ -1,4 +1,51 @@
 const RELEASE_NOTES = {
+  '1.21.0': {
+    version: '1.21.0',
+    eyebrow: 'Mehr Überblick im Stundenplan',
+    title: 'Fächer sind jetzt sofort besser erkennbar',
+    intro:
+      'Jedes Fach kann seine eigene Farbe behalten – sichtbar genug für den schnellen Blick, aber weiterhin angenehm ruhig.',
+    highlights: [
+      {
+        id: 'timetable-subject-colours',
+        title: 'Eine Farbe pro Fach',
+        description:
+          'Eine ausgewählte Fachfarbe gilt im Stundenplan eines Kindes für alle Stunden dieses Fachs. Die Palette bietet sechzehn abgestimmte Farben.'
+      },
+      {
+        id: 'timetable-colour-visibility',
+        title: 'Klarer sehen, ohne bunte Blöcke',
+        description:
+          'Farbstreifen, passender Rahmen und eine leichte Tönung machen Fächer schneller unterscheidbar. Der Plan bleibt dabei gut lesbar.'
+      }
+    ],
+    closing:
+      'Bestehende Stunden, Fachfarben, Termine und Kinderprofile bleiben unverändert erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'A clearer timetable at a glance',
+        title: 'Subjects are now much easier to recognise',
+        intro:
+          'Each subject can keep its own colour – visible enough for a quick glance while the timetable stays calm.',
+        highlights: [
+          {
+            id: 'timetable-subject-colours',
+            title: 'One colour per subject',
+            description:
+              'A chosen subject colour applies to every lesson of that subject in a child’s timetable. The palette offers sixteen curated choices.'
+          },
+          {
+            id: 'timetable-colour-visibility',
+            title: 'Clearer, without colour blocks',
+            description:
+              'A colour edge, matching outline and light tint make subjects faster to distinguish while the timetable remains easy to read.'
+          }
+        ],
+        closing:
+          'Existing lessons, subject colours, events and child profiles remain unchanged.'
+      }
+    }
+  },
   '1.20.3': {
     version: '1.20.3',
     eyebrow: 'Kleiner Einkaufs-Hotfix',

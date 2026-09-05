@@ -141,7 +141,7 @@
       "bag": "Tascontrole"
     },
     "colors": {
-      "ocean": "Oceaanblauw", "meadow": "Weidegroen", "ochre": "Oker", "terracotta": "Terracotta", "indigo": "Indigo", "berry": "Bes", "slate": "Leigrijs"
+      "ocean": "Oceaanblauw", "meadow": "Weidegroen", "ochre": "Oker", "terracotta": "Terracotta", "indigo": "Indigo", "berry": "Bes", "slate": "Leigrijs", "sky": "Hemelsblauw", "jade": "Jade", "fern": "Varengroen", "amber": "Amber", "coral": "Koraal", "rose": "Roze", "lilac": "Lila", "steel": "Staalblauw", "cocoa": "Cacao"
     },
     "deleteAria": "Schoolitem verwijderen",
     "emptyKind": "Nog niets ingevuld.",
