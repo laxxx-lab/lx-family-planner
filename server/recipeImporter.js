@@ -1,7 +1,10 @@
-import { promises as dns } from 'node:dns';
 import { isIP } from 'node:net';
 import * as cheerio from 'cheerio';
 import { parseInstructionSteps } from '../shared/recipeInstructions.js';
+import {
+  closePinnedResponse,
+  fetchPinned
+} from './pinnedFetch.js';
 
 const RECIPE_FETCH_TIMEOUT_MS = 12_000;
 const RECIPE_MAX_BYTES = 3 * 1024 * 1024;
@@ -306,23 +309,29 @@ export function normalizeRecipeImportUrl(value) {
   return url;
 }
 
-async function validatePublicTarget(url) {
-  let addresses;
+async function fetchPublicTarget(url, options) {
   try {
-    addresses = isIP(url.hostname)
-      ? [{ address: url.hostname }]
-      : await dns.lookup(url.hostname, { all: true, verbatim: true });
-  } catch {
-    throw recipeError('Die Rezeptseite konnte nicht gefunden werden.', 400);
+    return await fetchPinned(url, options, { isBlocked: blockedPublicAddress });
+  } catch (error) {
+    if (error?.code === 'PINNED_TARGET_NOT_FOUND') {
+      throw recipeError('Die Rezeptseite konnte nicht gefunden werden.', 400);
+    }
+    if (error?.code === 'PINNED_TARGET_BLOCKED') {
+      throw recipeError(
+        'Lokale und private Netzwerkadressen sind beim Rezeptimport nicht erlaubt.',
+        400
+      );
+    }
+    throw error;
   }
-  if (
-    !addresses.length ||
-    addresses.some(entry => blockedPublicAddress(entry.address))
-  ) {
-    throw recipeError(
-      'Lokale und private Netzwerkadressen sind beim Rezeptimport nicht erlaubt.',
-      400
-    );
+}
+
+async function fetchRecipeResponse(url, options, unavailableMessage) {
+  try {
+    return await fetchPublicTarget(url, options);
+  } catch (error) {
+    if (error?.statusCode) throw error;
+    throw recipeError(unavailableMessage, 502);
   }
 }
 
@@ -373,46 +382,45 @@ async function readLimitedBytes(response, limit) {
 async function fetchRecipePage(rawUrl) {
   let url = normalizeRecipeImportUrl(rawUrl);
   for (let redirect = 0; redirect <= 3; redirect += 1) {
-    await validatePublicTarget(url);
-    let response;
-    try {
-      response = await fetch(url, {
-        redirect: 'manual',
-        signal: AbortSignal.timeout(RECIPE_FETCH_TIMEOUT_MS),
-        headers: {
-          accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.2',
-          'accept-language': 'de-DE,de;q=0.9,en;q=0.6',
-          'user-agent':
-            'Mozilla/5.0 (compatible; LX-Family-Planner/2.0; +private-recipe-import)'
-        }
-      });
-    } catch {
-      throw recipeError('Die Rezeptseite antwortet gerade nicht.', 502);
-    }
-    if ([301, 302, 303, 307, 308].includes(response.status)) {
-      const location = response.headers.get('location');
-      if (!location || redirect === 3) {
-        throw recipeError('Der Rezept-Link leitet zu oft weiter.', 502);
+    const request = await fetchRecipeResponse(url, {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(RECIPE_FETCH_TIMEOUT_MS),
+      headers: {
+        accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.2',
+        'accept-language': 'de-DE,de;q=0.9,en;q=0.6',
+        'user-agent':
+          'Mozilla/5.0 (compatible; LX-Family-Planner/2.0; +private-recipe-import)'
       }
-      url = normalizeRecipeImportUrl(new URL(location, url).toString());
-      continue;
+    }, 'Die Rezeptseite antwortet gerade nicht.');
+    try {
+      const response = request.response;
+      if ([301, 302, 303, 307, 308].includes(response.status)) {
+        const location = response.headers.get('location');
+        if (!location || redirect === 3) {
+          throw recipeError('Der Rezept-Link leitet zu oft weiter.', 502);
+        }
+        url = normalizeRecipeImportUrl(new URL(location, url).toString());
+        continue;
+      }
+      if (!response.ok) {
+        throw recipeError(
+          response.status === 401 || response.status === 403
+            ? 'Die Rezeptseite blockiert den automatischen Import.'
+            : `Die Rezeptseite meldet Fehler ${response.status}.`,
+          502
+        );
+      }
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType && !/html|xhtml/i.test(contentType)) {
+        throw recipeError('Unter diesem Link wurde keine Rezeptseite gefunden.');
+      }
+      return {
+        html: await readLimitedHtml(response),
+        url
+      };
+    } finally {
+      await closePinnedResponse(request);
     }
-    if (!response.ok) {
-      throw recipeError(
-        response.status === 401 || response.status === 403
-          ? 'Die Rezeptseite blockiert den automatischen Import.'
-          : `Die Rezeptseite meldet Fehler ${response.status}.`,
-        502
-      );
-    }
-    const contentType = response.headers.get('content-type') || '';
-    if (contentType && !/html|xhtml/i.test(contentType)) {
-      throw recipeError('Unter diesem Link wurde keine Rezeptseite gefunden.');
-    }
-    return {
-      html: await readLimitedHtml(response),
-      url
-    };
   }
   throw recipeError('Die Rezeptseite konnte nicht geladen werden.', 502);
 }
@@ -420,42 +428,41 @@ async function fetchRecipePage(rawUrl) {
 async function fetchRecipeImage(rawUrl) {
   let url = normalizeRecipeImportUrl(rawUrl);
   for (let redirect = 0; redirect <= 3; redirect += 1) {
-    await validatePublicTarget(url);
-    let response;
-    try {
-      response = await fetch(url, {
-        redirect: 'manual',
-        signal: AbortSignal.timeout(RECIPE_FETCH_TIMEOUT_MS),
-        headers: {
-          accept: 'image/avif,image/webp,image/png,image/jpeg,image/gif;q=0.9',
-          'user-agent':
-            'Mozilla/5.0 (compatible; LX-Family-Planner/2.0; +private-recipe-import)'
-        }
-      });
-    } catch {
-      throw recipeError('Das Rezeptbild antwortet gerade nicht.', 502);
-    }
-    if ([301, 302, 303, 307, 308].includes(response.status)) {
-      const location = response.headers.get('location');
-      if (!location || redirect === 3) {
-        throw recipeError('Das Rezeptbild leitet zu oft weiter.', 502);
+    const request = await fetchRecipeResponse(url, {
+      redirect: 'manual',
+      signal: AbortSignal.timeout(RECIPE_FETCH_TIMEOUT_MS),
+      headers: {
+        accept: 'image/avif,image/webp,image/png,image/jpeg,image/gif;q=0.9',
+        'user-agent':
+          'Mozilla/5.0 (compatible; LX-Family-Planner/2.0; +private-recipe-import)'
       }
-      url = normalizeRecipeImportUrl(new URL(location, url).toString());
-      continue;
+    }, 'Das Rezeptbild antwortet gerade nicht.');
+    try {
+      const response = request.response;
+      if ([301, 302, 303, 307, 308].includes(response.status)) {
+        const location = response.headers.get('location');
+        if (!location || redirect === 3) {
+          throw recipeError('Das Rezeptbild leitet zu oft weiter.', 502);
+        }
+        url = normalizeRecipeImportUrl(new URL(location, url).toString());
+        continue;
+      }
+      if (!response.ok) {
+        throw recipeError(`Das Rezeptbild meldet Fehler ${response.status}.`, 502);
+      }
+      const contentType = String(response.headers.get('content-type') || '')
+        .split(';')[0]
+        .trim()
+        .toLowerCase();
+      if (!RECIPE_IMAGE_TYPES.has(contentType)) {
+        throw recipeError('Die Vorschau ist keine unterstützte Bilddatei.', 422);
+      }
+      const bytes = await readLimitedBytes(response, RECIPE_IMAGE_MAX_BYTES);
+      if (!bytes.length) return '';
+      return `data:${contentType};base64,${bytes.toString('base64')}`;
+    } finally {
+      await closePinnedResponse(request);
     }
-    if (!response.ok) {
-      throw recipeError(`Das Rezeptbild meldet Fehler ${response.status}.`, 502);
-    }
-    const contentType = String(response.headers.get('content-type') || '')
-      .split(';')[0]
-      .trim()
-      .toLowerCase();
-    if (!RECIPE_IMAGE_TYPES.has(contentType)) {
-      throw recipeError('Die Vorschau ist keine unterstützte Bilddatei.', 422);
-    }
-    const bytes = await readLimitedBytes(response, RECIPE_IMAGE_MAX_BYTES);
-    if (!bytes.length) return '';
-    return `data:${contentType};base64,${bytes.toString('base64')}`;
   }
   return '';
 }
@@ -543,7 +550,13 @@ function resolveExternalUrl(value, baseUrl) {
   try {
     const resolved = new URL(candidate, baseUrl);
     if (!['http:', 'https:'].includes(resolved.protocol)) return '';
-    if (resolved.protocol === 'http:') resolved.protocol = 'https:';
+    const keepTestLoopbackHttp = process.env.NODE_ENV === 'test'
+      && process.env.RECIPE_ALLOW_LOOPBACK_FOR_TESTS === 'true'
+      && resolved.protocol === 'http:'
+      && ['127.0.0.1', '::1', 'localhost'].includes(resolved.hostname);
+    if (resolved.protocol === 'http:' && !keepTestLoopbackHttp) {
+      resolved.protocol = 'https:';
+    }
     return resolved.href;
   } catch {
     return '';

@@ -1,5 +1,4 @@
 import { createHash, randomUUID } from 'crypto';
-import { promises as dns } from 'dns';
 import { isIP } from 'net';
 import { XMLParser } from 'fast-xml-parser';
 import { parseICalendar } from '../shared/icsCalendar.js';
@@ -16,6 +15,11 @@ import {
   saveIntegrationSyncItem,
   upsertRecord
 } from './database.js';
+import {
+  closePinnedResponse,
+  fetchPinnedTarget,
+  resolvePinnedTarget
+} from './pinnedFetch.js';
 
 const PROVIDER = 'nextcloud';
 const REQUEST_TIMEOUT_MS = 15_000;
@@ -151,19 +155,19 @@ function blockedAddress(address) {
 }
 
 async function validateTarget(url) {
-  let addresses;
   try {
-    addresses = isIP(url.hostname)
-      ? [{ address: url.hostname }]
-      : await dns.lookup(url.hostname, { all: true, verbatim: true });
-  } catch {
-    throw httpError('Der Nextcloud-Server konnte nicht gefunden werden.', 400);
-  }
-  if (!addresses.length || addresses.some(entry => blockedAddress(entry.address))) {
-    throw httpError(
-      'Diese Nextcloud-Adresse zeigt auf eine gesperrte Geräteadresse.',
-      400
-    );
+    return await resolvePinnedTarget(url, { isBlocked: blockedAddress });
+  } catch (error) {
+    if (error?.code === 'PINNED_TARGET_BLOCKED') {
+      throw httpError(
+        'Diese Nextcloud-Adresse zeigt auf eine gesperrte Geräteadresse.',
+        400
+      );
+    }
+    if (error?.code === 'PINNED_TARGET_NOT_FOUND') {
+      throw httpError('Der Nextcloud-Server konnte nicht gefunden werden.', 400);
+    }
+    throw error;
   }
 }
 
@@ -232,10 +236,10 @@ export async function nextcloudRequest(
   const url = remoteHref
     ? buildRemoteUrl(connection.baseUrl, pathname)
     : buildApiUrl(connection.baseUrl, pathname);
-  await validateTarget(url);
-  let response;
+  const target = await validateTarget(url);
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method,
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -256,20 +260,25 @@ export async function nextcloudRequest(
       'Nextcloud ist unter dieser Adresse gerade nicht erreichbar.'
     );
   }
-  const text = response.status === 204 ? '' : await readLimitedText(response);
-  if (!expectedStatuses.includes(response.status)) {
-    const message =
-      response.status === 401 || response.status === 403
-        ? 'Nextcloud hat Benutzername oder App-Passwort abgelehnt.'
-        : response.status === 404
-          ? 'Die angeforderte Nextcloud-Funktion wurde nicht gefunden.'
-          : `Nextcloud meldet Fehler ${response.status}.`;
-    const error = httpError(message, response.status === 401 ? 401 : 502);
-    error.remoteStatus = response.status;
-    error.responseText = text.slice(0, 1000);
-    throw error;
+  try {
+    const response = request.response;
+    const text = response.status === 204 ? '' : await readLimitedText(response);
+    if (!expectedStatuses.includes(response.status)) {
+      const message =
+        response.status === 401 || response.status === 403
+          ? 'Nextcloud hat Benutzername oder App-Passwort abgelehnt.'
+          : response.status === 404
+            ? 'Die angeforderte Nextcloud-Funktion wurde nicht gefunden.'
+            : `Nextcloud meldet Fehler ${response.status}.`;
+      const error = httpError(message, response.status === 401 ? 401 : 502);
+      error.remoteStatus = response.status;
+      error.responseText = text.slice(0, 1000);
+      throw error;
+    }
+    return { response, text, url };
+  } finally {
+    await closePinnedResponse(request);
   }
-  return { response, text, url };
 }
 
 function propFromResponse(response) {
@@ -886,10 +895,10 @@ export async function downloadNextcloudFile(
     connection.baseUrl,
     encodedFilePath(userId, folder, targetPath)
   );
-  await validateTarget(url);
-  let response;
+  const target = await validateTarget(url);
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method: 'GET',
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -904,27 +913,32 @@ export async function downloadNextcloudFile(
   } catch {
     throw httpError('Die Datei konnte gerade nicht aus Nextcloud geladen werden.');
   }
-  if (!response.ok) {
-    throw httpError(
-      response.status === 404
-        ? 'Die Datei wurde nicht gefunden.'
-        : `Nextcloud meldet Fehler ${response.status}.`,
-      response.status === 404 ? 404 : 502
-    );
+  try {
+    const response = request.response;
+    if (!response.ok) {
+      throw httpError(
+        response.status === 404
+          ? 'Die Datei wurde nicht gefunden.'
+          : `Nextcloud meldet Fehler ${response.status}.`,
+        response.status === 404 ? 404 : 502
+      );
+    }
+    return {
+      content: await readLimitedBuffer(response),
+      contentType: clean(
+        response.headers.get('content-type'),
+        'application/octet-stream',
+        200
+      ),
+      etag: clean(response.headers.get('etag'), '', 300),
+      fileName: cleanCloudEntryName(
+        targetPath.split('/').pop(),
+        'download'
+      )
+    };
+  } finally {
+    await closePinnedResponse(request);
   }
-  return {
-    content: await readLimitedBuffer(response),
-    contentType: clean(
-      response.headers.get('content-type'),
-      'application/octet-stream',
-      200
-    ),
-    etag: clean(response.headers.get('etag'), '', 300),
-    fileName: cleanCloudEntryName(
-      targetPath.split('/').pop(),
-      'download'
-    )
-  };
 }
 
 function unfoldIcs(value = '') {

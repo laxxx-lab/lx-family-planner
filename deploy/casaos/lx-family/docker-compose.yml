@@ -2,7 +2,7 @@ name: lx-family
 
 services:
   lx-family:
-    image: ghcr.io/laxxx-lab/lx-family-planner:1.21.0
+    image: ghcr.io/laxxx-lab/lx-family-planner:1.21.1
     container_name: lx-family
     restart: unless-stopped
     environment:
@@ -103,11 +103,11 @@ x-casaos:
   architectures:
     - amd64
     - arm64
-  version: "1.21.0"
-  update_at: "2026-09-05"
+  version: "1.21.1"
+  update_at: "2026-09-06"
   release_notes:
-    en_US: Gives every school subject a clear, calm colour treatment with sixteen curated choices.
-    de_DE: Gibt jedem Schulfach eine klare, ruhige Farbkennzeichnung mit sechzehn abgestimmten Farben.
+    en_US: Hardens recipe imports and calendar or cloud connections against DNS rebinding.
+    de_DE: Härtet Rezeptimporte sowie Kalender- und Cloud-Verbindungen gegen DNS-Rebinding.
   website: https://github.com/laxxx-lab/lx-family-planner
   repo: https://github.com/laxxx-lab/lx-family-planner
   support: https://github.com/laxxx-lab/lx-family-planner/issues

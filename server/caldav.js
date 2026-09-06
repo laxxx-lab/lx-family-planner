@@ -1,4 +1,3 @@
-import { promises as dns } from 'dns';
 import { isIP } from 'net';
 import { spawn } from 'node:child_process';
 import { unlink, writeFile } from 'node:fs/promises';
@@ -7,6 +6,12 @@ import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { XMLParser } from 'fast-xml-parser';
 import { parseICalendar } from '../shared/icsCalendar.js';
+import {
+  closePinnedResponse,
+  curlResolveArgument,
+  fetchPinnedTarget,
+  resolvePinnedTarget
+} from './pinnedFetch.js';
 
 const REQUEST_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 4 * 1024 * 1024;
@@ -93,26 +98,38 @@ function privateLanAddress(address) {
 }
 
 async function validateTarget(url) {
-  let addresses;
   try {
-    addresses = isIP(url.hostname)
-      ? [{ address: url.hostname }]
-      : await dns.lookup(url.hostname, { all: true, verbatim: true });
-  } catch {
-    throw failure('Der CalDAV-Server konnte nicht gefunden werden.', 400);
+    const target = await resolvePinnedTarget(url, { isBlocked: privateAddress });
+    if (url.protocol === 'http:' && process.env.NODE_ENV !== 'test'
+      && (!insecureLocalHttpAllowed() || !target.addresses.every(entry => privateLanAddress(entry.address)))) {
+      throw failure('Unverschlüsseltes CalDAV ist nur für eine bewusst freigegebene private LAN-Adresse erlaubt.', 400);
+    }
+    return target;
+  } catch (error) {
+    if (error?.statusCode) throw error;
+    if (error?.code === 'PINNED_TARGET_BLOCKED') {
+      throw failure(
+        process.env.CALENDAR_ALLOW_PRIVATE_HOSTS === 'true'
+          ? 'Die CalDAV-Adresse zeigt auf eine gesperrte Geräteadresse.'
+          : 'Lokale CalDAV-Adressen sind aus Sicherheitsgründen gesperrt. Für einen bewusst lokal betriebenen Kalender kann CALENDAR_ALLOW_PRIVATE_HOSTS=true gesetzt werden.',
+        400
+      );
+    }
+    if (error?.code === 'PINNED_TARGET_NOT_FOUND') {
+      throw failure('Der CalDAV-Server konnte nicht gefunden werden.', 400);
+    }
+    throw error;
   }
-  if (!addresses.length || addresses.some(entry => privateAddress(entry.address))) {
+}
+
+function requirePinnedTarget(target) {
+  if (!target?.address) {
     throw failure(
-      process.env.CALENDAR_ALLOW_PRIVATE_HOSTS === 'true'
-        ? 'Die CalDAV-Adresse zeigt auf eine gesperrte Geräteadresse.'
-        : 'Lokale CalDAV-Adressen sind aus Sicherheitsgründen gesperrt. Für einen bewusst lokal betriebenen Kalender kann CALENDAR_ALLOW_PRIVATE_HOSTS=true gesetzt werden.',
-      400
+      'Die CalDAV-Adresse konnte nicht sicher aufgelöst werden.',
+      502
     );
   }
-  if (url.protocol === 'http:' && process.env.NODE_ENV !== 'test'
-    && (!insecureLocalHttpAllowed() || !addresses.every(entry => privateLanAddress(entry.address)))) {
-    throw failure('Unverschlüsseltes CalDAV ist nur für eine bewusst freigegebene private LAN-Adresse erlaubt.', 400);
-  }
+  return target;
 }
 
 async function readText(response) {
@@ -177,8 +194,9 @@ async function synologyCurlDavRequest(
   url,
   username,
   password,
-  { method = 'REPORT', depth = '1', body = '' } = {}
+  { method = 'REPORT', depth = '1', body = '', target } = {}
 ) {
+  const pinnedTarget = target || await validateTarget(url);
   const bodyFile = join(tmpdir(), `lx-caldav-${randomUUID()}.xml`);
   if (body) {
     await writeFile(bodyFile, body, { encoding: 'utf8', mode: 0o600 });
@@ -192,6 +210,8 @@ async function synologyCurlDavRequest(
         '--max-time', String(Math.ceil(REQUEST_TIMEOUT_MS / 1000)),
         '--max-redirs', '0',
         '--proto', '=http,https',
+        '--noproxy', '*',
+        '--resolve', curlResolveArgument(requirePinnedTarget(pinnedTarget)),
         '--header', `Depth: ${depth}`,
         '--header', 'Accept: application/xml, text/xml;q=0.9',
         '--header', 'Content-Type: application/xml; charset=utf-8',
@@ -277,14 +297,15 @@ export function synologyCalendarUrlsFromMultistatus(xml, baseUrl) {
   return [...new Map(urls.map(url => [url.toString(), url])).values()];
 }
 
-async function discoverSynologyCalendars(baseUrl, username, password) {
+async function discoverSynologyCalendars(baseUrl, username, password, target) {
   const homeUrl = new URL(baseUrl.toString());
   homeUrl.pathname = `/caldav.php/${encodeURIComponent(username)}/`;
   homeUrl.search = '';
   const response = await synologyCurlDavRequest(homeUrl, username, password, {
     method: 'PROPFIND',
     depth: '1',
-    body: calendarDiscoveryBody()
+    body: calendarDiscoveryBody(),
+    target
   });
   if (!successfulDavStatus(response.status)) throw synologyStatusFailure(response.status);
   const urls = synologyCalendarUrlsFromMultistatus(response.body, homeUrl);
@@ -294,8 +315,8 @@ async function discoverSynologyCalendars(baseUrl, username, password) {
   return urls;
 }
 
-async function fetchSynologyCalendarDocuments(url, username, password, body) {
-  const response = await synologyCurlDavRequest(url, username, password, { body });
+async function fetchSynologyCalendarDocuments(url, username, password, body, target) {
+  const response = await synologyCurlDavRequest(url, username, password, { body, target });
   if (!successfulDavStatus(response.status)) throw synologyStatusFailure(response.status);
   return calendarDataFromMultistatus(response.body, { allowEmpty: true });
 }
@@ -324,15 +345,15 @@ export async function calDavRequest(
   if (url.origin !== baseUrl.origin) {
     throw failure('CalDAV-Verweise dürfen den verbundenen Server nicht verlassen.', 400);
   }
-  await validateTarget(url);
+  const target = await validateTarget(url);
   const user = String(connection.username || '').trim();
   const secret = String(connection.password || '');
   if (!user || !secret) {
     throw failure('Für CalDAV werden Benutzername und App-Passwort benötigt.', 400);
   }
-  let response;
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method,
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -346,42 +367,48 @@ export async function calDavRequest(
   } catch (error) {
     throw failure(calDavFetchErrorMessage(error));
   }
-  let text = response.status === 204 ? '' : await readText(response);
-  if (
-    method === 'REPORT' &&
-    shouldUseSynologyCurlFallback(url, response.status, text)
-  ) {
-    const fallback = await synologyCurlDavRequest(url, user, secret, {
-      method,
-      depth: headers.Depth || headers.depth || '1',
-      body
-    });
-    response = {
-      status: fallback.status,
-      headers: new Headers()
-    };
-    text = fallback.body;
+  try {
+    let response = request.response;
+    let text = response.status === 204 ? '' : await readText(response);
+    if (
+      method === 'REPORT' &&
+      shouldUseSynologyCurlFallback(url, response.status, text)
+    ) {
+      const fallback = await synologyCurlDavRequest(url, user, secret, {
+        method,
+        depth: headers.Depth || headers.depth || '1',
+        body,
+        target
+      });
+      response = {
+        status: fallback.status,
+        headers: new Headers()
+      };
+      text = fallback.body;
+    }
+    if (!expectedStatuses.includes(response.status)) {
+      const message = response.status === 401 || response.status === 403
+        ? 'CalDAV hat Benutzername oder Passwort abgelehnt.'
+        : response.status === 404
+          ? 'Der CalDAV-Termin wurde nicht gefunden.'
+          : response.status === 412
+            ? 'Der CalDAV-Termin wurde gleichzeitig auf einem anderen Gerät geändert.'
+            : `Der CalDAV-Server antwortet mit HTTP ${response.status}.`;
+      const error = failure(
+        message,
+        response.status === 404
+          ? 404
+          : response.status === 412
+            ? 409
+            : 502
+      );
+      error.remoteStatus = response.status;
+      throw error;
+    }
+    return { response, text, url };
+  } finally {
+    await closePinnedResponse(request);
   }
-  if (!expectedStatuses.includes(response.status)) {
-    const message = response.status === 401 || response.status === 403
-      ? 'CalDAV hat Benutzername oder Passwort abgelehnt.'
-      : response.status === 404
-        ? 'Der CalDAV-Termin wurde nicht gefunden.'
-        : response.status === 412
-          ? 'Der CalDAV-Termin wurde gleichzeitig auf einem anderen Gerät geändert.'
-          : `Der CalDAV-Server antwortet mit HTTP ${response.status}.`;
-    const error = failure(
-      message,
-      response.status === 404
-        ? 404
-        : response.status === 412
-          ? 409
-          : 502
-    );
-    error.remoteStatus = response.status;
-    throw error;
-  }
-  return { response, text, url };
 }
 
 export function calDavFetchErrorMessage(error) {
@@ -436,12 +463,12 @@ export async function fetchCalDavEvents(
   if (!user || !secret) {
     throw failure('Für CalDAV werden Benutzername und App-Passwort benötigt.', 400);
   }
-  await validateTarget(url);
+  const target = await validateTarget(url);
   const body = calendarQueryBody();
   if (isSynologyCalDavBaseUrl(url, user)) {
     let calendarUrls;
     try {
-      calendarUrls = await discoverSynologyCalendars(url, user, secret);
+      calendarUrls = await discoverSynologyCalendars(url, user, secret, target);
     } catch (error) {
       if (error?.statusCode) throw error;
       throw failure(calDavFetchErrorMessage(error));
@@ -452,7 +479,13 @@ export async function fetchCalDavEvents(
     for (const calendarUrl of calendarUrls) {
       let documents;
       try {
-        documents = await fetchSynologyCalendarDocuments(calendarUrl, user, secret, body);
+        documents = await fetchSynologyCalendarDocuments(
+          calendarUrl,
+          user,
+          secret,
+          body,
+          target
+        );
       } catch (error) {
         firstCalendarError ||= error?.statusCode
           ? error
@@ -476,9 +509,9 @@ export async function fetchCalDavEvents(
     }
     return events.slice(0, maxEvents);
   }
-  let response;
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method: 'REPORT',
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -494,44 +527,52 @@ export async function fetchCalDavEvents(
   } catch (error) {
     throw failure(calDavFetchErrorMessage(error));
   }
-  if (![200, 207].includes(response.status)) {
-    const responseBody = await readText(response);
-    if (shouldUseSynologyCurlFallback(url, response.status, responseBody)) {
-      let fallback;
-      try {
-        fallback = await synologyCurlDavRequest(url, user, secret, { body });
-      } catch (error) {
-        throw failure(calDavFetchErrorMessage(error));
+  try {
+    const response = request.response;
+    if (![200, 207].includes(response.status)) {
+      const responseBody = await readText(response);
+      if (shouldUseSynologyCurlFallback(url, response.status, responseBody)) {
+        let fallback;
+        try {
+          fallback = await synologyCurlDavRequest(url, user, secret, {
+            body,
+            target
+          });
+        } catch (error) {
+          throw failure(calDavFetchErrorMessage(error));
+        }
+        if (!successfulDavStatus(fallback.status)) throw synologyStatusFailure(fallback.status);
+        const documents = calendarDataFromMultistatus(fallback.body);
+        const events = [];
+        for (const document of documents) {
+          events.push(...parseICalendar(document, {
+            targetTimeZone,
+            rangeStart,
+            rangeEnd,
+            maxEvents: Math.max(1, maxEvents - events.length)
+          }));
+          if (events.length >= maxEvents) break;
+        }
+        return events.slice(0, maxEvents);
       }
-      if (!successfulDavStatus(fallback.status)) throw synologyStatusFailure(fallback.status);
-      const documents = calendarDataFromMultistatus(fallback.body);
-      const events = [];
-      for (const document of documents) {
-        events.push(...parseICalendar(document, {
-          targetTimeZone,
-          rangeStart,
-          rangeEnd,
-          maxEvents: Math.max(1, maxEvents - events.length)
-        }));
-        if (events.length >= maxEvents) break;
-      }
-      return events.slice(0, maxEvents);
+      const message = response.status === 401 || response.status === 403
+        ? 'CalDAV hat Benutzername oder Passwort abgelehnt.'
+        : `Der CalDAV-Server antwortet mit HTTP ${response.status}.`;
+      throw failure(message);
     }
-    const message = response.status === 401 || response.status === 403
-      ? 'CalDAV hat Benutzername oder Passwort abgelehnt.'
-      : `Der CalDAV-Server antwortet mit HTTP ${response.status}.`;
-    throw failure(message);
+    const documents = calendarDataFromMultistatus(await readText(response));
+    const events = [];
+    for (const document of documents) {
+      events.push(...parseICalendar(document, {
+        targetTimeZone,
+        rangeStart,
+        rangeEnd,
+        maxEvents: Math.max(1, maxEvents - events.length)
+      }));
+      if (events.length >= maxEvents) break;
+    }
+    return events.slice(0, maxEvents);
+  } finally {
+    await closePinnedResponse(request);
   }
-  const documents = calendarDataFromMultistatus(await readText(response));
-  const events = [];
-  for (const document of documents) {
-    events.push(...parseICalendar(document, {
-      targetTimeZone,
-      rangeStart,
-      rangeEnd,
-      maxEvents: Math.max(1, maxEvents - events.length)
-    }));
-    if (events.length >= maxEvents) break;
-  }
-  return events.slice(0, maxEvents);
 }

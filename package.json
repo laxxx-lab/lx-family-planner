@@ -1,7 +1,7 @@
 {
   "name": "lx-family-planner",
   "private": true,
-  "version": "1.21.0",
+  "version": "1.21.1",
   "description": "LX Family is a private self-hosted Family OS with dedicated spaces for parents, children, grandparents and pets.",
   "homepage": "https://github.com/laxxx-lab/lx-family-planner",
   "repository": {
@@ -56,6 +56,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^17.0.11",
+    "undici": "^7.29.1",
     "web-push": "3.6.7"
   },
   "devDependencies": {
@@ -68,6 +69,7 @@
     "vite": "^8.1.5"
   },
   "overrides": {
-    "nanoid": "3.3.17"
+    "nanoid": "3.3.17",
+    "qs": "6.16.0"
   }
 }

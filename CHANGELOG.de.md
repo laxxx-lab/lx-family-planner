@@ -4,6 +4,21 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.21.1] – 2026-09-06
+
+### Sicherere externe Verbindungen
+
+- Rezeptimporte lösen einen externen Servernamen jetzt nur einmal auf, prüfen
+  alle erhaltenen Adressen und binden die Verbindung anschließend an die
+  geprüfte Adresse. Das schließt das Zeitfenster für DNS-Rebinding zwischen
+  Prüfung und Abruf.
+- Kalender-Feed-Importe, WebDAV, CalDAV und Nextcloud verwenden denselben
+  geschützten Verbindungsweg. Weiterleitungen werden vor dem Folgen erneut
+  geprüft.
+- Auch der Synology-Kompatibilitätsweg von CalDAV bindet seine cURL-Verbindung
+  nun fest. Bewusst aktivierte lokale Verbindungen bleiben weiterhin explizit
+  und unverändert.
+
 ## [1.21.0] – 2026-09-05
 
 ### Besser sichtbare Fächerfarben

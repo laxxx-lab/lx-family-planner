@@ -1,4 +1,51 @@
 const RELEASE_NOTES = {
+  '1.21.1': {
+    version: '1.21.1',
+    eyebrow: 'Sicherheitsupdate für externe Dienste',
+    title: 'Rezept, Kalender und Cloud sind jetzt besser geschützt',
+    intro:
+      'Externe Servernamen werden vor dem Verbinden geprüft und die Verbindung bleibt danach an die geprüfte Adresse gebunden.',
+    highlights: [
+      {
+        id: 'pinned-outbound-connections',
+        title: 'Geschützte externe Abrufe',
+        description:
+          'Rezeptseiten und Bilder werden nur noch über die zuvor geprüfte Serveradresse geladen. Weiterleitungen werden erneut geprüft.'
+      },
+      {
+        id: 'safer-cloud-and-calendar-sync',
+        title: 'Cloud und Kalender im gleichen Schutz',
+        description:
+          'Kalender-Feeds, WebDAV, CalDAV und Nextcloud nutzen nun denselben geschützten Verbindungsweg – auch bei Synology.'
+      }
+    ],
+    closing:
+      'Deine bestehenden Kalender, Cloud-Verbindungen, Familieninhalte und Einstellungen bleiben unverändert erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'Security update for external services',
+        title: 'Recipes, calendars and cloud connections are better protected',
+        intro:
+          'External server names are verified before connecting, and each connection stays bound to the verified address.',
+        highlights: [
+          {
+            id: 'pinned-outbound-connections',
+            title: 'Protected external downloads',
+            description:
+              'Recipe pages and images are only loaded through the previously verified server address. Redirects are checked again.'
+          },
+          {
+            id: 'safer-cloud-and-calendar-sync',
+            title: 'Cloud and calendars use the same protection',
+            description:
+              'Calendar feeds, WebDAV, CalDAV and Nextcloud now share the protected connection path, including Synology.'
+          }
+        ],
+        closing:
+          'Your existing calendars, cloud connections, family content and settings remain unchanged.'
+      }
+    }
+  },
   '1.21.0': {
     version: '1.21.0',
     eyebrow: 'Mehr Überblick im Stundenplan',

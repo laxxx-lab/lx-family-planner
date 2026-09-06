@@ -1,6 +1,10 @@
-import { promises as dns } from 'dns';
 import { isIP } from 'net';
 import { XMLParser } from 'fast-xml-parser';
+import {
+  closePinnedResponse,
+  fetchPinnedTarget,
+  resolvePinnedTarget
+} from './pinnedFetch.js';
 
 const REQUEST_TIMEOUT_MS = 15_000;
 const MAX_RESPONSE_BYTES = 8 * 1024 * 1024;
@@ -150,19 +154,19 @@ function blockedAddress(address) {
 }
 
 async function validateTarget(url) {
-  let addresses;
   try {
-    addresses = isIP(url.hostname)
-      ? [{ address: url.hostname }]
-      : await dns.lookup(url.hostname, { all: true, verbatim: true });
-  } catch {
-    throw httpError('Der WebDAV-Server konnte nicht gefunden werden.', 400);
-  }
-  if (!addresses.length || addresses.some(entry => blockedAddress(entry.address))) {
-    throw httpError(
-      'Diese WebDAV-Adresse zeigt auf eine gesperrte Geräteadresse.',
-      400
-    );
+    return await resolvePinnedTarget(url, { isBlocked: blockedAddress });
+  } catch (error) {
+    if (error?.code === 'PINNED_TARGET_BLOCKED') {
+      throw httpError(
+        'Diese WebDAV-Adresse zeigt auf eine gesperrte Geräteadresse.',
+        400
+      );
+    }
+    if (error?.code === 'PINNED_TARGET_NOT_FOUND') {
+      throw httpError('Der WebDAV-Server konnte nicht gefunden werden.', 400);
+    }
+    throw error;
   }
 }
 
@@ -198,10 +202,10 @@ async function webDavRequest(
   { method = 'GET', headers = {}, body, expectedStatuses = [200] } = {}
 ) {
   const url = buildWebDavUrl(connection.baseUrl, relativePath);
-  await validateTarget(url);
-  let response;
+  const target = await validateTarget(url);
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method,
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -219,31 +223,36 @@ async function webDavRequest(
     if (error?.statusCode) throw error;
     throw httpError('Der WebDAV-Server ist gerade nicht erreichbar.');
   }
-  const text = response.status === 204
-    ? ''
-    : (await readLimitedBuffer(response, MAX_RESPONSE_BYTES)).toString('utf8');
-  if (!expectedStatuses.includes(response.status)) {
-    const message =
-      response.status === 401 || response.status === 403
-        ? 'Der WebDAV-Server hat Benutzername oder Passwort abgelehnt.'
-        : response.status === 404
-          ? 'Der angeforderte WebDAV-Pfad wurde nicht gefunden.'
-          : response.status === 409
-            ? 'Der übergeordnete WebDAV-Ordner fehlt.'
-            : `Der WebDAV-Server meldet Fehler ${response.status}.`;
-    const error = httpError(
-      message,
-      response.status === 401 || response.status === 403
-        ? 401
-        : response.status === 404
-          ? 404
-          : 502
-    );
-    error.remoteStatus = response.status;
-    error.responseText = text.slice(0, 1000);
-    throw error;
+  try {
+    const response = request.response;
+    const text = response.status === 204
+      ? ''
+      : (await readLimitedBuffer(response, MAX_RESPONSE_BYTES)).toString('utf8');
+    if (!expectedStatuses.includes(response.status)) {
+      const message =
+        response.status === 401 || response.status === 403
+          ? 'Der WebDAV-Server hat Benutzername oder Passwort abgelehnt.'
+          : response.status === 404
+            ? 'Der angeforderte WebDAV-Pfad wurde nicht gefunden.'
+            : response.status === 409
+              ? 'Der übergeordnete WebDAV-Ordner fehlt.'
+              : `Der WebDAV-Server meldet Fehler ${response.status}.`;
+      const error = httpError(
+        message,
+        response.status === 401 || response.status === 403
+          ? 401
+          : response.status === 404
+            ? 404
+            : 502
+      );
+      error.remoteStatus = response.status;
+      error.responseText = text.slice(0, 1000);
+      throw error;
+    }
+    return { response, text, url };
+  } finally {
+    await closePinnedResponse(request);
   }
-  return { response, text, url };
 }
 
 function parseMultiStatus(text) {
@@ -443,10 +452,10 @@ export async function downloadWebDavFile(connection, relativePath) {
     throw httpError('Bitte wähle eine Datei aus.', 400);
   }
   const url = buildWebDavUrl(connection.baseUrl, targetPath);
-  await validateTarget(url);
-  let response;
+  const target = await validateTarget(url);
+  let request;
   try {
-    response = await fetch(url, {
+    request = await fetchPinnedTarget(target, {
       method: 'GET',
       redirect: 'error',
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
@@ -461,22 +470,27 @@ export async function downloadWebDavFile(connection, relativePath) {
   } catch {
     throw httpError('Die Datei konnte gerade nicht per WebDAV geladen werden.');
   }
-  if (!response.ok) {
-    throw httpError(
-      response.status === 404
-        ? 'Die Datei wurde nicht gefunden.'
-        : `Der WebDAV-Server meldet Fehler ${response.status}.`,
-      response.status === 404 ? 404 : 502
-    );
+  try {
+    const response = request.response;
+    if (!response.ok) {
+      throw httpError(
+        response.status === 404
+          ? 'Die Datei wurde nicht gefunden.'
+          : `Der WebDAV-Server meldet Fehler ${response.status}.`,
+        response.status === 404 ? 404 : 502
+      );
+    }
+    return {
+      content: await readLimitedBuffer(response, MAX_FILE_BYTES),
+      contentType: clean(
+        response.headers.get('content-type'),
+        'application/octet-stream',
+        200
+      ),
+      etag: clean(response.headers.get('etag'), '', 300),
+      fileName: cleanEntryName(targetPath.split('/').pop(), 'download')
+    };
+  } finally {
+    await closePinnedResponse(request);
   }
-  return {
-    content: await readLimitedBuffer(response, MAX_FILE_BYTES),
-    contentType: clean(
-      response.headers.get('content-type'),
-      'application/octet-stream',
-      200
-    ),
-    etag: clean(response.headers.get('etag'), '', 300),
-    fileName: cleanEntryName(targetPath.split('/').pop(), 'download')
-  };
 }

@@ -11,7 +11,6 @@ import {
   randomUUID,
   timingSafeEqual
 } from 'crypto';
-import { promises as dns } from 'dns';
 import { isIP } from 'net';
 import BringApi from 'bring-shopping';
 import webPush from 'web-push';
@@ -74,6 +73,11 @@ import {
   importRecipePreviewImage,
   importRecipeFromUrl
 } from './recipeImporter.js';
+import {
+  closePinnedResponse,
+  fetchPinnedTarget,
+  resolvePinnedTarget
+} from './pinnedFetch.js';
 import {
   resolveMediaPreview,
   safeCoverUrl
@@ -1178,25 +1182,17 @@ function blockedCalendarAddress(address) {
 }
 
 async function validateCalendarFeedTarget(url) {
-  let addresses;
   try {
-    addresses = isIP(url.hostname)
-      ? [{ address: url.hostname }]
-      : await dns.lookup(url.hostname, { all: true, verbatim: true });
-  } catch {
+    return await resolvePinnedTarget(url, {
+      isBlocked: blockedCalendarAddress
+    });
+  } catch (caught) {
     const error = new Error(translate('errors.calendarServerNotFound'));
-    error.statusCode = 400;
-    throw error;
-  }
-  if (
-    !addresses.length ||
-    addresses.some(entry => blockedCalendarAddress(entry.address))
-  ) {
-    const error = new Error(
-      CALENDAR_ALLOW_PRIVATE_HOSTS
+    if (caught?.code === 'PINNED_TARGET_BLOCKED') {
+      error.message = CALENDAR_ALLOW_PRIVATE_HOSTS
         ? translate('errors.calendarLocalAddressesBlocked')
-        : translate('errors.calendarPrivateAddressesBlocked')
-    );
+        : translate('errors.calendarPrivateAddressesBlocked');
+    }
     error.statusCode = 400;
     throw error;
   }
@@ -1231,10 +1227,10 @@ async function readLimitedCalendarBody(response) {
 async function fetchCalendarFeed(rawUrl) {
   let url = normalizeCalendarFeedUrl(rawUrl);
   for (let redirect = 0; redirect <= 3; redirect += 1) {
-    await validateCalendarFeedTarget(url);
-    let response;
+    const target = await validateCalendarFeedTarget(url);
+    let request;
     try {
-      response = await fetch(url, {
+      request = await fetchPinnedTarget(target, {
         redirect: 'manual',
         signal: AbortSignal.timeout(CALENDAR_FETCH_TIMEOUT_MS),
         headers: {
@@ -1247,32 +1243,37 @@ async function fetchCalendarFeed(rawUrl) {
       error.statusCode = 502;
       throw error;
     }
-    if ([301, 302, 303, 307, 308].includes(response.status)) {
-      const location = response.headers.get('location');
-      if (!location || redirect === 3) {
-        const error = new Error(translate('errors.calendarTooManyRedirects'));
+    try {
+      const response = request.response;
+      if ([301, 302, 303, 307, 308].includes(response.status)) {
+        const location = response.headers.get('location');
+        if (!location || redirect === 3) {
+          const error = new Error(translate('errors.calendarTooManyRedirects'));
+          error.statusCode = 502;
+          throw error;
+        }
+        url = normalizeCalendarFeedUrl(new URL(location, url).toString());
+        continue;
+      }
+      if (!response.ok) {
+        const error = new Error(
+          response.status === 401 || response.status === 403
+            ? translate('errors.calendarLinkNotPublic')
+            : translate('errors.calendarServerError', { status: response.status })
+        );
         error.statusCode = 502;
         throw error;
       }
-      url = normalizeCalendarFeedUrl(new URL(location, url).toString());
-      continue;
+      const content = await readLimitedCalendarBody(response);
+      if (!/BEGIN:VCALENDAR/i.test(content)) {
+        const error = new Error(translate('errors.calendarNoIcs'));
+        error.statusCode = 422;
+        throw error;
+      }
+      return content;
+    } finally {
+      await closePinnedResponse(request);
     }
-    if (!response.ok) {
-      const error = new Error(
-        response.status === 401 || response.status === 403
-          ? translate('errors.calendarLinkNotPublic')
-          : translate('errors.calendarServerError', { status: response.status })
-      );
-      error.statusCode = 502;
-      throw error;
-    }
-    const content = await readLimitedCalendarBody(response);
-    if (!/BEGIN:VCALENDAR/i.test(content)) {
-      const error = new Error(translate('errors.calendarNoIcs'));
-      error.statusCode = 422;
-      throw error;
-    }
-    return content;
   }
   throw new Error(translate('errors.calendarLoadFailed'));
 }

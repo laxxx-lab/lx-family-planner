@@ -6,6 +6,18 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.21.1] — 2026-09-06
+
+### Safer external connections
+
+- Recipe imports now resolve an external host once, verify every returned
+  address and keep the connection pinned to that approved address. This closes
+  the DNS-rebinding window between validation and download.
+- Calendar-feed imports, WebDAV, CalDAV and Nextcloud use the same protected
+  connection path. Redirects are checked again before they are followed.
+- The Synology CalDAV compatibility fallback now pins its cURL connection too.
+  Existing local-network opt-ins remain explicit and unchanged.
+
 ## [1.21.0] — 2026-09-05
 
 ### Subject colours that are easier to see

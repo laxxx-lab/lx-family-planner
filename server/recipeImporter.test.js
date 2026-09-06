@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
 import test from 'node:test';
 import {
   extractFacebookRecipeDraft,
@@ -245,34 +246,29 @@ test('shared Facebook captions create drafts without downloading the Reel', asyn
   assert.equal(result.recipe.instructions.length, 2);
 });
 
-test('missing RTK images can be stored permanently from public page metadata', async context => {
+test('missing RTK images can be stored permanently from public page metadata', async () => {
   const png = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
-  context.mock.method(globalThis, 'fetch', async input => {
-    const url = String(input);
-    if (url.endsWith('/cover.png')) {
-      return new Response(png, {
-        status: 200,
-        headers: {
-          'content-type': 'image/png',
-          'content-length': String(png.length)
-        }
+  const server = createServer((request, response) => {
+    if (request.url === '/cover.png') {
+      response.writeHead(200, {
+        'content-type': 'image/png',
+        'content-length': String(png.length)
       });
+      response.end(png);
+      return;
     }
-    return new Response(
-      '<meta property="og:image" content="/cover.png">',
-      {
-        status: 200,
-        headers: { 'content-type': 'text/html; charset=utf-8' }
-      }
-    );
+    response.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+    response.end('<meta property="og:image" content="/cover.png">');
   });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const { port } = server.address();
   const previousNodeEnv = process.env.NODE_ENV;
   const previousLoopback = process.env.RECIPE_ALLOW_LOOPBACK_FOR_TESTS;
   process.env.NODE_ENV = 'test';
   process.env.RECIPE_ALLOW_LOOPBACK_FOR_TESTS = 'true';
   try {
     const result = await importRecipePreviewImage(
-      'https://127.0.0.1/recipe'
+      `http://127.0.0.1:${port}/recipe`
     );
     assert.match(result.image, /^data:image\/png;base64,/);
     assert.equal(
@@ -287,5 +283,6 @@ test('missing RTK images can be stored permanently from public page metadata', a
     } else {
       process.env.RECIPE_ALLOW_LOOPBACK_FOR_TESTS = previousLoopback;
     }
+    await new Promise(resolve => server.close(resolve));
   }
 });
