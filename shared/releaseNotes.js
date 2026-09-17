@@ -1,4 +1,63 @@
 const RELEASE_NOTES = {
+  '1.21.2': {
+    version: '1.21.2',
+    eyebrow: 'Ruhiger planen, leichter bedienen',
+    title: 'Essensplan und mobile Eingaben bleiben im richtigen Takt',
+    intro:
+      'Der Essensplan unterscheidet jetzt Wochen zuverlässig, während mobile Eingaben auch mit geöffneter Tastatur erreichbar bleiben.',
+    highlights: [
+      {
+        id: 'ios-dialog-viewport',
+        title: 'Eingaben bleiben auf dem iPhone erreichbar',
+        description:
+          'Schnell hinzufügen und Familie verwalten richten sich am sichtbaren Bereich aus. Die Tastatur verschiebt nicht mehr die Seite im Hintergrund.'
+      },
+      {
+        id: 'weekly-meal-plans',
+        title: 'Ein Essensplan pro Woche',
+        description:
+          'Vor- und zurückblättern trennt Gerichte sauber nach Kalenderwoche. Bestehende Einträge bleiben in der aktuellen Woche sichtbar.'
+      },
+      {
+        id: 'bring-background-sync',
+        title: 'Bring! bleibt im Hintergrund aktuell',
+        description:
+          'Verbundene Listen werden regelmäßig und fehlertolerant abgeglichen. Stundenplan-Farben sind außerdem auf einen Blick deutlicher.'
+      }
+    ],
+    closing:
+      'Bestehende Familieninhalte, Bring!-Verbindungen, Essenspläne und Einstellungen bleiben erhalten.',
+    localizations: {
+      en: {
+        eyebrow: 'Calmer planning, easier input',
+        title: 'Meal plans and mobile input stay in step',
+        intro:
+          'Meal plans now distinguish weeks reliably, while mobile forms remain reachable with the keyboard open.',
+        highlights: [
+          {
+            id: 'ios-dialog-viewport',
+            title: 'Forms stay reachable on iPhone',
+            description:
+              'Quick Add and family settings follow the visible viewport, so the keyboard no longer shifts the page behind them.'
+          },
+          {
+            id: 'weekly-meal-plans',
+            title: 'One meal plan per week',
+            description:
+              'Moving back and forward keeps dishes separated by calendar week. Existing entries remain visible in the current week.'
+          },
+          {
+            id: 'bring-background-sync',
+            title: 'Bring! stays current in the background',
+            description:
+              'Connected lists sync regularly with failure isolation. Timetable subject colours are also clearer at a glance.'
+          }
+        ],
+        closing:
+          'Existing family content, Bring! connections, meal plans and settings remain intact.'
+      }
+    }
+  },
   '1.21.1': {
     version: '1.21.1',
     eyebrow: 'Sicherheitsupdate für externe Dienste',

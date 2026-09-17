@@ -183,21 +183,43 @@ await new Promise((resolve, reject) => {
 const homeAssistantAddress = homeAssistantServer.address();
 const homeAssistantBaseUrl =
   `http://127.0.0.1:${homeAssistantAddress.port}`;
+function addLocalDays(date, days) {
+  const result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
+function icsDate(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, '0'),
+    String(date.getDate()).padStart(2, '0')
+  ].join('');
+}
+
+const calendarFixtureStart = (() => {
+  const date = new Date();
+  date.setHours(12, 0, 0, 0);
+  const daysUntilNextTuesday = (9 - date.getDay()) % 7 || 7;
+  return addLocalDays(date, daysUntilNextTuesday);
+})();
+const calendarFixtureExcluded = addLocalDays(calendarFixtureStart, 7);
+const calendarFixtureHoliday = addLocalDays(calendarFixtureStart, 13);
 const calendarFeed = [
   'BEGIN:VCALENDAR',
   'VERSION:2.0',
   'PRODID:-//LX Test Calendar//DE',
   'BEGIN:VEVENT',
   'UID:school-weekly@example.test',
-  'DTSTART;TZID=Europe/Berlin:20260728T081500',
+  `DTSTART;TZID=Europe/Berlin:${icsDate(calendarFixtureStart)}T081500`,
   'RRULE:FREQ=WEEKLY;COUNT=3;BYDAY=TU',
-  'EXDATE;TZID=Europe/Berlin:20260804T081500',
+  `EXDATE;TZID=Europe/Berlin:${icsDate(calendarFixtureExcluded)}T081500`,
   'SUMMARY:Schulweg gemeinsam',
   'LOCATION:Grundschule',
   'END:VEVENT',
   'BEGIN:VEVENT',
   'UID:holiday@example.test',
-  'DTSTART;VALUE=DATE:20260810',
+  `DTSTART;VALUE=DATE:${icsDate(calendarFixtureHoliday)}`,
   'SUMMARY:Ferienstart',
   'DESCRIPTION:Heute beginnt die schulfreie ',
   ' Zeit.',
@@ -319,15 +341,23 @@ test('recipe instructions are cleaned and scheduled in a useful order', () => {
 });
 
 test('ICS calendars keep recurring, excluded and folded events useful', () => {
+  const rangeStart = addLocalDays(calendarFixtureStart, -1);
+  rangeStart.setHours(0, 0, 0, 0);
+  const rangeEnd = addLocalDays(calendarFixtureStart, 21);
+  rangeEnd.setHours(23, 59, 59, 999);
   const events = parseICalendar(calendarFeed, {
     targetTimeZone: 'Europe/Berlin',
-    rangeStart: new Date('2026-07-01T00:00:00Z').getTime(),
-    rangeEnd: new Date('2026-09-01T00:00:00Z').getTime()
+    rangeStart: rangeStart.getTime(),
+    rangeEnd: rangeEnd.getTime()
   });
   assert.equal(events.length, 3);
   assert.deepEqual(
     events.map(event => event.date),
-    ['2026-07-28', '2026-08-10', '2026-08-11']
+    [
+      calendarFixtureStart,
+      calendarFixtureHoliday,
+      addLocalDays(calendarFixtureStart, 14)
+    ].map(date => date.toISOString().slice(0, 10))
   );
   assert.equal(events[0].time, '08:15');
   assert.equal(events[1].allDay, true);
@@ -3002,4 +3032,9 @@ test('family flow stays isolated, authorized and internally consistent', async (
     body: JSON.stringify({ password })
   });
   assert.equal(deletion.body.success, true);
+});
+
+test('Bring! background sync is available and idle without connected families', async () => {
+  const result = await app.locals.runBringSweep();
+  assert.deepEqual(result, { skipped: false, synced: 0, failed: 0 });
 });

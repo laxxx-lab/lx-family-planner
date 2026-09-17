@@ -12,6 +12,9 @@
       "title": "Weekmenu",
       "subtitle": "Plan jullie maaltijden voor de week. Klik op een maaltijd om een recept te kiezen of de ingrediënten met één klik aan de boodschappenlijst toe te voegen!"
     },
+    "week": {
+      "current": "Deze week"
+    },
     "mealTypes": {
       "lunch": "Lunch",
       "dinner": "Diner"

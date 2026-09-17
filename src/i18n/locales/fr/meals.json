@@ -12,6 +12,9 @@
       "title": "Plan de repas hebdomadaire",
       "subtitle": "Planifiez vos repas de la semaine. Cliquez sur un repas pour choisir une recette ou ajoutez ses ingrédients à la liste de courses en un clic !"
     },
+    "week": {
+      "current": "Cette semaine"
+    },
     "mealTypes": {
       "lunch": "Déjeuner",
       "dinner": "Dîner"

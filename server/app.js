@@ -322,6 +322,12 @@ const NEXTCLOUD_SYNC_INTERVAL_MS = Math.max(
   5,
   Number(process.env.NEXTCLOUD_SYNC_INTERVAL_MINUTES || 15)
 ) * 60 * 1000;
+const configuredBringSyncMinutes = Number(process.env.BRING_SYNC_INTERVAL_MINUTES);
+const BRING_SYNC_INTERVAL_MS = Math.max(
+  5,
+  Number.isFinite(configuredBringSyncMinutes) ? configuredBringSyncMinutes : 15
+) * 60 * 1000;
+const BRING_SYNC_TIMEOUT_MS = 20_000;
 const EVENT_REMINDER_INTERVAL_MS = Math.max(
   15,
   Number(process.env.EVENT_REMINDER_INTERVAL_SECONDS || 30)
@@ -4871,6 +4877,36 @@ function applyBringRecords(familyId, response) {
   return listRecords(familyId, 'shoppingItems');
 }
 
+function sameBringIntegration(left, right) {
+  return Boolean(
+    left &&
+    right &&
+    left.secretEncrypted === right.secretEncrypted &&
+    left.config?.listUuid === right.config?.listUuid
+  );
+}
+
+function bringRecordsNeedRefresh(familyId, response) {
+  const current = listRecords(familyId, 'shoppingItems')
+    .filter(item => item.source === 'bring');
+  const next = mapBringItems(response).map(({ updatedAt, ...item }) => item);
+  if (current.length !== next.length) return true;
+  return current.some((item, index) => {
+    const { updatedAt, familyId: _familyId, ...existing } = item;
+    return JSON.stringify(existing) !== JSON.stringify(next[index]);
+  });
+}
+
+function withBringTimeout(promise) {
+  let timeoutId = null;
+  const timeout = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error('Bring!-Synchronisierung hat zu lange gedauert.'));
+    }, BRING_SYNC_TIMEOUT_MS);
+  });
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timeoutId));
+}
+
 function sanitizeAgentRecord(type, data, familyId) {
   const input = ensureObject(data);
   const record = { ...input, familyId };
@@ -5569,6 +5605,63 @@ export function createApp() {
       return { skipped: false };
     } finally {
       nextcloudSweepRunning = false;
+    }
+  };
+
+  let bringSweepRunning = false;
+  let bringSweepOffset = 0;
+  app.locals.runBringSweep = async () => {
+    if (bringSweepRunning) return { skipped: true, synced: 0, failed: 0 };
+    bringSweepRunning = true;
+    let synced = 0;
+    let failed = 0;
+    try {
+      const allIntegrations = listIntegrationsByProvider('bring');
+      const start = allIntegrations.length
+        ? bringSweepOffset % allIntegrations.length
+        : 0;
+      const integrations = [
+        ...allIntegrations.slice(start, start + 100),
+        ...allIntegrations.slice(0, Math.max(0, start + 100 - allIntegrations.length))
+      ];
+      bringSweepOffset = allIntegrations.length
+        ? (start + integrations.length) % allIntegrations.length
+        : 0;
+      for (const integration of integrations) {
+        if (isReadOnlyDemoFamily(integration.familyId)) continue;
+        try {
+          const deadline = Date.now() + BRING_SYNC_TIMEOUT_MS;
+          const sync = (async () => {
+            const { client, integration: activeIntegration } =
+              await fetchBringClient(integration.familyId);
+            const response = await client.getItems(activeIntegration.config.listUuid);
+            if (Date.now() > deadline) {
+              throw new Error('Bring!-Synchronisierung hat zu lange gedauert.');
+            }
+            const currentIntegration = getIntegration(integration.familyId, 'bring');
+            if (!sameBringIntegration(activeIntegration, currentIntegration)) {
+              return false;
+            }
+            if (bringRecordsNeedRefresh(integration.familyId, response)) {
+              applyBringRecords(integration.familyId, response);
+              publishFamilyChange(integration.familyId, 'bring-shopping');
+            }
+            return true;
+          })();
+          const applied = await withBringTimeout(sync);
+          if (!applied) continue;
+          synced += 1;
+        } catch (error) {
+          failed += 1;
+          console.warn(
+            `Bring!-Liste für Familie ${integration.familyId} konnte nicht synchronisiert werden:`,
+            error.message
+          );
+        }
+      }
+      return { skipped: false, synced, failed };
+    } finally {
+      bringSweepRunning = false;
     }
   };
   const stopHomeAssistantSocket = familyId => {
@@ -11587,6 +11680,10 @@ export function startServer(port = Number(process.env.PORT || DEFAULT_PORT)) {
     void app.locals.runNextcloudSweep();
   }, NEXTCLOUD_SYNC_INTERVAL_MS);
   nextcloudSyncTimer.unref();
+  const bringSyncTimer = setInterval(() => {
+    void app.locals.runBringSweep();
+  }, BRING_SYNC_INTERVAL_MS);
+  bringSyncTimer.unref();
   const bundledCloudProvisioningTimer = setInterval(() => {
     void app.locals.runBundledCloudProvisioning();
   }, 10 * 60 * 1000);
@@ -11625,6 +11722,10 @@ export function startServer(port = Number(process.env.PORT || DEFAULT_PORT)) {
     void app.locals.runNextcloudSweep();
   }, 35_000);
   initialNextcloudSweep.unref();
+  const initialBringSweep = setTimeout(() => {
+    void app.locals.runBringSweep();
+  }, 40_000);
+  initialBringSweep.unref();
   const initialBundledCloudProvisioning = setTimeout(() => {
     void app.locals.runBundledCloudProvisioning();
   }, 12_000);
@@ -11652,6 +11753,7 @@ export function startServer(port = Number(process.env.PORT || DEFAULT_PORT)) {
     clearInterval(databaseBackupTimer);
     clearInterval(eventReminderTimer);
     clearInterval(nextcloudSyncTimer);
+    clearInterval(bringSyncTimer);
     clearInterval(bundledCloudProvisioningTimer);
     clearInterval(legacyChatPhotoMigrationTimer);
     clearInterval(dashboardCoverRefreshTimer);
@@ -11659,6 +11761,7 @@ export function startServer(port = Number(process.env.PORT || DEFAULT_PORT)) {
     clearTimeout(initialDatabaseBackupSweep);
     clearTimeout(initialEventReminderSweep);
     clearTimeout(initialNextcloudSweep);
+    clearTimeout(initialBringSweep);
     clearTimeout(initialBundledCloudProvisioning);
     clearTimeout(initialLegacyChatPhotoMigration);
     clearTimeout(initialDashboardCoverRefresh);

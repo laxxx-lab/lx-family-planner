@@ -3246,7 +3246,7 @@ textarea {
 .quick-add-modal {
   max-height: min(
     90vh,
-    calc(var(--quick-add-available-height, 100dvh) - 32px)
+    calc(var(--dialog-viewport-height, 100dvh) - 32px)
   );
   scroll-padding-block: 12px;
 }
@@ -3381,7 +3381,32 @@ textarea {
 
   .quick-add-modal {
     max-height: calc(
-      var(--quick-add-available-height, 100dvh)
+      var(--dialog-viewport-height, 100dvh)
+      - max(10px, env(safe-area-inset-top, 0px))
+      - max(10px, env(safe-area-inset-bottom, 0px))
+    );
+  }
+
+  .visual-viewport-dialog.is-visual-viewport-constrained {
+    align-items: flex-start;
+    padding-top: calc(
+      var(--dialog-viewport-offset, 0px)
+      + max(10px, env(safe-area-inset-top, 0px))
+    );
+    padding-bottom: max(
+      10px,
+      calc(
+        100dvh
+        - var(--dialog-viewport-height, 100dvh)
+        - var(--dialog-viewport-offset, 0px)
+        + max(10px, env(safe-area-inset-bottom, 0px))
+      )
+    );
+  }
+
+  .visual-viewport-dialog.is-visual-viewport-constrained .modal-card {
+    max-height: calc(
+      var(--dialog-viewport-height, 100dvh)
       - max(10px, env(safe-area-inset-top, 0px))
       - max(10px, env(safe-area-inset-bottom, 0px))
     );
@@ -8613,6 +8638,46 @@ textarea {
   .recipe-import-review-safe {
     grid-column: 1 / -1;
   }
+}
+
+.meal-week-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+.meal-week-navigation > div {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  color: var(--text-main);
+  text-align: center;
+}
+
+.meal-week-navigation strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.meal-week-current {
+  padding: 0;
+  border: 0;
+  color: var(--primary);
+  background: transparent;
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.meal-week-current:disabled {
+  color: var(--text-muted);
+  cursor: default;
 }
 
 .meal-modal-actions {
@@ -18466,8 +18531,8 @@ textarea {
   border-color: color-mix(in srgb, var(--school-lesson-color) 32%, var(--border-color));
   background:
     linear-gradient(90deg,
-      color-mix(in srgb, var(--school-lesson-color) 13%, var(--bg-card)),
-      color-mix(in srgb, var(--school-lesson-color) 5%, var(--bg-card)) 76%);
+      color-mix(in srgb, var(--school-lesson-color) 28%, var(--bg-card)),
+      color-mix(in srgb, var(--school-lesson-color) 12%, var(--bg-card)) 76%);
   box-shadow: inset 5px 0 0 var(--school-lesson-color);
 }
 
@@ -18476,8 +18541,8 @@ textarea {
   border-color: var(--school-lesson-color);
   background:
     linear-gradient(90deg,
-      color-mix(in srgb, var(--school-lesson-color) 20%, var(--bg-card)),
-      color-mix(in srgb, var(--school-lesson-color) 8%, var(--bg-card)) 68%);
+      color-mix(in srgb, var(--school-lesson-color) 38%, var(--bg-card)),
+      color-mix(in srgb, var(--school-lesson-color) 18%, var(--bg-card)) 68%);
 }
 
 .school-lesson-card strong,

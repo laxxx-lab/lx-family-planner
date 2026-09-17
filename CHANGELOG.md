@@ -6,6 +6,17 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.21.2] — 2026-09-17
+
+### More reliable daily planning
+
+- Mobile Quick Add and family settings stay inside the visible iOS viewport
+  when the software keyboard is open, without shifting the page behind them.
+- Meal plans now keep dishes separate by calendar week, with back, next and
+  current-week navigation. Existing meals remain visible in the current week.
+- Connected Bring! lists refresh in the background with bounded, timeout-safe
+  polling. Timetable subject colours are more visible at a glance.
+
 ## [1.21.1] — 2026-09-06
 
 ### Safer external connections

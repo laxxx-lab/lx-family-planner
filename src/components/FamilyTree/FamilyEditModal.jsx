@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -21,6 +21,7 @@ import { GITHUB_REPOSITORY_URL } from '../../constants/project';
 import ProjectSupportCard from '../ProjectSupportCard';
 import { PRODUCT_NAME } from '../../../shared/brand.js';
 import { useViewportScrollLock } from '../../hooks/useViewportScrollLock';
+import { useVisualViewportDialog } from '../../hooks/useVisualViewportDialog';
 
 export default function FamilyEditModal({ family, isOpen, onClose }) {
   const { t } = useTranslation('familyTree');
@@ -36,7 +37,9 @@ export default function FamilyEditModal({ family, isOpen, onClose }) {
   const [deletePassword, setDeletePassword] = useState('');
   const [showDelete, setShowDelete] = useState(false);
   const [busy, setBusy] = useState(false);
+  const backdropRef = useRef(null);
   useViewportScrollLock(isOpen && Boolean(family));
+  useVisualViewportDialog(isOpen && Boolean(family), backdropRef);
 
   useEffect(() => {
     if (!family) return;
@@ -94,7 +97,11 @@ export default function FamilyEditModal({ family, isOpen, onClose }) {
   };
 
   return createPortal(
-    <div className="modal-backdrop" onClick={onClose}>
+    <div
+      ref={backdropRef}
+      className="modal-backdrop visual-viewport-dialog"
+      onClick={onClose}
+    >
       <div
         className="modal-card family-settings-modal"
         onClick={event => event.stopPropagation()}

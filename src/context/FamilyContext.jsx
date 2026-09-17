@@ -39,6 +39,7 @@ import {
 } from '../utils/apiConfig';
 import i18n from '../i18n';
 import { formatDateTime } from '../utils/formatting';
+import { mealBelongsToWeek, weekStartFor } from '../utils/mealPlanWeek.js';
 import { birthdayEventsForMembers } from '../../shared/birthdays.js';
 import { expandCalendarEventSeries } from '../../shared/calendarRecurrence.js';
 import { shoppingItemIcon } from '../../shared/shoppingItemIcons.js';
@@ -2166,22 +2167,35 @@ export function FamilyProvider({ children }) {
       return data;
     }, i18n.t('context:errors.redeemFailed')), [showToast, withActionError]);
 
-  const updateMeal = useCallback((day, mealType, recipe, ingredients = []) =>
+  const updateMeal = useCallback((
+    day,
+    mealType,
+    recipe,
+    ingredients = [],
+    weekStart = weekStartFor()
+  ) =>
     withActionError(async () => {
+      const currentWeekStart = weekStartFor();
       const existing = resources.meals.find(
         meal =>
           meal.day === day &&
           meal.meal === mealType &&
+          mealBelongsToWeek(meal, weekStart, currentWeekStart) &&
           (meal.household || 'familie') === activeHouseholdState
       );
       const meal = existing
-        ? await patchResource('meals', existing.id, { recipe, ingredients })
+        ? await patchResource('meals', existing.id, {
+            recipe,
+            ingredients,
+            weekStart
+          })
         : await createResource('meals', {
             id: makeId('meal'),
             day,
             meal: mealType,
             recipe,
             ingredients,
+            weekStart,
             household: activeHouseholdState
           });
       showToast(

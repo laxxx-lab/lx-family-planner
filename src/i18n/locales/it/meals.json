@@ -12,6 +12,9 @@
       "title": "Piano pasti settimanale",
       "subtitle": "Pianifica i pasti della settimana. Clicca su un pasto per scegliere una ricetta o aggiungi i suoi ingredienti alla lista della spesa con un clic!"
     },
+    "week": {
+      "current": "Questa settimana"
+    },
     "mealTypes": {
       "lunch": "Pranzo",
       "dinner": "Cena"

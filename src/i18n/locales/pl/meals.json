@@ -12,6 +12,9 @@
       "title": "Tygodniowy plan posiłków",
       "subtitle": "Zaplanujcie posiłki na tydzień. Kliknij posiłek, aby wybrać przepis lub jednym kliknięciem dodać jego składniki do listy zakupów!"
     },
+    "week": {
+      "current": "Ten tydzień"
+    },
     "mealTypes": {
       "lunch": "Obiad",
       "dinner": "Kolacja"

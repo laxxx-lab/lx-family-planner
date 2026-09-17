@@ -12,6 +12,9 @@
       "title": "Plan semanal de comidas",
       "subtitle": "Planifica las comidas de la semana. Toca una comida para elegir una receta o añadir sus ingredientes a la lista de la compra con un solo clic."
     },
+    "week": {
+      "current": "Esta semana"
+    },
     "mealTypes": {
       "lunch": "Comida",
       "dinner": "Cena"

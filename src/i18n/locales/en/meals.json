@@ -12,6 +12,9 @@
       "title": "Weekly meal plan",
       "subtitle": "Plan your meals for the week. Click a meal to pick a recipe or add its ingredients to the shopping list with one click!"
     },
+    "week": {
+      "current": "This week"
+    },
     "mealTypes": {
       "lunch": "Lunch",
       "dinner": "Dinner"

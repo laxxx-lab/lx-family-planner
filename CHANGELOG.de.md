@@ -4,6 +4,17 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.21.2] – 2026-09-17
+
+### Verlässlicher im Familienalltag
+
+- Schnell hinzufügen und Familie verwalten bleiben bei geöffneter iOS-Tastatur
+  im sichtbaren Bereich, ohne die Seite dahinter zu verschieben.
+- Essenspläne trennen Gerichte jetzt nach Kalenderwoche und bieten Vor, Zurück
+  sowie „Diese Woche“. Bestehende Mahlzeiten bleiben in der aktuellen Woche.
+- Verbundene Bring!-Listen werden begrenzt und timeout-sicher im Hintergrund
+  abgeglichen. Fachfarben im Stundenplan sind deutlicher erkennbar.
+
 ## [1.21.1] – 2026-09-06
 
 ### Sicherere externe Verbindungen

@@ -1,10 +1,25 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFamily } from '../../context/FamilyContext';
-import { UtensilsCrossed, ShoppingBag, Edit3, BookOpen, Trash2, X } from 'lucide-react';
+import {
+  UtensilsCrossed,
+  ShoppingBag,
+  Edit3,
+  BookOpen,
+  Trash2,
+  X,
+  CalendarDays,
+  ChevronLeft,
+  ChevronRight
+} from 'lucide-react';
 import RecipeBook from './RecipeBook';
 import { recipeShareTargetFromUrl } from '../../../shared/recipeShareTarget.js';
-import { getWeekdayNames } from '../../utils/formatting';
+import { formatDate, getWeekdayNames } from '../../utils/formatting';
+import {
+  mealBelongsToWeek,
+  shiftWeekStart,
+  weekStartFor
+} from '../../utils/mealPlanWeek.js';
 
 // Gespeicherte Schlüssel im Speiseplan (meal.day / meal.meal) bleiben deutsch –
 // nur die Anzeige wird übersetzt.
@@ -36,8 +51,13 @@ export default function MealPlanner() {
   const [customRecipeTitle, setCustomRecipeTitle] = useState('');
   const [customIngredientsText, setCustomIngredientsText] = useState('');
   const [saving, setSaving] = useState(false);
+  const [visibleWeekStart, setVisibleWeekStart] = useState(() => weekStartFor());
 
   const weekdayLabels = getWeekdayNames('long');
+  const currentWeekStart = weekStartFor();
+  const visibleWeekLabel = formatDate(`${visibleWeekStart}T12:00:00`, {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
   const dayLabelFor = day => {
     const index = DAYS.indexOf(day);
     return index >= 0 ? weekdayLabels[index] : day;
@@ -73,7 +93,8 @@ export default function MealPlanner() {
       selectedMealSlot.day,
       selectedMealSlot.meal,
       finalTitle.trim(),
-      finalIngredients
+      finalIngredients,
+      visibleWeekStart
     );
     setSaving(false);
     if (saved) setSelectedMealSlot(null);
@@ -128,12 +149,42 @@ export default function MealPlanner() {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
               {t('planner.header.subtitle')}
             </p>
+            <div className="meal-week-navigation">
+              <button
+                className="icon-circle-btn"
+                onClick={() => setVisibleWeekStart(value => shiftWeekStart(value, -1))}
+                aria-label={t('common:actions.back')}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <div>
+                <strong><CalendarDays size={16} /> {visibleWeekLabel}</strong>
+                <button
+                  className="meal-week-current"
+                  onClick={() => setVisibleWeekStart(currentWeekStart)}
+                  disabled={visibleWeekStart === currentWeekStart}
+                >
+                  {t('planner.week.current')}
+                </button>
+              </div>
+              <button
+                className="icon-circle-btn"
+                onClick={() => setVisibleWeekStart(value => shiftWeekStart(value, 1))}
+                aria-label={t('common:actions.next')}
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
           </div>
 
           {/* Weekly Grid (Montag - Sonntag) */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
             {DAYS.map((dayName, dayIndex) => {
-              const dayMeals = meals.filter(m => m.day === dayName && (m.household || 'familie') === activeHousehold);
+              const dayMeals = meals.filter(meal =>
+                meal.day === dayName &&
+                mealBelongsToWeek(meal, visibleWeekStart, currentWeekStart) &&
+                (meal.household || 'familie') === activeHousehold
+              );
               const mittag = dayMeals.find(m => m.meal === 'Mittagessen');
               const abend = dayMeals.find(m => m.meal === 'Abendessen');
               const dayLabel = weekdayLabels[dayIndex] || dayName;

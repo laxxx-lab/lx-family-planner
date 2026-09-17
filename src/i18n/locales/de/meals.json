@@ -12,6 +12,9 @@
       "title": "Wochen-Speiseplan",
       "subtitle": "Plant eure Gerichte für die Woche. Klicke auf ein Essen, um Rezepte auszuwählen oder Zutaten mit 1 Klick auf die Einkaufsliste zu setzen!"
     },
+    "week": {
+      "current": "Diese Woche"
+    },
     "mealTypes": {
       "lunch": "Mittagessen",
       "dinner": "Abendessen"

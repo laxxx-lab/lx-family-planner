@@ -4,6 +4,7 @@ import {
   isAppleMobileDevice,
   shouldOfferIosInstall
 } from '../src/utils/iosPwa.js';
+import { visualViewportDialogMetrics } from '../src/utils/visualViewport.js';
 
 test('iPhone and iPad browsers receive the home screen offer only when needed', () => {
   assert.equal(
@@ -49,5 +50,16 @@ test('iPhone and iPad browsers receive the home screen offer only when needed', 
       now: 100
     }),
     false
+  );
+});
+
+test('input dialogs stay within the visible iOS viewport above the keyboard', () => {
+  assert.deepEqual(
+    visualViewportDialogMetrics({ height: 412, offsetTop: 176 }, 844),
+    { height: 412, offsetTop: 176 }
+  );
+  assert.deepEqual(
+    visualViewportDialogMetrics({ height: 0, offsetTop: -20 }, 844),
+    { height: 844, offsetTop: 0 }
   );
 });

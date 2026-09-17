@@ -18,6 +18,7 @@ import {
 import EventReminderPicker from './Calendar/EventReminderPicker';
 import EventAudiencePicker from './Calendar/EventAudiencePicker';
 import { useViewportScrollLock } from '../hooks/useViewportScrollLock';
+import { useVisualViewportDialog } from '../hooks/useVisualViewportDialog';
 
 function addLocalDays(value, days) {
   const date = new Date(`${value}T12:00:00`);
@@ -38,9 +39,10 @@ export default function QuickAddModal() {
     addEvent, addShoppingItem, addTask, addNote
   } = useFamily();
   const { t } = useTranslation('profile');
-  const dialogRef = useRef(null);
+  const backdropRef = useRef(null);
   const didInitializeOpenRef = useRef(false);
   useViewportScrollLock(isQuickAddOpen);
+  useVisualViewportDialog(isQuickAddOpen, backdropRef);
 
   const [type, setType] = useState(quickAddDefaultType || 'event');
 
@@ -107,33 +109,6 @@ export default function QuickAddModal() {
     setQuickAddEventPreset
   ]);
 
-  useEffect(() => {
-    if (!isQuickAddOpen) return undefined;
-
-    // iOS keeps dvh/svh at the app height while the keyboard is visible.
-    // visualViewport is the actual visible area, so keep the scrollable dialog
-    // inside it instead of leaving its actions behind the keyboard.
-    const viewport = window.visualViewport;
-    const updateAvailableHeight = () => {
-      const height = viewport?.height ?? window.innerHeight;
-      dialogRef.current?.style.setProperty(
-        '--quick-add-available-height',
-        `${Math.round(height)}px`
-      );
-    };
-
-    updateAvailableHeight();
-    viewport?.addEventListener('resize', updateAvailableHeight);
-    viewport?.addEventListener('scroll', updateAvailableHeight);
-    window.addEventListener('resize', updateAvailableHeight);
-
-    return () => {
-      viewport?.removeEventListener('resize', updateAvailableHeight);
-      viewport?.removeEventListener('scroll', updateAvailableHeight);
-      window.removeEventListener('resize', updateAvailableHeight);
-    };
-  }, [isQuickAddOpen]);
-
   if (!isQuickAddOpen) return null;
 
   const handleSubmit = async (e) => {
@@ -199,9 +174,12 @@ export default function QuickAddModal() {
   };
 
   return (
-    <div className="modal-backdrop quick-add-backdrop" onClick={() => setIsQuickAddOpen(false)}>
+    <div
+      ref={backdropRef}
+      className="modal-backdrop quick-add-backdrop visual-viewport-dialog"
+      onClick={() => setIsQuickAddOpen(false)}
+    >
       <div
-        ref={dialogRef}
         className="modal-card quick-add-modal"
         onClick={e => e.stopPropagation()}
       >
