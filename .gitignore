@@ -57,6 +57,7 @@ scripts/stats.mjs
 .codex/
 .claude/
 .openai/
+.worktrees/
 logo/
 .idea/
 .vscode/
