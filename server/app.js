@@ -10295,6 +10295,22 @@ export function createApp() {
   );
 
   app.post(
+    '/api/integrations/nextcloud/calendar-targets/discover',
+    requireAuth,
+    requireAdult,
+    async (req, res) => {
+      const baseUrl = normalizeNextcloudBaseUrl(req.body?.baseUrl, translate('fields.internalNextcloudAddress'));
+      const username = requireText(req.body?.username, translate('fields.nextcloudUser'), 300);
+      const appPassword = requireText(req.body?.appPassword, translate('fields.nextcloudAppPassword'), 1000);
+      const inspection = await inspectNextcloud({ baseUrl, username, appPassword, appVersion: APP_VERSION });
+      res.json({
+        success: true,
+        calendars: inspection.calendars.filter(calendar => calendar.components.includes('VEVENT'))
+      });
+    }
+  );
+
+  app.post(
     '/api/integrations/nextcloud/calendar-targets',
     requireAuth,
     requireAdult,

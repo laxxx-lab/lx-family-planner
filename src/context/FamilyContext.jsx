@@ -2904,6 +2904,14 @@ export function FamilyProvider({ children }) {
       return refreshNextcloudCalendarTargets();
     }), [refreshNextcloudCalendarTargets, withActionError]);
 
+  const discoverNextcloudCalendars = useCallback(payload =>
+    withActionError(async () => {
+      const data = await apiRequest('/api/integrations/nextcloud/calendar-targets/discover', {
+        method: 'POST', body: JSON.stringify(payload)
+      });
+      return data.calendars || [];
+    }), [withActionError]);
+
   const deleteNextcloudCalendarTarget = useCallback(targetId =>
     withActionError(async () => {
       await apiRequest(`/api/integrations/nextcloud/calendar-targets/${encodeURIComponent(targetId)}`, { method: 'DELETE' });
@@ -3560,6 +3568,7 @@ export function FamilyProvider({ children }) {
     nextcloudCalendarTargets,
     refreshNextcloudCalendarTargets,
     createNextcloudCalendarTarget,
+    discoverNextcloudCalendars,
     deleteNextcloudCalendarTarget,
     setupNextcloud,
     setupBundledNextcloud,

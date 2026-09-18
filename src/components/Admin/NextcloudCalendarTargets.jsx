@@ -7,12 +7,14 @@ export default function NextcloudCalendarTargets() {
     nextcloudCalendarTargets,
     refreshNextcloudCalendarTargets,
     createNextcloudCalendarTarget,
+    discoverNextcloudCalendars,
     deleteNextcloudCalendarTarget
   } = useFamily();
   const [form, setForm] = useState({
     memberId: '', name: '', baseUrl: '', username: '', appPassword: '', calendarHref: ''
   });
   const [busy, setBusy] = useState(false);
+  const [calendars, setCalendars] = useState([]);
   const assigned = new Set(nextcloudCalendarTargets.targets.map(target => target.memberId));
 
   useEffect(() => { void refreshNextcloudCalendarTargets(); }, [refreshNextcloudCalendarTargets]);
@@ -23,6 +25,16 @@ export default function NextcloudCalendarTargets() {
     const result = await createNextcloudCalendarTarget(form);
     setBusy(false);
     if (result) setForm({ memberId: '', name: '', baseUrl: '', username: '', appPassword: '', calendarHref: '' });
+  };
+
+  const discover = async () => {
+    setBusy(true);
+    const found = await discoverNextcloudCalendars(form);
+    setBusy(false);
+    if (found) {
+      setCalendars(found);
+      setForm(previous => ({ ...previous, calendarHref: found[0]?.href || '' }));
+    }
   };
 
   return (
@@ -49,7 +61,13 @@ export default function NextcloudCalendarTargets() {
         <label>Nextcloud-Adresse <input required type="url" value={form.baseUrl} onChange={event => setForm({ ...form, baseUrl: event.target.value })} /></label>
         <label>Benutzername <input required value={form.username} onChange={event => setForm({ ...form, username: event.target.value })} /></label>
         <label>App-Passwort <input required type="password" value={form.appPassword} onChange={event => setForm({ ...form, appPassword: event.target.value })} /></label>
-        <label>Kalenderpfad <input required value={form.calendarHref} onChange={event => setForm({ ...form, calendarHref: event.target.value })} placeholder="/remote.php/dav/calendars/.../" /></label>
+        <button type="button" onClick={discover} disabled={busy || !form.baseUrl || !form.username || !form.appPassword}>Kalender laden</button>
+        <label>Kalender
+          <select required value={form.calendarHref} onChange={event => setForm({ ...form, calendarHref: event.target.value })} disabled={!calendars.length}>
+            <option value="">Kalender zuerst laden</option>
+            {calendars.map(calendar => <option key={calendar.href} value={calendar.href}>{calendar.name || calendar.href}</option>)}
+          </select>
+        </label>
         <button disabled={busy}>{busy ? 'Wird gespeichert …' : 'Persönlichen Kalender speichern'}</button>
       </form>
     </section>
