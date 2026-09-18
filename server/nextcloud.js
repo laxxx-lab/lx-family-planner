@@ -1146,7 +1146,12 @@ function remoteEvent(
   };
 }
 
-function eligibleLocalEvent(event, includeGrandparents, provider = PROVIDER) {
+function eligibleLocalEvent(
+  event,
+  includeGrandparents,
+  provider = PROVIDER,
+  allowProviderTransfer = false
+) {
   return Boolean(
     event?.id &&
     event?.title &&
@@ -1156,7 +1161,9 @@ function eligibleLocalEvent(event, includeGrandparents, provider = PROVIDER) {
     !event.sharedOwnerFamilyId &&
     event.nextcloudExcluded !== true &&
     event.syncExcluded !== true &&
-    (!event.syncProvider || event.syncProvider === provider) &&
+    (allowProviderTransfer ||
+      !event.syncProvider ||
+      event.syncProvider === provider) &&
     (includeGrandparents || (event.household || 'familie') === 'familie') &&
     !String(event.source || '').startsWith('calendar-subscription:')
   );
@@ -1297,6 +1304,7 @@ export async function syncNextcloudEvents({
   memberIds = [],
   provider = PROVIDER,
   sourceName = 'Nextcloud',
+  ownsEvent,
   request = nextcloudRequest
 }) {
   if (!calendarHref) {
@@ -1312,6 +1320,8 @@ export async function syncNextcloudEvents({
     conflicts: 0
   };
   const allowedMemberIds = new Set(memberIds);
+  const hasOwnershipFilter = typeof ownsEvent === 'function';
+  const eventIsOwned = hasOwnershipFilter ? ownsEvent : () => true;
   const remoteResources = await listRemoteEvents(
     connection,
     calendarHref,
@@ -1329,14 +1339,43 @@ export async function syncNextcloudEvents({
     mappings.map(mapping => [mapping.localId, mapping])
   );
   const mappedRemoteHrefs = new Set(mappings.map(mapping => mapping.remoteHref));
-  let localEvents = listRecords(familyId, 'events').filter(event =>
-    eligibleLocalEvent(event, includeGrandparents, provider)
+  const eligibleEvents = () => listRecords(familyId, 'events').filter(event =>
+    eligibleLocalEvent(
+      event,
+      includeGrandparents,
+      provider,
+      hasOwnershipFilter
+    )
   );
+  let localEvents = eligibleEvents().filter(eventIsOwned);
   let localById = new Map(localEvents.map(event => [event.id, event]));
+  let eligibleLocalById = new Map(
+    eligibleEvents().map(event => [event.id, event])
+  );
 
   for (const mapping of mappings) {
-    let local = localById.get(mapping.localId);
+    let local = eligibleLocalById.get(mapping.localId);
     const remoteResource = remoteByHref.get(mapping.remoteHref);
+    if (local && !eventIsOwned(local)) {
+      const remoteWasCreatedByLx = Boolean(
+        remoteResource &&
+        customIcsValue(
+          remoteResource.calendarData,
+          'X-LX-FAMILY-ID'
+        ) === familyId
+      );
+      if (remoteWasCreatedByLx) {
+        await deleteRemoteEvent(connection, mapping.remoteHref, request);
+        stats.deletedRemote += 1;
+      }
+      deleteIntegrationSyncItem(
+        familyId,
+        provider,
+        'events',
+        mapping.localId
+      );
+      continue;
+    }
     if (!local) {
       const remoteWasCreatedByLx = Boolean(
         remoteResource &&
@@ -1485,9 +1524,7 @@ export async function syncNextcloudEvents({
     }, provider);
   }
 
-  localEvents = listRecords(familyId, 'events').filter(event =>
-    eligibleLocalEvent(event, includeGrandparents, provider)
-  );
+  localEvents = eligibleEvents().filter(eventIsOwned);
   for (const local of localEvents) {
     if (
       mappingByLocal.has(local.id) ||

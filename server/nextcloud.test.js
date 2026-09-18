@@ -590,6 +590,104 @@ test('generic CalDAV two-way sync writes LX events but preserves foreign remote 
   assert.equal(remoteEvents.has(foreignHref), true);
 });
 
+test('moving a member event to family removes its personal remote copy', async () => {
+  remoteEvents.clear();
+  const familyId = 'family-personal-calendar-target';
+  const provider = 'nextcloud-target:anna-target';
+  createFamily({
+    id: familyId,
+    familyName: 'Familie Anna',
+    password: 'long-test-password',
+    members: [{
+      id: 'anna',
+      name: 'Anna',
+      role: 'adult',
+      position: 'mama'
+    }]
+  });
+  createRecord(familyId, 'events', {
+    id: 'anna-event',
+    title: 'Annas Termin',
+    date: '2026-09-02',
+    time: '18:00',
+    memberId: 'anna',
+    memberIds: ['anna'],
+    household: 'familie'
+  });
+  const syncOptions = {
+    familyId,
+    connection,
+    calendarHref,
+    provider,
+    defaultMemberId: 'anna',
+    defaultMemberIds: ['anna'],
+    memberIds: ['anna'],
+    ownsEvent: event => event.memberIds?.length === 1 && event.memberIds[0] === 'anna'
+  };
+
+  const exported = await syncNextcloudEvents(syncOptions);
+  assert.equal(exported.exported, 1);
+  const remoteHref = [...remoteEvents.keys()][0];
+
+  updateRecord(familyId, 'events', 'anna-event', {
+    memberId: 'all',
+    memberIds: []
+  });
+  const moved = await syncNextcloudEvents(syncOptions);
+
+  assert.equal(moved.deletedRemote, 1);
+  assert.equal(remoteEvents.has(remoteHref), false);
+  assert.equal(listIntegrationSyncItems(familyId, provider, 'events').length, 0);
+});
+
+test('moving an imported personal event keeps the foreign remote record', async () => {
+  remoteEvents.clear();
+  const familyId = 'family-personal-calendar-import';
+  const provider = 'nextcloud-target:anna-import-target';
+  createFamily({
+    id: familyId,
+    familyName: 'Familie Anna Import',
+    password: 'long-test-password',
+    members: [{
+      id: 'anna-import',
+      name: 'Anna',
+      role: 'adult',
+      position: 'mama'
+    }]
+  });
+  const foreignHref = `${calendarHref}anna-foreign.ics`;
+  remoteEvents.set(foreignHref, {
+    etag: '"anna-foreign-1"',
+    data: calendarData('Annas Fremdtermin', 'anna-foreign-uid')
+  });
+  const syncOptions = {
+    familyId,
+    connection,
+    calendarHref,
+    provider,
+    defaultMemberId: 'anna-import',
+    defaultMemberIds: ['anna-import'],
+    memberIds: ['anna-import'],
+    ownsEvent: event =>
+      event.memberIds?.length === 1 && event.memberIds[0] === 'anna-import'
+  };
+
+  const imported = await syncNextcloudEvents(syncOptions);
+  assert.equal(imported.imported, 1);
+  const local = listRecords(familyId, 'events')[0];
+  assert.deepEqual(local.memberIds, ['anna-import']);
+
+  updateRecord(familyId, 'events', local.id, {
+    memberId: 'all',
+    memberIds: []
+  });
+  const moved = await syncNextcloudEvents(syncOptions);
+
+  assert.equal(moved.deletedRemote, 0);
+  assert.equal(remoteEvents.has(foreignHref), true);
+  assert.equal(listIntegrationSyncItems(familyId, provider, 'events').length, 0);
+});
+
 test('bundled Nextcloud users receive isolated renewable app credentials', async () => {
   const first = await provisionNextcloudUser({
     baseUrl: connection.baseUrl,
