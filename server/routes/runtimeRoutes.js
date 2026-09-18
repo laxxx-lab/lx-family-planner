@@ -119,7 +119,7 @@ export function registerRuntimeRoutes(app, {
     res.setHeader('Content-Type', 'application/manifest+json; charset=utf-8');
     res.append('Vary', 'Accept-Language');
     if (!manifestPath) return res.sendStatus(404);
-    return res.sendFile(manifestPath);
+    return res.sendFile(manifestPath, { dotfiles: 'allow' });
   });
 
   app.get('/api/health', (_req, res) => {
