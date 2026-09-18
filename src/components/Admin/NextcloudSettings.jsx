@@ -21,6 +21,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useFamily } from '../../context/FamilyContext';
 import { formatDateTime } from '../../utils/formatting';
+import NextcloudCalendarTargets from './NextcloudCalendarTargets';
 
 function suggestedPublicUrl() {
   const url = new URL(window.location.origin);
@@ -655,6 +656,8 @@ export default function NextcloudSettings() {
               {t('nextcloud.backupNow')}
             </button>
           </div>
+
+          <NextcloudCalendarTargets />
 
           <details className="nextcloud-connection-details">
             <summary>{t('nextcloud.manageConnection')}</summary>

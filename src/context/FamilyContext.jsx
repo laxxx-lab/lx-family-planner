@@ -163,6 +163,10 @@ export function FamilyProvider({ children }) {
   const [activeMemberIdState, setActiveMemberIdState] = useState('');
   const [resources, setResources] = useState(EMPTY_RESOURCES);
   const [calendarSubscriptions, setCalendarSubscriptions] = useState([]);
+  const [nextcloudCalendarTargets, setNextcloudCalendarTargets] = useState({
+    shared: null,
+    targets: []
+  });
   const [familyRelationships, setFamilyRelationships] = useState([]);
   const [familyLetters, setFamilyLetters] = useState([]);
   const [familyChatGuests, setFamilyChatGuests] = useState([]);
@@ -2884,6 +2888,28 @@ export function FamilyProvider({ children }) {
       return true;
     }), [showToast, withActionError]);
 
+  const refreshNextcloudCalendarTargets = useCallback(() =>
+    withActionError(async () => {
+      const data = await apiRequest('/api/integrations/nextcloud/calendar-targets');
+      const targets = { shared: data.shared || null, targets: data.targets || [] };
+      setNextcloudCalendarTargets(targets);
+      return targets;
+    }), [withActionError]);
+
+  const createNextcloudCalendarTarget = useCallback(payload =>
+    withActionError(async () => {
+      await apiRequest('/api/integrations/nextcloud/calendar-targets', {
+        method: 'POST', body: JSON.stringify(payload)
+      });
+      return refreshNextcloudCalendarTargets();
+    }), [refreshNextcloudCalendarTargets, withActionError]);
+
+  const deleteNextcloudCalendarTarget = useCallback(targetId =>
+    withActionError(async () => {
+      await apiRequest(`/api/integrations/nextcloud/calendar-targets/${encodeURIComponent(targetId)}`, { method: 'DELETE' });
+      return refreshNextcloudCalendarTargets();
+    }), [refreshNextcloudCalendarTargets, withActionError]);
+
   const addChatMessage = useCallback(message =>
     withActionError(() => createResource('chatMessages', {
       id: makeId('message'),
@@ -3531,6 +3557,10 @@ export function FamilyProvider({ children }) {
     refreshHomeAssistantStates,
     callHomeAssistantAction,
     nextcloudIntegration: integrations.nextcloud,
+    nextcloudCalendarTargets,
+    refreshNextcloudCalendarTargets,
+    createNextcloudCalendarTarget,
+    deleteNextcloudCalendarTarget,
     setupNextcloud,
     setupBundledNextcloud,
     getBundledNextcloudAccess,
