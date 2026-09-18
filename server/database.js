@@ -233,6 +233,26 @@ database.exec(`
   CREATE INDEX IF NOT EXISTS calendar_subscriptions_family_idx
     ON calendar_subscriptions(family_id, enabled, updated_at);
 
+  CREATE TABLE IF NOT EXISTS nextcloud_calendar_targets (
+    id TEXT PRIMARY KEY,
+    family_id TEXT NOT NULL REFERENCES families(id) ON DELETE CASCADE,
+    member_id TEXT NOT NULL REFERENCES members(id) ON DELETE CASCADE,
+    name TEXT NOT NULL,
+    calendar_href TEXT NOT NULL,
+    secret_encrypted TEXT NOT NULL,
+    enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0, 1)),
+    last_synced_at INTEGER,
+    last_success_at INTEGER,
+    last_error TEXT NOT NULL DEFAULT '',
+    event_count INTEGER NOT NULL DEFAULT 0,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    UNIQUE(family_id, member_id)
+  );
+
+  CREATE INDEX IF NOT EXISTS nextcloud_calendar_targets_family_idx
+    ON nextcloud_calendar_targets(family_id, enabled, updated_at);
+
   CREATE TABLE IF NOT EXISTS integrations (
     family_id TEXT NOT NULL REFERENCES families(id) ON DELETE CASCADE,
     provider TEXT NOT NULL,
@@ -758,6 +778,29 @@ applySchemaMigration(18, 'Papierkorb fuer wiederherstellbare Familieninhalte', (
       ON recycle_bin_records(family_id, deleted_at DESC);
     CREATE INDEX IF NOT EXISTS recycle_bin_expiry_idx
       ON recycle_bin_records(expires_at);
+  `);
+});
+
+applySchemaMigration(19, 'Persoenliche Nextcloud-Kalenderziele', () => {
+  database.exec(`
+    CREATE TABLE IF NOT EXISTS nextcloud_calendar_targets (
+      id TEXT PRIMARY KEY,
+      family_id TEXT NOT NULL REFERENCES families(id) ON DELETE CASCADE,
+      member_id TEXT NOT NULL REFERENCES members(id) ON DELETE CASCADE,
+      name TEXT NOT NULL,
+      calendar_href TEXT NOT NULL,
+      secret_encrypted TEXT NOT NULL,
+      enabled INTEGER NOT NULL DEFAULT 1 CHECK(enabled IN (0, 1)),
+      last_synced_at INTEGER,
+      last_success_at INTEGER,
+      last_error TEXT NOT NULL DEFAULT '',
+      event_count INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL,
+      updated_at INTEGER NOT NULL,
+      UNIQUE(family_id, member_id)
+    );
+    CREATE INDEX IF NOT EXISTS nextcloud_calendar_targets_family_idx
+      ON nextcloud_calendar_targets(family_id, enabled, updated_at);
   `);
 });
 
@@ -3669,6 +3712,163 @@ export function deleteCalendarSubscription(familyId, subscriptionId) {
       WHERE family_id = ? AND id = ?
     `)
     .run(familyId, subscriptionId);
+  if (result.changes) bumpFamilyVersion(familyId);
+  return result.changes > 0;
+}
+
+function mapNextcloudCalendarTargetRow(row, { includeSecret = false } = {}) {
+  if (!row) return null;
+  const target = {
+    id: row.id,
+    kind: 'member',
+    familyId: row.family_id,
+    memberId: row.member_id,
+    name: row.name,
+    calendarHref: row.calendar_href,
+    enabled: Boolean(row.enabled),
+    lastSyncedAt: row.last_synced_at || null,
+    lastSuccessAt: row.last_success_at || null,
+    lastError: row.last_error || '',
+    eventCount: Number(row.event_count || 0),
+    createdAt: row.created_at,
+    updatedAt: row.updated_at
+  };
+  if (includeSecret) target.secretEncrypted = row.secret_encrypted;
+  return target;
+}
+
+export function listNextcloudCalendarTargets(
+  familyId,
+  { includeSecret = false } = {}
+) {
+  return database
+    .prepare(`
+      SELECT * FROM nextcloud_calendar_targets
+      WHERE family_id = ?
+      ORDER BY name COLLATE NOCASE ASC, created_at ASC
+    `)
+    .all(familyId)
+    .map(row => mapNextcloudCalendarTargetRow(row, { includeSecret }));
+}
+
+export function getNextcloudCalendarTarget(
+  familyId,
+  targetId,
+  { includeSecret = false } = {}
+) {
+  return mapNextcloudCalendarTargetRow(
+    database
+      .prepare(`
+        SELECT * FROM nextcloud_calendar_targets
+        WHERE family_id = ? AND id = ?
+      `)
+      .get(familyId, targetId),
+    { includeSecret }
+  );
+}
+
+export function createNextcloudCalendarTarget(familyId, target = {}) {
+  const memberId = String(target.memberId || '').trim();
+  const calendarHref = String(target.calendarHref || '').trim();
+  const secretEncrypted = String(target.secretEncrypted || '');
+  if (!getMember(familyId, memberId)) {
+    throw new Error('Das Familienmitglied ist ungültig.');
+  }
+  if (!calendarHref) throw new Error('Der Kalender fehlt.');
+  if (!secretEncrypted) throw new Error('Das verschlüsselte App-Passwort fehlt.');
+  if (listNextcloudCalendarTargets(familyId).some(item => item.memberId === memberId)) {
+    throw new Error('Für dieses Familienmitglied besteht bereits ein Kalenderziel.');
+  }
+
+  const id = `nextcloud-calendar-target-${randomUUID()}`;
+  const now = Date.now();
+  database
+    .prepare(`
+      INSERT INTO nextcloud_calendar_targets(
+        id, family_id, member_id, name, calendar_href, secret_encrypted,
+        enabled, created_at, updated_at
+      ) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `)
+    .run(
+      id,
+      familyId,
+      memberId,
+      String(target.name || 'Persönlicher Kalender').trim(),
+      calendarHref,
+      secretEncrypted,
+      target.enabled === false ? 0 : 1,
+      now,
+      now
+    );
+  bumpFamilyVersion(familyId);
+  return getNextcloudCalendarTarget(familyId, id);
+}
+
+export function updateNextcloudCalendarTarget(
+  familyId,
+  targetId,
+  changes = {}
+) {
+  const existing = getNextcloudCalendarTarget(familyId, targetId, {
+    includeSecret: true
+  });
+  if (!existing) return null;
+  const memberId = String(changes.memberId ?? existing.memberId).trim();
+  if (!getMember(familyId, memberId)) {
+    throw new Error('Das Familienmitglied ist ungültig.');
+  }
+  if (
+    memberId !== existing.memberId &&
+    listNextcloudCalendarTargets(familyId).some(item => item.memberId === memberId)
+  ) {
+    throw new Error('Für dieses Familienmitglied besteht bereits ein Kalenderziel.');
+  }
+  const updated = {
+    ...existing,
+    ...changes,
+    memberId,
+    calendarHref: String(changes.calendarHref ?? existing.calendarHref).trim(),
+    secretEncrypted: String(changes.secretEncrypted ?? existing.secretEncrypted),
+    updatedAt: Date.now()
+  };
+  if (!updated.calendarHref) throw new Error('Der Kalender fehlt.');
+  if (!updated.secretEncrypted) {
+    throw new Error('Das verschlüsselte App-Passwort fehlt.');
+  }
+
+  database
+    .prepare(`
+      UPDATE nextcloud_calendar_targets SET
+        member_id = ?, name = ?, calendar_href = ?, secret_encrypted = ?,
+        enabled = ?, last_synced_at = ?, last_success_at = ?, last_error = ?,
+        event_count = ?, updated_at = ?
+      WHERE family_id = ? AND id = ?
+    `)
+    .run(
+      updated.memberId,
+      String(updated.name || 'Persönlicher Kalender').trim(),
+      updated.calendarHref,
+      updated.secretEncrypted,
+      updated.enabled === false ? 0 : 1,
+      updated.lastSyncedAt || null,
+      updated.lastSuccessAt || null,
+      String(updated.lastError || ''),
+      Math.max(0, Number(updated.eventCount || 0)),
+      updated.updatedAt,
+      familyId,
+      targetId
+    );
+  bumpFamilyVersion(familyId);
+  return getNextcloudCalendarTarget(familyId, targetId);
+}
+
+export function deleteNextcloudCalendarTarget(familyId, targetId) {
+  const result = database
+    .prepare(`
+      DELETE FROM nextcloud_calendar_targets
+      WHERE family_id = ? AND id = ?
+    `)
+    .run(familyId, targetId);
   if (result.changes) bumpFamilyVersion(familyId);
   return result.changes > 0;
 }
