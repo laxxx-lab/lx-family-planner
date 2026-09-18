@@ -91,6 +91,7 @@ import {
   createFamilyChatGuestInvite,
   createFamilyLetter,
   createCalendarSubscription,
+  createNextcloudCalendarTarget,
   createInboxNotifications,
   createFamily,
   exportFamilyTransferData,
@@ -107,6 +108,7 @@ import {
   countNativePushProfilesForInstallation,
   deleteFamily,
   deleteCalendarSubscription,
+  deleteNextcloudCalendarTarget,
   deleteFamilyRelationship,
   deleteIntegration,
   deleteIntegrationSyncItems,
@@ -123,6 +125,7 @@ import {
   findFamilyAuthCandidates,
   getBootstrap,
   getCalendarSubscription,
+  getNextcloudCalendarTarget,
   getFamily,
   getFamilyAuthRow,
   getFamilyChatGuest,
@@ -137,6 +140,7 @@ import {
   getSession,
   listPublicFamilies,
   listCalendarSubscriptions,
+  listNextcloudCalendarTargets,
   listEventReminderDeliveries,
   listEnabledCalendarSubscriptions,
   listFamilyRelationships,
@@ -170,6 +174,7 @@ import {
   toggleTaskRecord,
   updateCalendarSubscription,
   updateCalendarSubscriptionSync,
+  updateNextcloudCalendarTarget,
   updateFamily,
   updateFamilyChatGuestStatus,
   updateFamilyLetterState,
@@ -182,6 +187,11 @@ import {
   upsertRecords,
   verifySecret
 } from './database.js';
+import {
+  normalizePersonalCalendarTarget,
+  routeEventToCalendarTarget,
+  targetProvider
+} from './nextcloudCalendarTargets.js';
 import {
   isWallDisplayMember,
   wallDisplayMutationAllowed
@@ -3486,6 +3496,37 @@ function nextcloudConnection(integration) {
   };
 }
 
+function calendarTargetsForFamily(familyId, { includeSecret = false } = {}) {
+  const integration = getIntegration(familyId, 'nextcloud');
+  const config = integration?.config || {};
+  const shared = integration && config.eventCalendarHref
+    ? {
+        id: 'shared',
+        kind: 'family',
+        name: 'Familienkalender',
+        calendarHref: config.eventCalendarHref,
+        enabled: config.enabled !== false && config.eventSyncEnabled !== false,
+        defaultMemberId: config.defaultMemberId || 'all',
+        includeGrandparents: Boolean(config.includeGrandparents),
+        integration
+      }
+    : null;
+  return {
+    shared,
+    targets: listNextcloudCalendarTargets(familyId, { includeSecret })
+  };
+}
+
+function nextcloudCalendarTargetConnection(target) {
+  const secret = decryptJson(target.secretEncrypted);
+  return {
+    baseUrl: secret.baseUrl,
+    username: secret.username,
+    appPassword: secret.appPassword,
+    appVersion: APP_VERSION
+  };
+}
+
 function nextcloudWorkspace(familyId) {
   const integration = getIntegration(familyId, 'nextcloud');
   if (!integration || integration.config?.enabled === false) {
@@ -3665,56 +3706,88 @@ function nextcloudBackupBundle(familyId) {
   };
 }
 
-async function performNextcloudSyncUnlocked(familyId, existing = null) {
-  const integration = existing || getIntegration(familyId, 'nextcloud');
-  if (
-    !integration ||
-    integration.config?.enabled === false ||
-    integration.config?.eventSyncEnabled === false
-  ) {
-    return null;
-  }
+async function syncNextcloudCalendarTarget(familyId, target) {
+  const { shared, targets } = calendarTargetsForFamily(familyId, {
+    includeSecret: true
+  });
+  const isShared = target.kind === 'family';
+  const integration = isShared ? target.integration : null;
+  const connection = isShared
+    ? nextcloudConnection(integration)
+    : nextcloudCalendarTargetConnection(target);
+  const provider = targetProvider(target);
   try {
     const stats = await syncNextcloudEvents({
       familyId,
-      connection: nextcloudConnection(integration),
-      calendarHref: integration.config.eventCalendarHref,
-      defaultMemberId: integration.config.defaultMemberId || 'all',
-      includeGrandparents: Boolean(
-        integration.config.includeGrandparents
-      ),
+      connection,
+      calendarHref: target.calendarHref,
+      defaultMemberId: isShared ? target.defaultMemberId : target.memberId,
+      defaultMemberIds: isShared
+        ? null
+        : [target.memberId],
+      includeGrandparents: isShared && target.includeGrandparents,
       timeZone: process.env.TZ || 'Europe/Berlin',
-      memberIds: getMembers(familyId).map(member => member.id)
+      memberIds: getMembers(familyId).map(member => member.id),
+      provider,
+      sourceName: isShared ? 'Nextcloud' : target.name,
+      ownsEvent: event =>
+        routeEventToCalendarTarget(event, {
+          sharedTarget: shared,
+          personalTargets: targets
+        })?.id === target.id
     });
-    saveIntegration(
-      familyId,
-      'nextcloud',
-      {
+    if (isShared) {
+      saveIntegration(familyId, 'nextcloud', {
         ...integration.config,
-        lastSyncAt: Date.now(),
-        lastSyncError: '',
-        lastSyncStats: stats
-      },
-      integration.secretEncrypted
-    );
+        lastSyncAt: Date.now(), lastSyncError: '', lastSyncStats: stats
+      }, integration.secretEncrypted);
+    } else {
+      updateNextcloudCalendarTarget(familyId, target.id, {
+        lastSyncedAt: Date.now(), lastSuccessAt: Date.now(),
+        lastError: '', eventCount: stats.imported + stats.exported
+      });
+    }
     return stats;
   } catch (error) {
-    saveIntegration(
-      familyId,
-      'nextcloud',
-      {
-        ...integration.config,
-        lastSyncAt: Date.now(),
-        lastSyncError: cleanText(
-          error.message,
-          translate('errors.nextcloudSyncFailed'),
-          300
-        )
-      },
-      integration.secretEncrypted
-    );
+    const message = cleanText(error.message, translate('errors.nextcloudSyncFailed'), 300);
+    if (isShared) {
+      saveIntegration(familyId, 'nextcloud', {
+        ...integration.config, lastSyncAt: Date.now(), lastSyncError: message
+      }, integration.secretEncrypted);
+    } else {
+      updateNextcloudCalendarTarget(familyId, target.id, {
+        lastSyncedAt: Date.now(), lastError: message
+      });
+    }
     throw error;
   }
+}
+
+async function performNextcloudSyncUnlocked(familyId, existing = null) {
+  const configured = calendarTargetsForFamily(familyId, { includeSecret: true });
+  const shared = existing && configured.shared
+    ? { ...configured.shared, integration: existing }
+    : configured.shared;
+  const targets = [
+    ...(shared?.enabled ? [shared] : []),
+    ...configured.targets.filter(target => target.enabled)
+  ];
+  if (!targets.length) return null;
+  const total = {
+    imported: 0, exported: 0, updatedLocal: 0, updatedRemote: 0,
+    deletedLocal: 0, deletedRemote: 0, conflicts: 0, targetErrors: []
+  };
+  for (const target of targets) {
+    try {
+      const stats = await syncNextcloudCalendarTarget(familyId, target);
+      Object.keys(total).forEach(key => {
+        if (typeof total[key] === 'number') total[key] += Number(stats[key] || 0);
+      });
+    } catch (error) {
+      total.targetErrors.push({ id: target.id, error: cleanText(error.message, 'Synchronisierung fehlgeschlagen.', 300) });
+    }
+  }
+  return total;
 }
 
 async function performNextcloudSync(familyId, existing = null) {
@@ -10208,6 +10281,127 @@ export function createApp() {
         publicFamilyCloudPath(req.query.path)
       );
       res.json({ success: true });
+    }
+  );
+
+  app.get(
+    '/api/integrations/nextcloud/calendar-targets',
+    requireAuth,
+    requireAdult,
+    (req, res) => {
+      const { shared, targets } = calendarTargetsForFamily(req.session.familyId);
+      res.json({ success: true, shared, targets, version: getFamilyVersion(req.session.familyId) });
+    }
+  );
+
+  app.post(
+    '/api/integrations/nextcloud/calendar-targets',
+    requireAuth,
+    requireAdult,
+    async (req, res) => {
+      const familyId = req.session.familyId;
+      const { targets } = calendarTargetsForFamily(familyId);
+      let normalized;
+      try {
+        normalized = normalizePersonalCalendarTarget(
+          req.body,
+          getMembers(familyId),
+          targets
+        );
+      } catch (error) {
+        return res.status(400).json({ success: false, error: error.message });
+      }
+      const baseUrl = normalizeNextcloudBaseUrl(
+        req.body?.baseUrl,
+        translate('fields.internalNextcloudAddress')
+      );
+      const username = requireText(req.body?.username, translate('fields.nextcloudUser'), 300);
+      const appPassword = requireText(
+        req.body?.appPassword,
+        translate('fields.nextcloudAppPassword'),
+        1000
+      );
+      const connection = { baseUrl, username, appPassword, appVersion: APP_VERSION };
+      const inspection = await inspectNextcloud(connection);
+      const available = inspection.calendars.some(calendar =>
+        calendar.href === normalized.calendarHref && calendar.components.includes('VEVENT')
+      );
+      if (!available) {
+        return res.status(400).json({ success: false, error: translate('errors.nextcloudCalendarUnavailable') });
+      }
+      const target = createNextcloudCalendarTarget(familyId, {
+        ...normalized,
+        secretEncrypted: encryptJson({ baseUrl, username, appPassword })
+      });
+      publishFamilyChange(familyId, 'nextcloud-calendar-targets');
+      res.status(201).json({ success: true, target, version: getFamilyVersion(familyId) });
+    }
+  );
+
+  app.patch(
+    '/api/integrations/nextcloud/calendar-targets/:targetId',
+    requireAuth,
+    requireAdult,
+    (req, res) => {
+      const target = getNextcloudCalendarTarget(
+        req.session.familyId,
+        req.params.targetId,
+        { includeSecret: true }
+      );
+      if (!target) return res.status(404).json({ success: false, error: 'Kalenderziel nicht gefunden.' });
+      const changes = {
+        name: Object.hasOwn(req.body || {}, 'name') ? cleanText(req.body.name, target.name, 200) : target.name,
+        enabled: Object.hasOwn(req.body || {}, 'enabled') ? Boolean(req.body.enabled) : target.enabled
+      };
+      const updated = updateNextcloudCalendarTarget(req.session.familyId, target.id, changes);
+      publishFamilyChange(req.session.familyId, 'nextcloud-calendar-targets');
+      res.json({ success: true, target: updated, version: getFamilyVersion(req.session.familyId) });
+    }
+  );
+
+  app.delete(
+    '/api/integrations/nextcloud/calendar-targets/:targetId',
+    requireAuth,
+    requireAdult,
+    (req, res) => {
+      const deleted = deleteNextcloudCalendarTarget(req.session.familyId, req.params.targetId);
+      if (!deleted) return res.status(404).json({ success: false, error: 'Kalenderziel nicht gefunden.' });
+      publishFamilyChange(req.session.familyId, 'nextcloud-calendar-targets');
+      res.json({ success: true, version: getFamilyVersion(req.session.familyId) });
+    }
+  );
+
+  app.post(
+    '/api/integrations/nextcloud/calendar-targets/:targetId/sync',
+    requireAuth,
+    requireAdult,
+    async (req, res) => {
+      const target = getNextcloudCalendarTarget(req.session.familyId, req.params.targetId, { includeSecret: true });
+      if (!target) return res.status(404).json({ success: false, error: 'Kalenderziel nicht gefunden.' });
+      const stats = await syncNextcloudCalendarTarget(req.session.familyId, target);
+      publishFamilyChange(req.session.familyId, 'events');
+      res.json({ success: true, stats, target: getNextcloudCalendarTarget(req.session.familyId, target.id), version: getFamilyVersion(req.session.familyId) });
+    }
+  );
+
+  app.post(
+    '/api/integrations/nextcloud/calendar-targets/:targetId/test',
+    requireAuth,
+    requireAdult,
+    async (req, res) => {
+      const target = getNextcloudCalendarTarget(req.session.familyId, req.params.targetId, { includeSecret: true });
+      if (!target) return res.status(404).json({ success: false, error: 'Kalenderziel nicht gefunden.' });
+      const inspection = await inspectNextcloud(nextcloudCalendarTargetConnection(target));
+      const available = inspection.calendars.some(calendar =>
+        calendar.href === target.calendarHref && calendar.components.includes('VEVENT')
+      );
+      if (!available) return res.status(400).json({ success: false, error: translate('errors.nextcloudCalendarUnavailable') });
+      res.json({
+        success: true,
+        message: translate('messages.nextcloudTest', { version: inspection.version, count: inspection.calendars.length }),
+        target: getNextcloudCalendarTarget(req.session.familyId, target.id),
+        version: getFamilyVersion(req.session.familyId)
+      });
     }
   );
 

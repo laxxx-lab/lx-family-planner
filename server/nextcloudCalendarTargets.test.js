@@ -16,6 +16,7 @@ process.env.DATABASE_FILE = path.join(databaseDirectory, 'targets.sqlite');
 process.env.DISABLE_LEGACY_IMPORT = 'true';
 const {
   createFamily,
+  createSession,
   createNextcloudCalendarTarget,
   database,
   deleteNextcloudCalendarTarget,
@@ -28,7 +29,10 @@ createFamily({
   id: 'targets-family',
   familyName: 'Kalenderziele',
   password: 'test-password',
-  members: [{ id: 'anna', name: 'Anna', role: 'adult' }]
+  members: [
+    { id: 'anna', name: 'Anna', role: 'adult' },
+    { id: 'kind', name: 'Kind', role: 'child' }
+  ]
 });
 
 after(() => {
@@ -133,4 +137,61 @@ test('a personal target can update its status and be removed', () => {
   assert.equal(updated.lastError, 'Server nicht erreichbar');
   assert.equal(deleteNextcloudCalendarTarget('targets-family', target.id), true);
   assert.equal(listNextcloudCalendarTargets('targets-family').length, 0);
+});
+
+test('only adults manage targets and member IDs stay family-scoped', async () => {
+  const { createApp } = await import('./app.js');
+  const app = createApp();
+  const server = app.listen(0, '127.0.0.1');
+  await new Promise((resolve, reject) => {
+    server.once('listening', resolve);
+    server.once('error', reject);
+  });
+  const address = server.address();
+  const baseUrl = `http://127.0.0.1:${address.port}`;
+  const request = async (token, pathname, options = {}) => {
+    const response = await fetch(`${baseUrl}${pathname}`, {
+      ...options,
+      headers: {
+        cookie: `lx_session=${token}`,
+        'content-type': 'application/json',
+        ...(options.headers || {})
+      }
+    });
+    return { response, body: await response.json() };
+  };
+
+  try {
+    const adultToken = createSession('targets-family', { memberId: 'anna' });
+    const childToken = createSession('targets-family', { memberId: 'kind' });
+    const listed = await request(
+      adultToken,
+      '/api/integrations/nextcloud/calendar-targets'
+    );
+    assert.equal(listed.response.status, 200);
+    assert.deepEqual(listed.body.targets, []);
+
+    const child = await request(
+      childToken,
+      '/api/integrations/nextcloud/calendar-targets',
+      {
+        method: 'POST',
+        body: JSON.stringify({ memberId: 'anna' })
+      }
+    );
+    assert.equal(child.response.status, 403);
+
+    const foreignMember = await request(
+      adultToken,
+      '/api/integrations/nextcloud/calendar-targets',
+      {
+        method: 'POST',
+        body: JSON.stringify({ memberId: 'foreign-member' })
+      }
+    );
+    assert.equal(foreignMember.response.status, 400);
+  } finally {
+    app.locals.stopHomeAssistantSockets?.();
+    await new Promise(resolve => server.close(resolve));
+  }
 });
