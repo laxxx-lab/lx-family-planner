@@ -105,11 +105,11 @@ Files:
 - `/deploy/cosmos/SUBMISSION.md`
 
 Cosmos uses a JSON Compose superset with a generated `APP_SECRET`, two named
-volumes and a routed web entry point. LX Family intentionally keeps its own
-login: the Cosmos route has `AuthEnabled: false`, avoiding a second account
-wall that would break the Android app and family-specific permissions. Since
-the route is the only web entry point, `TRUST_PROXY=1` lets LX recognize the
-HTTPS connection forwarded by Cosmos safely.
+volumes and a routed web entry point. The Cosmos route has `AuthEnabled: true`,
+so Cosmos authentication is the first gate. LX Family keeps its own login for
+family-specific profiles and permissions. Since the route is the only web
+entry point, `TRUST_PROXY=1` lets LX recognize the HTTPS connection forwarded
+by Cosmos safely.
 
 `cosmos-auto-update` remains disabled. LX updates must follow a published
 release and preserve the database and backup volumes; platform-wide automatic
