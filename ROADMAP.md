@@ -81,6 +81,8 @@ Mobile, calendar and tablet improvements:
   only after the consent and battery model have been proven;
 - optional at-rest database encryption with a documented recovery model;
 - Telegram profile linking through a bot and expiring QR/start links;
+- optional Cosmos OpenID Connect sign-in with explicit profile linking,
+  automatic first-profile creation and carefully mapped Cosmos groups;
 - voice-assisted kitchen capture;
 - official Google and Outlook account connections;
 - opt-in family albums and seasonal household checklists.
