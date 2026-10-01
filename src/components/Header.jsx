@@ -207,7 +207,7 @@ export default function Header({ onLogout, onOpenServerConfig, onOpenFamilyTree,
           </button>
         )}
         {/* Role-aware theme worlds */}
-        {!isWall && <div className="theme-picker-wrap hide-below-tablet">
+        {<div className="theme-picker-wrap hide-below-tablet">
           <button
             className="icon-circle-btn"
             onClick={() => {
@@ -284,7 +284,7 @@ export default function Header({ onLogout, onOpenServerConfig, onOpenFamilyTree,
                         </div>
                       </section>
                     ))}
-                    {!isChild && !isPet && (
+                    {!isChild && !isPet && !isWall && (
                       <button
                         type="button"
                         className={`custom-theme-launch ${activeMember?.customThemeCss ? 'is-active' : ''}`}
@@ -307,7 +307,7 @@ export default function Header({ onLogout, onOpenServerConfig, onOpenFamilyTree,
                       </button>
                     )}
                   </div>
-                  {isCustomThemeOpen && !isChild && !isPet && (
+                  {isCustomThemeOpen && !isChild && !isPet && !isWall && (
                     <CustomThemeEditor
                       savedCss={activeMember?.customThemeCss || ''}
                       onPreview={previewCustomThemeCss}
@@ -335,10 +335,10 @@ export default function Header({ onLogout, onOpenServerConfig, onOpenFamilyTree,
 
         {/* Profile Switcher Pill with Unread Chat Notification Badge */}
         {isWall ? (
-          <div className="wall-display-badge" title={t('header.wallDisplayHint')}>
+          <button type="button" className="wall-display-badge" onClick={() => setIsProfileModalOpen(true)} title={t('header.wallDisplayHint')}>
             <Monitor size={17} />
             <span>{t('header.wallDisplay')}</span>
-          </div>
+          </button>
         ) : <div className="profile-pill-btn" onClick={() => setIsProfileModalOpen(true)}>
           {activeMember?.avatar ? (
             <img src={activeMember.avatar} alt={activeMember.name} className="avatar-img-sm" />
@@ -408,7 +408,7 @@ export default function Header({ onLogout, onOpenServerConfig, onOpenFamilyTree,
         onOpenTheme={() => setIsThemePickerOpen(true)}
         onOpenServerConfig={onOpenServerConfig}
         onLogout={onLogout}
-        onOpenFamilySettings={() => setIsFamilySettingsOpen(true)}
+        onOpenFamilySettings={!isWall ? () => setIsFamilySettingsOpen(true) : undefined}
         showPlanningLocations={!isChild && !isPet && grandparentsHouseholdEnabled}
         activeHousehold={activeHousehold}
         onSelectHousehold={toggleHousehold}

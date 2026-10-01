@@ -11,10 +11,11 @@ Unraid Community Applications, Umbrel, CasaOS and Cosmos.
   [getumbrel/umbrel-apps#5939](https://github.com/getumbrel/umbrel-apps/pull/5939).
 - **CasaOS:** package review is open at
   [IceWhaleTech/CasaOS-AppStore#999](https://github.com/IceWhaleTech/CasaOS-AppStore/pull/999).
-- **Cosmos:** package review is open at
+- **Cosmos:** the initial package was merged in
   [azukaar/cosmos-servapps-official#267](https://github.com/azukaar/cosmos-servapps-official/pull/267).
+  Patch updates are submitted separately to the marketplace.
 
-The three pending platforms require a maintainer to approve and publish the
+Store submissions and updates require a maintainer to approve and publish the
 package after automated checks have passed. A published LX Family GitHub
 release updates the source package, but never bypasses that external review.
 

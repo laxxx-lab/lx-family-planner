@@ -4,12 +4,19 @@ export function isWallDisplayMember(member) {
   return member?.role === 'wall';
 }
 
-export function wallDisplayMutationAllowed({ method, path, body }) {
+export function wallDisplayMutationAllowed({ method, path, body, session }) {
   const normalizedMethod = String(method || 'GET').toUpperCase();
   const normalizedPath = String(path || '');
   if (SAFE_METHODS.has(normalizedMethod)) return true;
-  if (normalizedMethod === 'POST' && normalizedPath === '/api/auth/logout') {
+  if (normalizedMethod === 'POST' && ['/api/auth/logout', '/api/auth/member'].includes(normalizedPath)) {
     return true;
+  }
+  if (
+    normalizedMethod === 'PATCH' && session?.memberId &&
+    normalizedPath === `/api/members/${session.memberId}`
+  ) {
+    const changes = body && typeof body === 'object' ? body : {};
+    return Object.keys(changes).length === 1 && typeof changes.theme === 'string';
   }
   if (
     normalizedMethod === 'POST' &&

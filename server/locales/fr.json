@@ -114,6 +114,7 @@
     "reminderBody": "Collecte {{lead}}. Veuillez le sortir à temps."
   },
   "errors": {
+    "insufficientStars": "Pas assez d’étoiles",
     "tooManyLoginAttempts": "Trop de tentatives de connexion. Veuillez patienter un instant.",
     "loginRequired": "Veuillez d'abord vous connecter.",
     "adultProfileRequired": "Veuillez d'abord sélectionner un profil adulte.",

@@ -4,6 +4,7 @@ import { BellRing, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { useFamily } from '../../context/FamilyContext';
 import { isPetProfile } from '../../constants/roles';
 import { isCapacitorNative } from '../../utils/apiConfig';
+import { nativePushPermissionNeedsPrompt } from '../../hooks/useNativePushNotifications';
 
 const SNOOZE_MS = 24 * 60 * 60 * 1000;
 
@@ -34,7 +35,8 @@ export default function NotificationPermissionBanner() {
     !push.loading &&
     push.supported &&
     (!isNative || push.serverConfigured) &&
-    ['default', 'prompt', 'granted'].includes(push.permission) &&
+    (['default', 'granted'].includes(push.permission) ||
+      (isNative && nativePushPermissionNeedsPrompt(push.permission))) &&
     !alreadyConnected;
   const isSnoozed = snoozedUntil > Date.now();
 

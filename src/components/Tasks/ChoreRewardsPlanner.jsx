@@ -22,7 +22,8 @@ import {
   canManageFamily,
   getPositionLabel,
   isChildProfile,
-  isManagedProfile
+  isManagedProfile,
+  isWallProfile
 } from '../../constants/roles';
 import { formatDate } from '../../utils/formatting';
 import RewardIcon, { DEFAULT_REWARD_ICON } from './RewardIcon';
@@ -243,13 +244,16 @@ export default function ChoreRewardsPlanner() {
   };
 
   const isParent = canManageFamily(activeMember);
-  const visibleMembers = isParent ? members : [activeMember].filter(Boolean);
+  const isWall = isWallProfile(activeMember);
+  const visibleMembers = isParent || isWall
+    ? members.filter(member => !isWallProfile(member))
+    : [activeMember].filter(Boolean);
   const today = currentLocalDate();
   const visibleTasks = tasks.filter(task =>
     (task.household || 'familie') === activeHousehold &&
     taskIsVisibleOnDate(task, today)
   );
-  const scheduledTasks = isParent
+  const scheduledTasks = isParent || isWall
     ? tasks.filter(task =>
         (task.household || 'familie') === activeHousehold &&
         !taskIsVisibleOnDate(task, today) &&
@@ -266,7 +270,7 @@ export default function ChoreRewardsPlanner() {
     ) {
       return false;
     }
-    if (isParent) return true;
+    if (isParent || isWall) return true;
     return (
       !task.eligibleMemberIds?.length ||
       task.eligibleMemberIds.includes(activeMember?.id)
@@ -370,7 +374,7 @@ export default function ChoreRewardsPlanner() {
                     type="button"
                     className="task-approval-main"
                     onClick={() => toggleTask(task.id)}
-                    disabled={!canUseMainAction}
+                    disabled={isWall || !canUseMainAction}
                   >
                     <span className="task-status-mark">
                       {task.completed ? <Check size={17} /> :
@@ -454,7 +458,7 @@ export default function ChoreRewardsPlanner() {
         </section>
       )}
 
-      {isParent && scheduledTasks.length > 0 && (
+      {(isParent || isWall) && scheduledTasks.length > 0 && (
         <details className="task-scheduled-details">
           <summary>
             <CalendarDays size={17} />
@@ -468,7 +472,8 @@ export default function ChoreRewardsPlanner() {
                 <button
                   type="button"
                   key={task.id}
-                  onClick={() => openEditTask(task)}
+                  onClick={isParent ? () => openEditTask(task) : undefined}
+                  disabled={isWall}
                 >
                   <span>
                     <strong>{task.title}</strong>
@@ -556,7 +561,7 @@ export default function ChoreRewardsPlanner() {
                           type="button"
                           className="task-approval-main"
                           onClick={() => toggleTask(task.id)}
-                          disabled={!canUseMainAction}
+                          disabled={isWall || !canUseMainAction}
                           title={
                             isPending && !canReview
                               ? t('taskItem.reviewWaitingFor', {

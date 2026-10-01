@@ -386,6 +386,7 @@ const SCHOOL_SUBJECT_COLORS = new Set([
   '#60798a'
 ]);
 const ADULT_MANAGED_RESOURCES = new Set([
+  'events',
   'tasks',
   'rewards',
   'trashEvents',
@@ -11615,6 +11616,8 @@ export function createApp() {
             : error.message || translate('errors.importedPageTooLarge')
           : status >= 500
           ? translate('errors.internal')
+          : error.translationKey
+          ? translate(error.translationKey)
           : error.message || translate('errors.requestFailed')
     });
   });

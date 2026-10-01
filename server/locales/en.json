@@ -114,6 +114,7 @@
     "reminderBody": "Collection {{lead}}. Please put it out in time."
   },
   "errors": {
+    "insufficientStars": "Not enough stars",
     "tooManyLoginAttempts": "Too many login attempts. Please wait a moment.",
     "loginRequired": "Please sign in first.",
     "adultProfileRequired": "Please select an adult profile first.",

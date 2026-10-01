@@ -293,7 +293,7 @@ function MainContent() {
         isOpen={isFamilyTreeOpen}
         onClose={() => setIsFamilyTreeOpen(false)}
       />
-      {!isWallProfile(activeMember) && <ProfileModal />}
+      <ProfileModal />
       {!isWallProfile(activeMember) && <QuickAddModal />}
       <BringAccountModal />
       <ReleaseNotesModal />

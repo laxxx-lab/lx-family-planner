@@ -16,6 +16,7 @@
   --text-muted: #66736e;
   --border-color: #d9d3c6;
   --on-primary: #ffffff;
+  --primary-color: var(--primary);
   --success: #198754;
   --warning: #b86713;
   --danger: #cf3d45;
@@ -11807,7 +11808,7 @@ textarea {
   min-height: 42px;
   padding: 0 17px;
   border-radius: 14px;
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary-color);
   font-weight: 850;
   box-shadow: 0 7px 15px color-mix(in srgb, var(--primary-color) 26%, transparent);
@@ -11970,7 +11971,7 @@ textarea {
 
 .webpush-ready-card > button {
   border-color: var(--primary-color);
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary-color);
 }
 
@@ -12034,7 +12035,7 @@ textarea {
 }
 
 .webpush-rule-grid button.active > span:first-child {
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary-color);
 }
 
@@ -12066,7 +12067,7 @@ textarea {
 
 .webpush-rule-grid button.active i {
   border-color: var(--primary-color);
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary-color);
 }
 
@@ -13076,6 +13077,7 @@ textarea {
 
 .task-approval-main:disabled {
   cursor: default;
+  opacity: 1;
 }
 
 .task-status-mark {
@@ -15822,7 +15824,7 @@ textarea {
 
 .calendar-add-button {
   border: 1px solid white;
-  color: var(--primary-hover);
+  color: #19332f;
   background: white;
   box-shadow: 0 12px 28px rgba(9, 27, 22, 0.2);
 }

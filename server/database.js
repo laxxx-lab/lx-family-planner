@@ -4212,6 +4212,7 @@ export function redeemRewardRecord(familyId, rewardId, memberId) {
     const cost = Math.max(0, Number(reward.costStars || 0));
     if (Number(memberRow.stars || 0) < cost) {
       const error = new Error('Nicht genügend Sterne');
+      error.translationKey = 'errors.insufficientStars';
       error.statusCode = 409;
       throw error;
     }

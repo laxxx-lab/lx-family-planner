@@ -114,6 +114,7 @@
     "reminderBody": "Abholung {{lead}}. Bitte rechtzeitig rausstellen."
   },
   "errors": {
+    "insufficientStars": "Nicht genügend Sterne",
     "tooManyLoginAttempts": "Zu viele Anmeldeversuche. Bitte kurz warten.",
     "loginRequired": "Bitte zuerst anmelden.",
     "adultProfileRequired": "Bitte zuerst ein Erwachsenenprofil wählen.",

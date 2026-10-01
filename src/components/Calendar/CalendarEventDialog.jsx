@@ -59,12 +59,13 @@ export default function CalendarEventDialog({
   onClose,
   onSave,
   onDuplicate,
-  onDelete
+  onDelete,
+  canEdit = true
 }) {
   const { t } = useTranslation('calendar');
   const [form, setForm] = useState(() => formState(event, t));
   const [saving, setSaving] = useState(false);
-  const editable = Boolean(event && !event.readOnly);
+  const editable = Boolean(canEdit && event && !event.readOnly);
   const isBirthday = Boolean(event?.birthdayMemberId);
   // On iPhones, focusing an input opens the keyboard before people can see
   // the form. Mouse and keyboard users still get the useful desktop focus.

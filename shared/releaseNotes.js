@@ -1,4 +1,29 @@
 const RELEASE_NOTES = {
+  '1.21.3': {
+    version: '1.21.3',
+    eyebrow: 'Sicherer planen, Wandansicht leichter bedienen',
+    title: 'Kalenderrechte und Wanddisplay korrigiert',
+    intro: 'Kalenderänderungen sind Erwachsenen vorbehalten. Das Wanddisplay zeigt Familienaufgaben und erlaubt den sicheren Profilwechsel.',
+    highlights: [
+      { id: 'calendar-permissions', title: 'Kalenderrechte auch auf dem Server', description: 'Kinder lesen den Kalender. Nur Erwachsene ändern Termine und importieren Kalenderdateien.' },
+      { id: 'wall-display-controls', title: 'Wandansicht mit Profilwechsel und Themes', description: 'Profile wechseln, Theme speichern, Kacheln anpassen und Familienaufgaben ansehen.' },
+      { id: 'notification-theme-fixes', title: 'Lesbare Buttons und passende Fehlermeldungen', description: 'Theme-Kontraste und übersetzte Sternefehler sind korrigiert. Android bietet die Aktivierung auch nach einer früheren Ablehnung an.' }
+    ],
+    closing: 'Bestehende Familieninhalte bleiben erhalten. Native Android-Meldungen benötigen eine eingerichtete Firebase-Verbindung auf eurem Server.',
+    localizations: {
+      en: {
+        eyebrow: 'Safer planning, easier wall displays',
+        title: 'Calendar permissions and wall display fixes',
+        intro: 'Calendar changes require adults. Wall displays show family tasks and support secure profile switching.',
+        highlights: [
+          { id: 'calendar-permissions', title: 'Calendar permissions enforced on the server', description: 'Children can read the calendar. Only adults change events and import calendar files.' },
+          { id: 'wall-display-controls', title: 'Profile switching and themes on wall displays', description: 'Switch profiles, save themes, customize tiles and view family tasks.' },
+          { id: 'notification-theme-fixes', title: 'Readable buttons and translated errors', description: 'Theme contrast and star redemption errors are corrected. Android offers activation after a previous permission denial.' }
+        ],
+        closing: 'Existing family data is preserved. Native Android notifications require Firebase credentials on your server.'
+      }
+    }
+  },
   '1.21.2': {
     version: '1.21.2',
     eyebrow: 'Ruhiger planen, leichter bedienen',

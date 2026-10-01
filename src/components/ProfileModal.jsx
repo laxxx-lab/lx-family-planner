@@ -29,6 +29,7 @@ import {
   getPositionOptionLabel,
   isManagedProfile,
   isPetProfile,
+  isWallProfile,
   profileModuleOptionsForMember,
   roleForPosition
 } from '../constants/roles';
@@ -137,6 +138,7 @@ export default function ProfileModal() {
   };
   const notificationsEnabled = Boolean(push.currentDeviceId);
   const activeProfileIsPet = isPetProfile(activeMember);
+  const activeProfileIsWall = isWallProfile(activeMember);
   const close = () => {
     setMode('list');
     setPinTarget(null);
@@ -388,7 +390,7 @@ export default function ProfileModal() {
             <div className="profile-switch-grid" role="list">
               {selectableMembers.map((member, index) => {
                 const isActive = member.id === activeMemberId;
-                const canEdit = canManage || member.id === activeMemberId;
+                const canEdit = !activeProfileIsWall && (canManage || member.id === activeMemberId);
                 return (
                   <div
                     key={member.id}
@@ -508,7 +510,7 @@ export default function ProfileModal() {
             )}
 
             <div className={`profile-tools ${activeProfileIsPet ? 'pet-active' : ''}`}>
-              {!activeProfileIsPet && (
+              {!activeProfileIsPet && !activeProfileIsWall && (
                 <button
                   type="button"
                   className="profile-tool-button"
@@ -552,7 +554,7 @@ export default function ProfileModal() {
 
             </div>
 
-            {!activeProfileIsPet && showNotifications && (
+            {!activeProfileIsPet && !activeProfileIsWall && showNotifications && (
               <section
                 className="profile-notification-settings"
                 id="profile-notification-settings"
