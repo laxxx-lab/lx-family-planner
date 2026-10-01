@@ -1,0 +1,73 @@
+{
+  "header": {
+    "title": "家庭留言板",
+    "householdFamily": "我们家",
+    "householdGrandparents": "爷爷奶奶家",
+    "addNote": "贴一张新便签或照片",
+    "intro": "虚拟冰箱上的重要便签和照片。点照片看大图，通过阅读便签看背面。"
+  },
+  "note": {
+    "shared": "🤝 已与爷爷奶奶分享",
+    "viewLarge": "查看大图",
+    "readNote": "读便签",
+    "createdByLabel": "创建者：",
+    "fallbackAuthor": "家庭",
+    "today": "今天",
+    "editedLabel": "编辑于：",
+    "flipTitle": "翻转卡片",
+    "editTitle": "编辑便签",
+    "deleteTitle": "删除便签",
+    "backSideLabel": "照片背面：",
+    "showPhoto": "显示照片"
+  },
+  "lightbox": {
+    "openAria": "全屏查看图片“{{title}}”",
+    "dialogAria": "大图查看：{{title}}",
+    "closeAria": "关闭图片查看"
+  },
+  "photo": {
+    "previewAlt": "预览",
+    "optimizing": "正在优化照片…",
+    "choose": "选择/拍摄照片",
+    "upload": "上传照片",
+    "readError": "无法读取照片。"
+  },
+  "toasts": {
+    "notImage": {
+      "title": "不是图片文件",
+      "body": "请选择 JPG、PNG 或 WebP 格式的照片。"
+    },
+    "tooLarge": {
+      "title": "照片太大",
+      "body": "请选择不超过 20 MB 的图片。"
+    },
+    "stillTooLarge": "优化后照片仍然太大，请换一张图片。",
+    "ready": {
+      "title": "照片已就绪",
+      "body": "图片已自动为留言板优化。"
+    },
+    "loadFailed": "照片加载失败"
+  },
+  "form": {
+    "shared": "🤝 已分享（爷爷奶奶家也可见）"
+  },
+  "addModal": {
+    "title": "贴一张新便签/照片",
+    "titlePlaceholder": "例如：周日出游、Wi-Fi 密码…",
+    "contentLabel": "内容（便签文字）",
+    "contentPlaceholder": "在这里写下提醒，或照片的配文…",
+    "photoLabel": "可选：贴一张照片（拍立得效果）",
+    "autoResizeHint": "手机大图保存前会自动缩小。",
+    "colorLabel": "选择便签颜色",
+    "pinning": "正在张贴…",
+    "submit": "贴上便签"
+  },
+  "editModal": {
+    "title": "编辑便签",
+    "contentLabel": "内容",
+    "photoLabel": "编辑/替换照片",
+    "optimizeHint": "照片会自动优化以便快速显示。",
+    "colorLabel": "选择颜色",
+    "submit": "保存更改"
+  }
+}

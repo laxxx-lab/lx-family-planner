@@ -16,7 +16,7 @@
 <p align="center">
   <a href="https://quickrun.org/run?repo=laxxx-lab%2Flx-family-planner"><img alt="Run this repository with QuickRun" src="https://quickrun.org/badge.svg"></a>
   <a href="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml/badge.svg"></a>
-  <img alt="Latest release 1.21.3" src="https://img.shields.io/badge/release-1.21.3-17483F">
+  <img alt="Latest release 1.21.4" src="https://img.shields.io/badge/release-1.21.4-17483F">
   <img alt="Node.js 22+" src="https://img.shields.io/badge/Node.js-22%2B-43853D?logo=nodedotjs&logoColor=white">
   <img alt="Docker ready" src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white">
   <img alt="Android 7+" src="https://img.shields.io/badge/Android-7%2B-3DDC84?logo=android&logoColor=white">
@@ -218,7 +218,7 @@ For development, run `npm run server` and `npm run dev` in separate terminals.
 ## Languages
 
 The visible language switch offers **German, English, French, Spanish, Italian,
-Dutch and Polish** before login and in the main header. The choice stays on the
+Dutch, Polish and Simplified Chinese** before login and in the main header. The choice stays on the
 device. Set `APP_LANGUAGE=en` (or another supported language code) to choose
 the default for a new installation and server-generated notifications.
 

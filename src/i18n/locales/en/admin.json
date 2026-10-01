@@ -335,5 +335,35 @@
       "hint": "Everything is quiet here right now."
     },
     "openCount": "{{count}} open"
+  },
+  "webdav": {
+    "kicker": "Own cloud",
+    "title": "WebDAV family archive",
+    "subtitle": "For NAS and DAV servers without Nextcloud.",
+    "statusReady": "Ready",
+    "statusConnected": "Connected",
+    "connectedWith": "Connected with",
+    "displayNameFallback": "WebDAV",
+    "accountMeta": "{{host}} · Folder: {{folder}}",
+    "testButton": "Test connection",
+    "disconnectButton": "Disconnect",
+    "securityNote1": "If possible, use a dedicated app password.",
+    "securityNote2": "For a NAS on the home network, the following must also be set on the LX server:",
+    "addressLabel": "WebDAV address",
+    "folderLabel": "Family folder",
+    "usernameLabel": "Username",
+    "passwordLabel": "App password",
+    "connectButton": "Connect WebDAV",
+    "disconnectConfirm": "Disconnect WebDAV? The files on the server will be kept.",
+    "toasts": {
+      "connectedTitle": "WebDAV connected",
+      "connectedBody": "Your family archive now uses this WebDAV folder.",
+      "connectFailedTitle": "WebDAV could not be connected",
+      "testOkTitle": "WebDAV reachable",
+      "testFailedTitle": "WebDAV test failed",
+      "disconnectedTitle": "WebDAV disconnected",
+      "disconnectedBody": "The credentials have been removed from LX.",
+      "disconnectFailedTitle": "WebDAV could not be disconnected"
+    }
   }
 }

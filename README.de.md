@@ -16,7 +16,7 @@
 <p align="center">
   <a href="https://quickrun.org/run?repo=laxxx-lab%2Flx-family-planner"><img alt="Dieses Repository mit QuickRun starten" src="https://quickrun.org/badge.svg"></a>
   <a href="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml"><img alt="Qualitätsprüfung" src="https://github.com/laxxx-lab/lx-family-planner/actions/workflows/ci.yml/badge.svg"></a>
-  <img alt="Aktuelles Release 1.21.3" src="https://img.shields.io/badge/Release-1.21.3-17483F">
+  <img alt="Aktuelles Release 1.21.4" src="https://img.shields.io/badge/Release-1.21.4-17483F">
   <img alt="Node.js 22+" src="https://img.shields.io/badge/Node.js-22%2B-43853D?logo=nodedotjs&logoColor=white">
   <img alt="Docker" src="https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white">
   <img alt="Android" src="https://img.shields.io/badge/Android-7%2B-3DDC84?logo=android&logoColor=white">
@@ -849,7 +849,7 @@ Docker verwendet standardmäßig `Europe/Berlin`. Eine andere Zeitzone kann übe
 
 Die App startet standardmäßig auf Deutsch. Über die Umgebungsvariable
 `APP_LANGUAGE` in der `.env` kann die Standardsprache gewählt werden: `de`,
-`en`, `fr`, `es`, `it`, `nl` oder `pl`. Zusätzlich gibt es vor der Anmeldung
+`en`, `fr`, `es`, `it`, `nl`, `pl` oder `zh` (vereinfachtes Chinesisch). Zusätzlich gibt es vor der Anmeldung
 und im Kopfbereich eine sichtbare Sprachwahl, die pro Gerät gespeichert wird.
 Die Einstellung gilt für die Web-App, die Android-App und serverseitige
 Benachrichtigungen. Details und Übersetzungs-Konventionen stehen in

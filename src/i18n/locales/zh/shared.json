@@ -1,0 +1,116 @@
+{
+  "events": {
+    "groupChat": {
+      "title": "家庭聊天",
+      "description": "家庭群的新消息"
+    },
+    "directMessages": {
+      "title": "私信",
+      "description": "发给对应成员的私信"
+    },
+    "familyMail": {
+      "title": "家庭邮箱",
+      "description": "来自已连接家庭的新信件"
+    },
+    "familyChatInvites": {
+      "title": "聊天邀请",
+      "description": "受邀加入已连接家庭的聊天"
+    },
+    "events": {
+      "title": "日历和提醒",
+      "description": "新增、变更、取消和即将开始的活动"
+    },
+    "taskAssigned": {
+      "title": "新任务",
+      "description": "新的任务和职责"
+    },
+    "taskApproval": {
+      "title": "审核任务",
+      "description": "完成报告和被驳回的审核"
+    },
+    "taskCompleted": {
+      "title": "已完成的任务",
+      "description": "已确认的任务、星星和成就"
+    },
+    "moodUpdates": {
+      "title": "孩子的心情",
+      "description": "家庭指南针的新条目"
+    },
+    "moodHelp": {
+      "title": "需要抱抱",
+      "description": "紧急提醒——即使在免打扰时段也会提醒"
+    },
+    "problemReports": {
+      "title": "问题报告",
+      "description": "新的报告和解决方案反馈"
+    },
+    "encouragements": {
+      "title": "鼓励",
+      "description": "来自家庭的暖心消息"
+    },
+    "familyPolls": {
+      "title": "投票",
+      "description": "新的家庭决议"
+    },
+    "familyMissions": {
+      "title": "家庭任务",
+      "description": "新的共享任务"
+    },
+    "schoolItems": {
+      "title": "学校",
+      "description": "作业、书包和考试"
+    },
+    "rewards": {
+      "title": "奖励",
+      "description": "新增和已兑换的奖励"
+    },
+    "pocketMoney": {
+      "title": "零花钱",
+      "description": "新的存入、扣除和兑换"
+    },
+    "familyConnections": {
+      "title": "家庭网络",
+      "description": "已连接家庭的请求、批准和变更"
+    }
+  },
+  "reminderLead": {
+    "atStart": "开始时",
+    "weeks_one": "{{count}}周前",
+    "weeks_other": "{{count}}周前",
+    "days_one": "{{count}}天前",
+    "days_other": "{{count}}天前",
+    "hours_one": "{{count}}小时前",
+    "hours_other": "{{count}}小时前",
+    "minutes_one": "{{count}}分钟前",
+    "minutes_other": "{{count}}分钟前"
+  },
+  "reminderLeadShort": {
+    "atStart": "开始时",
+    "weeks_one": "{{count}}周",
+    "weeks_other": "{{count}}周",
+    "days_one": "{{count}}天",
+    "days_other": "{{count}}天",
+    "hours_one": "{{count}}小时",
+    "hours_other": "{{count}}小时",
+    "minutes_one": "{{count}}分钟",
+    "minutes_other": "{{count}}分钟"
+  },
+  "eventReminder": {
+    "fallback": "活动即将开始。",
+    "startsNow": "现在开始",
+    "startsInMinutes_one": "{{count}}分钟后开始",
+    "startsInMinutes_other": "{{count}}分钟后开始",
+    "startsInHours_one": "{{count}}小时后开始",
+    "startsInHours_other": "{{count}}小时后开始",
+    "startsOnDate": "{{date}}开始"
+  },
+  "trashReminder": {
+    "defaultTitle": "垃圾收运",
+    "tomorrowTitle": "🗑️ 明天：{{title}}",
+    "tomorrowBody": "{{title}}明天收运，请及时放到外面。",
+    "todayTitle": "🗑️ 今天：{{title}}",
+    "todayBody": "{{title}}今天收运。",
+    "reminderTitle": "🗑️ 提醒：{{title}}",
+    "reminderBody": "{{lead}}收运，请及时放到外面。"
+  }
+}

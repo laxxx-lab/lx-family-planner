@@ -6,6 +6,13 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.21.4] — 2026-10-01
+
+- Add optional Simplified Chinese, keeping German as the default on server and client.
+- Translate WebDAV setup and preserve existing device language preferences.
+- Include the calendar, wall-display, notification and theme fixes from 1.21.3.
+
+
 ## [1.21.3] — 2026-10-01
 
 - Calendar changes and ICS imports require an adult profile, including direct API calls.

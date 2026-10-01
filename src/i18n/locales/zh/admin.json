@@ -1,0 +1,369 @@
+{
+  "parentAdmin": {
+    "accessDenied": {
+      "title": "家长区",
+      "description": "此区域仅对成人家庭成员可见。"
+    },
+    "toasts": {
+      "profileUpdatedTitle": "儿童成员已更新",
+      "profileUpdatedBody": "{{name}}的设置已保存。"
+    },
+    "hero": {
+      "kicker": "仅限成人",
+      "title": "家长中心",
+      "description": "在一个安静的地方管理成员、任务和儿童仪表盘——无需在多个版块间跳转。"
+    },
+    "overview": {
+      "childProfiles": "儿童成员",
+      "openTasks": "待办任务",
+      "totalStars": "星星总数",
+      "managedProfiles": "代管成员"
+    },
+    "modules": {
+      "kicker": "更简洁",
+      "title": "家庭版块",
+      "intro": "关闭你的家庭不使用的功能。它们会从所有成员处消失，并可随时在此重新启用。",
+      "visible": "可见",
+      "hidden": "已隐藏",
+      "profileHint": "要自定义某个人，请编辑该成员并选择其可见版块。",
+      "labels": {
+        "chat": "聊天",
+        "calendar": "日历",
+        "trash": "垃圾收运日历",
+        "shopping": "购物",
+        "meals": "膳食计划",
+        "tasks": "任务",
+        "family-life": "家庭生活",
+        "board": "留言板",
+        "cloud": "家庭云",
+        "mail": "家庭邮件"
+      }
+    },
+    "managed": {
+      "kicker": "没有自己的登录",
+      "title": "代管成员",
+      "create": "创建成员",
+      "intro": "适用于爷爷奶奶或你照顾的人：他们会出现在活动和任务中，但不会出现在登录或聊天中。",
+      "positionWithoutLogin": "{{position}} · 无登录",
+      "plannable": "可规划",
+      "emptyTitle": "还没有添加任何人",
+      "emptyHint": "创建成员时选择“仅由我们代管”。"
+    },
+    "children": {
+      "kicker": "孩子和青少年",
+      "title": "管理成员",
+      "add": "添加成员",
+      "selectedProfile": "已选成员",
+      "positionLabel": "身份",
+      "pinLabel": "新成员 PIN 码（可选）",
+      "pinPlaceholder": "留空则保持不变",
+      "saving": "保存中…",
+      "save": "保存成员",
+      "emptyTitle": "还没有儿童成员",
+      "emptyDescription": "请先创建一个儿童或青少年成员。",
+      "emptyCta": "创建儿童成员"
+    },
+    "tasks": {
+      "kicker": "整理",
+      "title": "清理任务列表",
+      "openCount": "有{{count}}个待处理",
+      "doneCount": "已完成{{count}}个",
+      "filterLabel": "仅显示以下成员的任务",
+      "allMembers": "所有家庭成员",
+      "deleteCompleted": "删除已完成",
+      "deleteCompletedConfirm": "真的要删除已完成的任务吗？",
+      "clearAll": "清空任务列表",
+      "clearAllConfirm": "真的要全部删除吗？"
+    },
+    "points": {
+      "kicker": "星星账户",
+      "title": "奖励积分",
+      "intro": "分别重置儿童和成人的积分。宠物不收集奖励积分。",
+      "resetConfirm": "真的要重置为 0 吗？"
+    },
+    "media": {
+      "kicker": "儿童仪表盘",
+      "title": "媒体空间",
+      "intro": "将批准的 YouTube 频道和 Spotify 歌单添加为大型、儿童友好的磁贴。只有你在这里批准的内容才可见。",
+      "chooseChild": "选择儿童成员",
+      "kindAriaLabel": "媒体类型",
+      "titlePlaceholder": "例如：芝麻街",
+      "share": "批准小组件",
+      "linkMeta": "{{kind}} · 在{{name}}的仪表盘上",
+      "childProfileFallback": "儿童成员",
+      "removeLink": "移除{{title}}",
+      "empty": "还没有批准的媒体小组件。"
+    },
+    "family": {
+      "kicker": "家庭网络",
+      "title": "关联的家庭账号",
+      "confirmedConnections_one": "{{count}}个已确认的连接",
+      "confirmedConnections_other": "{{count}}个已确认的连接",
+      "pendingRequests_one": "{{count}}个待处理的请求",
+      "pendingRequests_other": "{{count}}个待处理的请求",
+      "openTree": "打开家庭树"
+    }
+  },
+  "homeAssistant": {
+    "kicker": "智能家居 · 本地且受保护",
+    "connected": "已连接",
+    "notConnected": "未连接",
+    "intro": "将选中的家庭状态作为真实磁贴带入家庭规划器。访问令牌在你的服务器上加密保存。",
+    "domains": {
+      "binary_sensor": "状态",
+      "button": "按钮",
+      "climate": "温控",
+      "cover": "窗帘",
+      "device_tracker": "在场状态",
+      "fan": "风扇",
+      "input_boolean": "开关",
+      "light": "灯光",
+      "media_player": "媒体播放器",
+      "person": "人员",
+      "scene": "场景",
+      "script": "脚本",
+      "sensor": "传感器",
+      "sun": "太阳",
+      "switch": "开关",
+      "vacuum": "扫地机器人",
+      "weather": "天气"
+    },
+    "connect": {
+      "addressLabel": "Home Assistant 地址",
+      "addressHint": "使用 Docker 时，家庭网络中的固定 IP 最可靠。",
+      "tokenLabel": "长期访问令牌",
+      "tokenPlaceholder": "来自你的 Home Assistant 用户页面的令牌",
+      "tokenHint": "保存后将不再显示令牌。",
+      "submit": "检查连接"
+    },
+    "summary": {
+      "tilesShared_one": "仪表盘上分享了{{count}}个磁贴",
+      "tilesShared_other": "仪表盘上分享了{{count}}个磁贴",
+      "active": "已激活"
+    },
+    "toolbar": {
+      "loadDevices": "加载设备",
+      "testConnection": "测试连接",
+      "searchPlaceholder": "搜索设备或传感器"
+    },
+    "callout": {
+      "title": "选择仪表盘磁贴",
+      "description": "加载设备，精确决定哪些可见、哪些可控。"
+    },
+    "entity": {
+      "allowControl": "允许控制",
+      "visibleFor": "同时可见于："
+    },
+    "noMatches": "未找到匹配的设备。",
+    "saveBar": {
+      "selectedCount": "已选择{{count}}个",
+      "hint": "成人成员可以看到全部，儿童只能看到分享给他们的内容。",
+      "save": "保存选择"
+    },
+    "manage": {
+      "summary": "管理连接",
+      "newTokenPlaceholder": "新的访问令牌",
+      "renew": "更新连接",
+      "disconnectConfirm": "真的要断开连接吗？",
+      "disconnect": "断开连接"
+    }
+  },
+  "webPush": {
+    "kickerNative": "直接来自安卓",
+    "kickerWeb": "无需额外应用",
+    "titleNative": "安卓应用通知",
+    "titleWeb": "浏览器通知",
+    "introNative": "LX 应用为某个成员一次性注册此安卓设备。之后即使应用关闭，提醒也会送达。",
+    "introWeb": "每部手机或平板为家庭成员注册一次。密钥和技术细节保持不可见。",
+    "deviceConnected": "此设备已开启",
+    "activationSteps": {
+      "server": "正在检查服务器…",
+      "android": "正在准备安卓…",
+      "channels": "正在设置通知…",
+      "permission": "正在检查权限…",
+      "permission-request": "请确认安卓弹窗…",
+      "firebase": "正在向 Firebase 注册设备…",
+      "save": "正在保存设备…"
+    },
+    "serverMissing": {
+      "title": "Firebase 连接仍然缺失",
+      "description": "LX 服务器还没有私有的 Firebase 服务密钥，因此目前无法触达安卓。",
+      "hint": "请仅将服务密钥存放在服务器的数据文件夹中，然后安装使用同一 Firebase 项目构建的 LX 应用。该密钥绝不应放入 Git 仓库。"
+    },
+    "checking": {
+      "title": "正在检查安卓连接",
+      "description": "LX 正在向家庭服务器请求当前的 Firebase 状态。"
+    },
+    "statusError": {
+      "title": "状态无法检查",
+      "fallback": "应用尚未收到家庭服务器的响应。",
+      "retry": "重新检查"
+    },
+    "unavailable": {
+      "titleSecureContext": "缺少 HTTPS——这就是后台推送无法工作的原因",
+      "titleGeneric": "还有一个安全步骤",
+      "hintNative": "安装最新版 LX 安卓应用以使用原生通知。",
+      "hintWeb": "通过受信任的 HTTPS 地址打开规划器，将其添加到安卓主屏幕，然后激活此设备。"
+    },
+    "denied": {
+      "title": "已在浏览器中关闭",
+      "bodyNative": "在“安卓 → 应用 → LX Family → 通知”中允许通知。",
+      "bodyWeb": "在浏览器的网站设置中允许通知，然后重新打开规划器。"
+    },
+    "ready": {
+      "title": "为{{name}}注册此设备",
+      "hintNative": "点一下——安卓弹窗只出现一次。",
+      "hintWeb": "点一下——无需令牌，无需额外应用。",
+      "connecting": "连接中…",
+      "enable": "开启通知"
+    },
+    "activationError": "连接未完成",
+    "connectedNote": {
+      "title": "后台推送已就绪",
+      "bodyNative": "安卓会在系统托盘中显示家庭提醒，如需要还会在锁屏上显示——即使 LX 已关闭。",
+      "bodyWeb": "为在安卓上最可靠地送达，请通过“添加到主屏幕”安装规划器，并在安卓应用设置中允许通知。"
+    },
+    "preview": {
+      "title": "在锁屏上显示详情",
+      "hint": "关闭后，聊天、任务和活动将保持私密。"
+    },
+    "actions": {
+      "saving": "保存中…",
+      "save": "保存选择",
+      "sending": "发送中…",
+      "sendTest": "发送测试",
+      "disable": "为此成员关闭"
+    },
+    "devices": {
+      "title": "家庭设备",
+      "registeredCount": "已注册{{count}}个",
+      "transportAndroid": "安卓应用",
+      "transportBrowser": "浏览器",
+      "meta": "{{transport}} · {{member}} · 上次更新于{{date}}",
+      "removeDevice": "移除{{name}}",
+      "empty": "还没有注册家庭设备。"
+    }
+  },
+  "gotify": {
+    "kicker": "推送消息",
+    "title": "Gotify 通知",
+    "intro": "即使规划器未打开，重要的家庭时刻也能送达。",
+    "connected": "已连接",
+    "serverFallback": "Gotify 服务器",
+    "security": {
+      "title": "安全设置",
+      "body": "该密码仅用于创建专用的 Gotify 应用一次，不会被存储。"
+    },
+    "form": {
+      "serverLabel": "Gotify 服务器",
+      "usernameLabel": "用户名",
+      "passwordLabel": "密码",
+      "plannerUrlLabel": "手机上的规划器地址",
+      "connecting": "连接中…",
+      "connect": "连接并测试"
+    },
+    "status": {
+      "channel": "消息通道",
+      "openGotify": "打开 Gotify"
+    },
+    "includeText": {
+      "title": "在锁屏上显示消息内容",
+      "hint": "出于隐私原因，默认关闭。"
+    },
+    "phoneUrlLabel": "点击时打开此规划器地址",
+    "actions": {
+      "saving": "保存中…",
+      "saveRules": "保存规则",
+      "sending": "发送中…",
+      "sendTest": "发送测试",
+      "disconnectConfirm": "真的要断开连接吗？",
+      "disconnect": "断开连接"
+    }
+  },
+  "ntfy": {
+    "kicker": "打开推送通道",
+    "title": "ntfy 通知",
+    "intro": "将选中的家庭事件发送到 ntfy 主题——自托管或通过 ntfy.sh。",
+    "connected": "已连接",
+    "security": {
+      "title": "像对待密码一样对待主题",
+      "body": "使用难以猜到的主题名称。可选的访问令牌将加密存储。"
+    },
+    "server": "ntfy 服务器",
+    "topic": "主题",
+    "token": "访问令牌（可选）",
+    "tokenPlaceholder": "受保护主题用 tk_...",
+    "plannerUrl": "点击时打开此规划器地址",
+    "connect": "连接并测试",
+    "connecting": "连接中…",
+    "open": "打开 ntfy",
+    "includeText": "在通知中显示消息内容",
+    "includeTextHint": "出于隐私原因，默认关闭。",
+    "save": "保存规则",
+    "test": "发送测试",
+    "disconnect": "断开连接",
+    "disconnectConfirm": "真的要断开连接吗？"
+  },
+  "problemReports": {
+    "kicker": "来自应用的反馈",
+    "title": "问题报告",
+    "intro": "报告保留在你的服务器上。通过“复制”可以完整转发，且不带凭证。",
+    "loading": "正在加载报告…",
+    "categories": {
+      "problem": "问题",
+      "content": "内容",
+      "idea": "想法",
+      "fallback": "报告"
+    },
+    "copy": {
+      "profileLine": "成员：{{value}}",
+      "areaLine": "版块：{{value}}",
+      "versionLine": "版本：{{value}}",
+      "deviceLine": "设备：{{value}}",
+      "successTitle": "报告已复制",
+      "successBody": "现在可以直接粘贴到 GitHub 或消息中。",
+      "errorTitle": "无法复制",
+      "errorBody": "浏览器阻止了对剪贴板的访问。"
+    },
+    "unknownMember": "未知",
+    "areaFallback": "应用",
+    "copyButton": "复制",
+    "markDone": "完成",
+    "reopen": "重新打开",
+    "empty": {
+      "title": "没有未处理的报告",
+      "hint": "这里目前很安静。"
+    },
+    "openCount": "有{{count}}个待处理"
+  },
+  "webdav": {
+    "kicker": "自有云",
+    "title": "WebDAV 家庭档案",
+    "subtitle": "适用于没有 Nextcloud 的 NAS 和 DAV 服务器。",
+    "statusReady": "就绪",
+    "statusConnected": "已连接",
+    "connectedWith": "已连接到",
+    "displayNameFallback": "WebDAV",
+    "accountMeta": "{{host}} · 文件夹：{{folder}}",
+    "testButton": "测试连接",
+    "disconnectButton": "断开连接",
+    "securityNote1": "如有可能，请使用专用的应用密码。",
+    "securityNote2": "对于家庭网络中的 NAS，还必须在 LX 服务器上设置以下内容：",
+    "addressLabel": "WebDAV 地址",
+    "folderLabel": "家庭文件夹",
+    "usernameLabel": "用户名",
+    "passwordLabel": "应用密码",
+    "connectButton": "连接 WebDAV",
+    "disconnectConfirm": "要断开 WebDAV 连接吗？服务器上的文件将保留。",
+    "toasts": {
+      "connectedTitle": "WebDAV 已连接",
+      "connectedBody": "您的家庭档案现在使用此 WebDAV 文件夹。",
+      "connectFailedTitle": "WebDAV 连接失败",
+      "testOkTitle": "WebDAV 可访问",
+      "testFailedTitle": "WebDAV 测试失败",
+      "disconnectedTitle": "WebDAV 已断开",
+      "disconnectedBody": "访问凭据已从 LX 中删除。",
+      "disconnectFailedTitle": "WebDAV 断开失败"
+    }
+  }
+}

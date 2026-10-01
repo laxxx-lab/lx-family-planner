@@ -24240,6 +24240,7 @@ body:has(.modal-backdrop) .problem-report-launcher {
   z-index: 80;
   top: max(16px, env(safe-area-inset-top));
   right: max(16px, env(safe-area-inset-right));
+  max-width: calc(100vw - 32px);
   display: inline-flex;
   align-items: center;
   gap: 7px;
@@ -24253,6 +24254,7 @@ body:has(.modal-backdrop) .problem-report-launcher {
 
 .language-switcher-label {
   display: inline-flex;
+  flex-shrink: 0;
   align-items: center;
   gap: 6px;
   padding: 0 7px 0 5px;
@@ -24265,10 +24267,14 @@ body:has(.modal-backdrop) .problem-report-launcher {
 
 .language-switcher-options {
   display: inline-flex;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
   gap: 3px;
 }
 
 .language-switcher-options button {
+  flex-shrink: 0;
   min-height: 34px;
   padding: 0 12px;
   border: 0;
@@ -24287,7 +24293,7 @@ body:has(.modal-backdrop) .problem-report-launcher {
 }
 
 .language-switcher-options button.active {
-  color: var(--primary-contrast, #fff);
+  color: var(--on-primary);
   background: var(--primary);
   box-shadow: 0 5px 14px color-mix(in srgb, var(--primary) 24%, transparent);
 }

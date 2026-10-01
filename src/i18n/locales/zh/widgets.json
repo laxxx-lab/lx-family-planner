@@ -1,0 +1,197 @@
+{
+  "kitchen": {
+    "widgets": {
+      "calendar": {
+        "label": "今天",
+        "description": "今日所有活动"
+      },
+      "meals": {
+        "label": "餐食",
+        "description": "今日膳食计划"
+      },
+      "tasks": {
+        "label": "任务",
+        "description": "待办任务和审核"
+      },
+      "shopping": {
+        "label": "购物",
+        "description": "还需要的商品"
+      },
+      "chat": {
+        "label": "家庭聊天",
+        "description": "最新的家庭消息"
+      },
+      "board": {
+        "label": "留言板",
+        "description": "当前家庭便签"
+      },
+      "trash": {
+        "label": "垃圾收运",
+        "description": "下次收运日期"
+      },
+      "family": {
+        "label": "家庭",
+        "description": "成员和星星一目了然"
+      },
+      "homeAssistant": {
+        "label": "家居控制",
+        "description": "设备、传感器和场景的大磁贴"
+      }
+    },
+    "household": {
+      "omaOpa": "爷爷奶奶",
+      "default": "我们的家"
+    },
+    "live": "实时",
+    "allInView": "一目了然。",
+    "signedInAs": "以{{name}}登录",
+    "quickActions": {
+      "event": "活动",
+      "shopping": "购物",
+      "standardView": "标准视图",
+      "tiles": "磁贴"
+    },
+    "completeTask": {
+      "kicker": "勾选任务",
+      "title": "谁完成了这个？",
+      "select": "是我",
+      "cancel": "还没有"
+    },
+    "cards": {
+      "calendar": {
+        "title": "今天",
+        "count_one": "{{count}}个活动",
+        "count_other": "{{count}}个活动",
+        "allDay": "全天",
+        "familyFallback": "家庭",
+        "empty": "今天还没有安排。"
+      },
+      "meals": {
+        "title": "餐食",
+        "empty": "还没有安排餐食。"
+      },
+      "tasks": {
+        "title": "任务",
+        "count_one": "有{{count}}个待处理",
+        "count_other": "有{{count}}个待处理",
+        "pendingApproval": "等待审核",
+        "shared": "共享任务",
+        "empty": "所有任务都完成了。"
+      },
+      "shopping": {
+        "title": "购物",
+        "count_one": "{{count}}件商品",
+        "count_other": "{{count}}件商品",
+        "empty": "全部买齐了。"
+      },
+      "chat": {
+        "title": "家庭聊天",
+        "count_one": "{{count}}条消息",
+        "count_other": "{{count}}条消息",
+        "photo": "📷 照片",
+        "newMessage": "新消息",
+        "senderFallback": "家庭",
+        "empty": "还没有消息。"
+      },
+      "board": {
+        "title": "留言板",
+        "count_one": "{{count}}条便签",
+        "count_other": "{{count}}条便签",
+        "empty": "留言板是空的。"
+      },
+      "trash": {
+        "title": "下次收运",
+        "noDate": "无日期",
+        "empty": "还没有安排垃圾收运。"
+      },
+      "family": {
+        "title": "家庭",
+        "count_one": "{{count}}个成员",
+        "count_other": "{{count}}个成员"
+      }
+    }
+  },
+  "pet": {
+    "noDateAppointment": "无日期的预约",
+    "appointmentWithTime": "{{day}} · {{time}}",
+    "petFallbackName": "毛茸茸的朋友",
+    "petAlt": "宠物",
+    "kicker": "宠物成员 · 家庭最爱",
+    "heroTitle": "{{name}}的一切一目了然",
+    "heroText": "预约、照料和喂养汇于一处，宁静有序——无聊天、星星或多余菜单。",
+    "caredFor": "已照料",
+    "openCareItems": "个待照料事项",
+    "overviewAria": "宠物概览",
+    "nextAppointment": "下次预约",
+    "nothingPlanned": "没有安排",
+    "calendarFree": "日历是空的。",
+    "care": "照料",
+    "careOpen_one": "{{count}}个事项待处理",
+    "careOpen_other": "{{count}}个事项待处理",
+    "allDone": "全部完成",
+    "managedByAdults": "由大人们照料。",
+    "petMode": "宠物模式",
+    "calmProtected": "宁静受保护",
+    "noChatNoAccount": "无聊天和账号功能。",
+    "carePlan": "照料计划",
+    "whatsUpFor": "{{name}}接下来有什么",
+    "familyTakesCare": "家人会照料",
+    "careCategoryFallback": "照料与喂养",
+    "openLabel": "待处理",
+    "allCaredFor": "一切都照料得很好",
+    "noCareItems": "{{name}}目前没有待照料事项。",
+    "appointmentsHealth": "预约与健康",
+    "pawCalendar": "宠物日历",
+    "calendar": "日历",
+    "noDateShort": "待定",
+    "noAppointments": "没有已安排的预约",
+    "pawCalendarFree": "宠物日历目前完全空闲。",
+    "importantNotes": "重要备注",
+    "noteFallback": "备注"
+  },
+  "homeAssistant": {
+    "states": {
+      "on": "开",
+      "off": "关闭",
+      "open": "打开",
+      "closed": "已关闭",
+      "opening": "正在打开……",
+      "closing": "正在关闭……",
+      "home": "首页",
+      "notHome": "外出",
+      "unavailable": "不可用",
+      "unknown": "未知",
+      "clear": "澄澈",
+      "cloudy": "多云",
+      "rainy": "雨"
+    },
+    "defaultTitle": "我们的家",
+    "subtitle": "Home Assistant · 实时",
+    "refreshAria": "刷新家居状态",
+    "emptyTitle": "还没有家居磁贴",
+    "emptyHint": "家长成员可在家长中心共享设备和传感器。",
+    "openCover": "打开",
+    "closeCover": "关闭",
+    "adultsOnlyConfirm": "仅成人，需确认",
+    "control": "控制"
+  },
+  "familyCloud": {
+    "title": "家庭档案",
+    "openAria": "打开家庭档案",
+    "open": "打开",
+    "preparing": "正在准备档案",
+    "checkConnection": "你可以在家长中心检查连接。",
+    "toParentCenter": "前往家长中心",
+    "sharedStorage": "共享存储",
+    "loading": "加载中",
+    "ofTotal": "共{{size}}",
+    "safeForFamily": "对你的家庭安全",
+    "openingArchive": "正在打开档案……",
+    "noFiles": "还没有文件——这里有空间存放你的回忆。",
+    "upload": "上传到云端",
+    "toast": {
+      "fileTooBigTitle": "文件太大",
+      "fileTooBigMessage": "{{name}}超过 100 MB。"
+    }
+  }
+}

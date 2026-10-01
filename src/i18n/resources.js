@@ -150,30 +150,51 @@ import plShopping from './locales/pl/shopping.json' with { type: 'json' };
 import plTasks from './locales/pl/tasks.json' with { type: 'json' };
 import plWidgets from './locales/pl/widgets.json' with { type: 'json' };
 
+import zhAdmin from './locales/zh/admin.json' with { type: 'json' };
+import zhAdminCloud from './locales/zh/adminCloud.json' with { type: 'json' };
+import zhAuth from './locales/zh/auth.json' with { type: 'json' };
+import zhBoard from './locales/zh/board.json' with { type: 'json' };
+import zhCalendar from './locales/zh/calendar.json' with { type: 'json' };
+import zhChat from './locales/zh/chat.json' with { type: 'json' };
+import zhChrome from './locales/zh/chrome.json' with { type: 'json' };
+import zhCommon from './locales/zh/common.json' with { type: 'json' };
+import zhContext from './locales/zh/context.json' with { type: 'json' };
+import zhDashboard from './locales/zh/dashboard.json' with { type: 'json' };
+import zhFamilyLife from './locales/zh/familyLife.json' with { type: 'json' };
+import zhFamilyMail from './locales/zh/familyMail.json' with { type: 'json' };
+import zhFamilyTree from './locales/zh/familyTree.json' with { type: 'json' };
+import zhMeals from './locales/zh/meals.json' with { type: 'json' };
+import zhNotifications from './locales/zh/notifications.json' with { type: 'json' };
+import zhProfile from './locales/zh/profile.json' with { type: 'json' };
+import zhShared from './locales/zh/shared.json' with { type: 'json' };
+import zhShopping from './locales/zh/shopping.json' with { type: 'json' };
+import zhTasks from './locales/zh/tasks.json' with { type: 'json' };
+import zhWidgets from './locales/zh/widgets.json' with { type: 'json' };
+
 const namespaces = {
-  admin: { de: deAdmin, en: enAdmin, fr: frAdmin, es: esAdmin, it: itAdmin, nl: nlAdmin, pl: plAdmin },
-  adminCloud: { de: deAdminCloud, en: enAdminCloud, fr: frAdminCloud, es: esAdminCloud, it: itAdminCloud, nl: nlAdminCloud, pl: plAdminCloud },
-  auth: { de: deAuth, en: enAuth, fr: frAuth, es: esAuth, it: itAuth, nl: nlAuth, pl: plAuth },
-  board: { de: deBoard, en: enBoard, fr: frBoard, es: esBoard, it: itBoard, nl: nlBoard, pl: plBoard },
-  calendar: { de: deCalendar, en: enCalendar, fr: frCalendar, es: esCalendar, it: itCalendar, nl: nlCalendar, pl: plCalendar },
-  chat: { de: deChat, en: enChat, fr: frChat, es: esChat, it: itChat, nl: nlChat, pl: plChat },
-  chrome: { de: deChrome, en: enChrome, fr: frChrome, es: esChrome, it: itChrome, nl: nlChrome, pl: plChrome },
-  common: { de: deCommon, en: enCommon, fr: frCommon, es: esCommon, it: itCommon, nl: nlCommon, pl: plCommon },
-  context: { de: deContext, en: enContext, fr: frContext, es: esContext, it: itContext, nl: nlContext, pl: plContext },
-  dashboard: { de: deDashboard, en: enDashboard, fr: frDashboard, es: esDashboard, it: itDashboard, nl: nlDashboard, pl: plDashboard },
-  familyLife: { de: deFamilyLife, en: enFamilyLife, fr: frFamilyLife, es: esFamilyLife, it: itFamilyLife, nl: nlFamilyLife, pl: plFamilyLife },
-  familyMail: { de: deFamilyMail, en: enFamilyMail, fr: frFamilyMail, es: esFamilyMail, it: itFamilyMail, nl: nlFamilyMail, pl: plFamilyMail },
-  familyTree: { de: deFamilyTree, en: enFamilyTree, fr: frFamilyTree, es: esFamilyTree, it: itFamilyTree, nl: nlFamilyTree, pl: plFamilyTree },
-  meals: { de: deMeals, en: enMeals, fr: frMeals, es: esMeals, it: itMeals, nl: nlMeals, pl: plMeals },
-  notifications: { de: deNotifications, en: enNotifications, fr: frNotifications, es: esNotifications, it: itNotifications, nl: nlNotifications, pl: plNotifications },
-  profile: { de: deProfile, en: enProfile, fr: frProfile, es: esProfile, it: itProfile, nl: nlProfile, pl: plProfile },
-  shared: { de: deShared, en: enShared, fr: frShared, es: esShared, it: itShared, nl: nlShared, pl: plShared },
-  shopping: { de: deShopping, en: enShopping, fr: frShopping, es: esShopping, it: itShopping, nl: nlShopping, pl: plShopping },
-  tasks: { de: deTasks, en: enTasks, fr: frTasks, es: esTasks, it: itTasks, nl: nlTasks, pl: plTasks },
-  widgets: { de: deWidgets, en: enWidgets, fr: frWidgets, es: esWidgets, it: itWidgets, nl: nlWidgets, pl: plWidgets }
+  admin: { de: deAdmin, en: enAdmin, fr: frAdmin, es: esAdmin, it: itAdmin, nl: nlAdmin, pl: plAdmin, zh: zhAdmin },
+  adminCloud: { de: deAdminCloud, en: enAdminCloud, fr: frAdminCloud, es: esAdminCloud, it: itAdminCloud, nl: nlAdminCloud, pl: plAdminCloud, zh: zhAdminCloud },
+  auth: { de: deAuth, en: enAuth, fr: frAuth, es: esAuth, it: itAuth, nl: nlAuth, pl: plAuth, zh: zhAuth },
+  board: { de: deBoard, en: enBoard, fr: frBoard, es: esBoard, it: itBoard, nl: nlBoard, pl: plBoard, zh: zhBoard },
+  calendar: { de: deCalendar, en: enCalendar, fr: frCalendar, es: esCalendar, it: itCalendar, nl: nlCalendar, pl: plCalendar, zh: zhCalendar },
+  chat: { de: deChat, en: enChat, fr: frChat, es: esChat, it: itChat, nl: nlChat, pl: plChat, zh: zhChat },
+  chrome: { de: deChrome, en: enChrome, fr: frChrome, es: esChrome, it: itChrome, nl: nlChrome, pl: plChrome, zh: zhChrome },
+  common: { de: deCommon, en: enCommon, fr: frCommon, es: esCommon, it: itCommon, nl: nlCommon, pl: plCommon, zh: zhCommon },
+  context: { de: deContext, en: enContext, fr: frContext, es: esContext, it: itContext, nl: nlContext, pl: plContext, zh: zhContext },
+  dashboard: { de: deDashboard, en: enDashboard, fr: frDashboard, es: esDashboard, it: itDashboard, nl: nlDashboard, pl: plDashboard, zh: zhDashboard },
+  familyLife: { de: deFamilyLife, en: enFamilyLife, fr: frFamilyLife, es: esFamilyLife, it: itFamilyLife, nl: nlFamilyLife, pl: plFamilyLife, zh: zhFamilyLife },
+  familyMail: { de: deFamilyMail, en: enFamilyMail, fr: frFamilyMail, es: esFamilyMail, it: itFamilyMail, nl: nlFamilyMail, pl: plFamilyMail, zh: zhFamilyMail },
+  familyTree: { de: deFamilyTree, en: enFamilyTree, fr: frFamilyTree, es: esFamilyTree, it: itFamilyTree, nl: nlFamilyTree, pl: plFamilyTree, zh: zhFamilyTree },
+  meals: { de: deMeals, en: enMeals, fr: frMeals, es: esMeals, it: itMeals, nl: nlMeals, pl: plMeals, zh: zhMeals },
+  notifications: { de: deNotifications, en: enNotifications, fr: frNotifications, es: esNotifications, it: itNotifications, nl: nlNotifications, pl: plNotifications, zh: zhNotifications },
+  profile: { de: deProfile, en: enProfile, fr: frProfile, es: esProfile, it: itProfile, nl: nlProfile, pl: plProfile, zh: zhProfile },
+  shared: { de: deShared, en: enShared, fr: frShared, es: esShared, it: itShared, nl: nlShared, pl: plShared, zh: zhShared },
+  shopping: { de: deShopping, en: enShopping, fr: frShopping, es: esShopping, it: itShopping, nl: nlShopping, pl: plShopping, zh: zhShopping },
+  tasks: { de: deTasks, en: enTasks, fr: frTasks, es: esTasks, it: itTasks, nl: nlTasks, pl: plTasks, zh: zhTasks },
+  widgets: { de: deWidgets, en: enWidgets, fr: frWidgets, es: esWidgets, it: itWidgets, nl: nlWidgets, pl: plWidgets, zh: zhWidgets }
 };
 
-const LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl'];
+const LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl', 'zh'];
 
 export const resources = Object.fromEntries(
   LANGUAGES.map(language => [

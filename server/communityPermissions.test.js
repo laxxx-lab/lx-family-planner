@@ -33,6 +33,8 @@ after(async () => {
 });
 
 test('children cannot create, change, delete or bulk import parent events; wall profile changes preserve adult authentication', async () => {
+  const config = await request('/api/config');
+  assert.equal(config.language, 'de');
   const family = await request('/api/public/register', 'POST', {
     familyName: 'Permissions', password: 'test-family-password',
     members: [

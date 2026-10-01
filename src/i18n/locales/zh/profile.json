@@ -1,0 +1,185 @@
+{
+  "positions": {
+    "mama": "妈妈",
+    "papa": "爸爸",
+    "kind": "孩子",
+    "teenager": "青少年",
+    "tochter_erwachsen": "成年女儿",
+    "sohn_erwachsen": "成年儿子",
+    "oma": "奶奶",
+    "opa": "爷爷",
+    "betreute_person": "被照料人",
+    "tante": "阿姨",
+    "onkel": "叔叔",
+    "patin": "教母",
+    "pate": "教父",
+    "haustier": "宠物",
+    "familienmitglied": "家庭成员",
+    "wanddisplay": "墙面屏"
+  },
+  "roleLabels": {
+    "adult": "成人",
+    "child": "孩子",
+    "teen": "青少年",
+    "senior": "祖父母",
+    "member": "家庭成员",
+    "pet": "宠物",
+    "wall": "墙面屏"
+  },
+  "modal": {
+    "eyebrow": {
+      "protected": "受保护的成员",
+      "edit": "编辑成员",
+      "new": "新成员",
+      "family": "你的家庭"
+    },
+    "title": {
+      "unlock": "解锁{{name}}",
+      "edit": "编辑成员",
+      "create": "创建成员",
+      "whoseTurn": "现在轮到谁了？"
+    }
+  },
+  "toasts": {
+    "switched": "已切换成员",
+    "greeting": "你好{{name}}！",
+    "locked": "成员已锁定",
+    "pinIncorrect": "PIN 码不正确",
+    "updated": "成员已更新",
+    "savedMessage": "{{name}}已保存。"
+  },
+  "confirmDelete": "确定删除该家庭成员吗？",
+  "pin": {
+    "protectedHeading": "{{name}}的成员资料受保护",
+    "enterPin": "请输入个人成员 PIN 码。",
+    "petPasswordNeeded": "切出宠物成员需要家庭密码。",
+    "childPasswordNeeded": "切出儿童成员需要家庭密码。",
+    "pinPlaceholder": "成员 PIN 码",
+    "familyPasswordPlaceholder": "家庭密码",
+    "unlock": "解锁"
+  },
+  "list": {
+    "intro": "点击成员即可进入其专属的家庭世界。",
+    "selectAria": "选择{{name}}（{{position}}）",
+    "activeProfile": "当前成员",
+    "pinProtected": "已用 PIN 码保护",
+    "petBadge": "宠物成员",
+    "editMember": "编辑{{name}}",
+    "managedHeading": "由你代管",
+    "managedSubheading": "无登录 · 用于活动和任务",
+    "managedNoAccess": "{{position}} · 无独立登录",
+    "eventsTitle": "活动",
+    "tasksTitle": "任务",
+    "addMember": "添加成员"
+  },
+  "notifications": {
+    "title": "通知",
+    "deviceHint": "适用于本设备上的{{name}}",
+    "petModeActive": "宠物模式已开启",
+    "petModeHint": "无聊天、通知和账号功能",
+    "headingFor": "{{name}}的通知",
+    "savedPerDevice": "此选择将保存于本成员和本设备。",
+    "on": "开",
+    "off": "关闭",
+    "serverNotConfigured": "服务器尚未设置安卓原生通知。说明请见家长中心。",
+    "deniedNative": "安卓阻止了通知。请在\"应用 → LX Family → 通知\"中允许。",
+    "deniedBrowser": "浏览器阻止了通知。请在浏览器站点设置中允许一次。",
+    "showPreviews": "在通知中显示内容",
+    "sendTest": "发送测试通知"
+  },
+  "modules": {
+    "profileTitle": "可见版块",
+    "profileHint": "选择该成员可从导航看到并打开的版块。",
+    "labels": {
+      "chat": "聊天",
+      "calendar": "日历",
+      "trash": "垃圾收运日历",
+      "shopping": "购物",
+      "meals": "膳食计划",
+      "tasks": "任务",
+      "family-life": "家庭生活",
+      "board": "留言板",
+      "cloud": "家庭云",
+      "mail": "家庭邮件"
+    }
+  },
+  "avatars": {
+    "av-1": "勇敢的狮子",
+    "av-2": "聪明的狐狸",
+    "av-3": "冒险小狗",
+    "av-4": "忍者猫",
+    "av-5": "小熊猫",
+    "av-6": "太空伙伴"
+  },
+  "form": {
+    "usage": "该成员将如何使用？",
+    "ownLogin": "独立登录",
+    "ownLoginHint": "显示在成员切换器中，可独立打开计划器。",
+    "managedOnly": "仅由我们代管",
+    "managedOnlyHint": "适用于爷爷、奶奶或无独立访问权限的被照料人。",
+    "managedNote": "无登录的代管成员",
+    "managedNoteHint": "该成员显示在日历和任务中，但不出现在登录页、成员切换器或聊天中。",
+    "petNote": "宠物成员",
+    "petNoteHint": "显示照料任务和宠物预约——无聊天、通知或星星商店。",
+    "petName": "宠物名字",
+    "petNamePlaceholder": "如：Luna",
+    "namePlaceholder": "如：示例名字",
+    "birthDate": "出生日期",
+    "birthDateHint": "自动创建家庭日历条目和提醒。",
+    "position": "家庭中的身份",
+    "avatar": "头像",
+    "ownPhoto": "自己的照片",
+    "color": "成员颜色",
+    "newPin": "新成员 PIN 码（可选）",
+    "pin": "成员 PIN 码（可选）",
+    "pinKeepPlaceholder": "留空 = 不变",
+    "pinPlaceholder": "个人保护",
+    "saving": "保存中…",
+    "save": "保存成员",
+    "delete": "删除成员"
+  },
+  "quickAdd": {
+    "title": "快速添加",
+    "types": {
+      "event": "活动",
+      "shopping": "购物",
+      "task": "任务",
+      "note": "便签"
+    },
+    "titleLabels": {
+      "event": "活动标题",
+      "shopping": "商品名称",
+      "task": "任务",
+      "note": "便签标题"
+    },
+    "titlePlaceholder": "在此输入……",
+    "forWhom": "给谁？",
+    "everyone": "所有人（共享）",
+    "managed": "代管",
+    "allDay": "全天活动",
+    "allDayHint": "无固定时间——可跨多天。",
+    "startsOn": "开始日期",
+    "startsAt": "开始时间",
+    "endsOn": "结束日期（可选）",
+    "endsOnInclusive": "持续至（可选）",
+    "endsAt": "结束时间（可选）",
+    "locationOptional": "地点（可选）",
+    "locationPlaceholder": "如：Dr. Weber、学校",
+    "inviteFamilies": "邀请关联家庭",
+    "inviteFamiliesHint": "该活动将显示给所有选定的家庭；私密活动保持独立。",
+    "categoryLabel": "分类",
+    "shoppingCategories": {
+      "produce": "水果蔬菜",
+      "dairy": "乳制品及冷藏",
+      "bakery": "烘焙食品",
+      "pantry": "食品杂货",
+      "drinks": "饮品",
+      "household": "日化家居"
+    },
+    "quantity": "数量",
+    "assignedTo": "分配给",
+    "starPoints": "星星积分",
+    "noteText": "便签内容",
+    "notePlaceholder": "输入内容……"
+  }
+}

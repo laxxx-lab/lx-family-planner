@@ -1,0 +1,200 @@
+{
+  "planner": {
+    "tabs": {
+      "weeklyPlan": "每周膳食计划（{{household}}）",
+      "recipeBook": "食谱书（{{count}}）"
+    },
+    "households": {
+      "family": "我们的家",
+      "grandparents": "爷爷奶奶"
+    },
+    "header": {
+      "title": "每周膳食计划",
+      "subtitle": "规划一周的膳食。点击一餐即可选择食谱，或一键将食材加入购物清单！"
+    },
+    "week": {
+      "current": "本周"
+    },
+    "mealTypes": {
+      "lunch": "午餐",
+      "dinner": "晚餐"
+    },
+    "slots": {
+      "editAria": "编辑{{day}}的{{meal}}",
+      "addIngredients": "将食材加入清单（{{count}}）",
+      "empty": "还没有安排菜品"
+    },
+    "modal": {
+      "title": "添加菜品：{{day}}（{{meal}}）",
+      "chooseFromBook": "从食谱书中选择",
+      "recipePlaceholderOption": "-- 从食谱书中选择食谱 --",
+      "customLabel": "或自己输入菜品",
+      "customPlaceholder": "例如：配苹果酱的煎饼…",
+      "ingredientsLabel": "食材（用逗号分隔，用于购物清单）",
+      "ingredientsPlaceholder": "例如：500克面粉、4个鸡蛋、1升牛奶…",
+      "saving": "保存中…",
+      "removeEntry": "删除条目"
+    }
+  },
+  "recipeBook": {
+    "image": {
+      "noImageAria": "{{title}}（无图片）",
+      "unavailable": "食谱图片不可用"
+    },
+    "errors": {
+      "importFailed": "食谱导入失败。",
+      "saveFailed": "食谱未能保存到食谱书。",
+      "shareMissingLink": "分享应用没有传递食谱链接。请在下方粘贴链接。",
+      "tandoorTooLarge": "Tandoor 导出文件不得大于 120 MB。",
+      "tandoorEmpty": "该文件中没有找到 Tandoor 食谱。",
+      "tandoorInvalid": "Tandoor 导出文件无法读取。",
+      "rtkTooLarge": "My Recipe Box 备份文件不得大于 120 MB。",
+      "rtkEmpty": "该文件中没有找到 My Recipe Box 食谱。",
+      "rtkInvalid": "My Recipe Box 备份文件无法读取。"
+    },
+    "toasts": {
+      "importedCheckTitle": "食谱已导入——请检查",
+      "importedTitle": "🎉 食谱已导入！",
+      "importedBody": "“{{title}}”导入成功！",
+      "draftReadyTitle": "食谱草稿已就绪",
+      "draftReadyBody": "检查食材和做法。确认之前不会保存任何内容。",
+      "importErrorTitle": "⚠️ 导入出错",
+      "manualCreatedTitle": "✨ 食谱已创建",
+      "manualCreatedBody": "“{{title}}”已保存到食谱书。",
+      "tandoorImportedTitle": "Tandoor 食谱已导入",
+      "tandoorImportedBody": "{{count}}个食谱已添加到你的 LX 食谱书。",
+      "tandoorErrorTitle": "Tandoor 导入失败",
+      "rtkImportedTitle": "My Recipe Box 食谱已导入",
+      "rtkImportedBody": "已导入{{imported}}个食谱，发现{{skipped}}个已存在食谱，恢复{{imagesRecovered}}张缺失图片。",
+      "rtkErrorTitle": "My Recipe Box 导入失败"
+    },
+    "header": {
+      "title": "我们的食谱书与食谱世界",
+      "subtitle": "从 Pinterest、Chefkoch 及众多网站导入食谱，集中收藏，逐步烹饪。"
+    },
+    "tabs": {
+      "browse": "全部食谱（{{count}}）",
+      "import": "导入食谱",
+      "manual": "新建食谱"
+    },
+    "card": {
+      "editTitle": "编辑食谱",
+      "deleteTitle": "删除食谱",
+      "defaultPrepTime": "30 分钟",
+      "defaultServings": "4 人份",
+      "startCooking": "开始烹饪",
+      "addIngredientsTitle": "将食材加入购物清单",
+      "addIngredients": "将食材加入清单"
+    },
+    "tandoor": {
+      "title": "从 Tandoor Recipes 导入",
+      "description": "导入官方 Tandoor 导出文件，包含食材、步骤和可用图片。",
+      "hint": "在 Tandoor 中：打开食谱 → 菜单 → 导出 → 选择全部食谱。然后在这里选择 ZIP 文件。",
+      "select": "选择 Tandoor 文件",
+      "loading": "正在读取 Tandoor…"
+    },
+    "rtk": {
+      "title": "从 My Recipe Box 导入",
+      "description": "导入完整的 .rtk 备份，包含食材、做法、图片和来源链接。",
+      "hint": "在 My Recipe Box 中：同步/备份 → 导出备份（RTK）。在安卓上可通过“分享 → LX Family”直接发送 RTK 文件。",
+      "select": "选择 RTK 备份",
+      "loading": "正在读取 My Recipe Box…"
+    },
+    "import": {
+      "shareArrivalTitle": "直接从手机分享",
+      "shareArrivalBody": "LX 会获取该链接。社交媒体的食谱会先以可审核的草稿形式打开。",
+      "shareRtkArrivalTitle": "已收到 My Recipe Box 备份",
+      "shareRtkArrivalBody": "LX 正在读取分享的 RTK 文件，并连同可用图片一起导入其中的食谱。",
+      "importRunningAria": "正在导入",
+      "kicker": "食谱搜索",
+      "title": "从网页导入食谱",
+      "description": "粘贴食谱链接、Pinterest 收藏或公开的 Facebook Reel。保存前社交媒体内容都会打开供审核。",
+      "platformsAria": "支持的网站示例",
+      "morePlatforms": "更多食谱网站",
+      "howto": "<strong>安卓上无需复制：</strong>只需安装一次 LX 应用。然后通过<b>分享 → LX Familie</b>从食谱网站、Pinterest 或 Facebook 导入。",
+      "urlLabel": "公开食谱链接",
+      "urlPlaceholder": "https://www.pinterest.de/pin/... 或食谱页面",
+      "socialTextTitle": "添加 Facebook 说明文字",
+      "socialTextSummary": "适用于 Facebook 只分享链接的情况",
+      "socialTextLabel": "Reel 的说明文字或食谱文本",
+      "socialTextPlaceholder": "粘贴 Reel 说明中的标题、食材和做法…",
+      "socialTextHint": "文本保存在你的 LX 服务器上，并以可编辑的草稿形式打开。",
+      "submitLoading": "正在读取食谱…",
+      "submit": "立即导入食谱",
+      "help": "出于安全原因，不会打开私有页面、登录页面和家庭内网地址。部分网站可能在技术上阻止自动获取。"
+    },
+    "review": {
+      "kicker": "已导入的草稿",
+      "facebookKicker": "从 Facebook Reels 读取",
+      "sharedKicker": "从 My Recipe Box 分享",
+      "title": "检查一次，然后保存",
+      "description": "Reel 说明可能缺少用量、顺序或个别步骤。请在下方补充缺失的内容。",
+      "sharedDescription": "不同版本的食谱应用分享的详细程度不同。请快速检查用量和顺序，必要时添加图片。",
+      "notSaved": "尚未保存",
+      "editorKicker": "你的审核",
+      "editorTitle": "审核食谱草稿",
+      "saveReviewed": "保存已审核的食谱"
+    },
+    "manual": {
+      "kicker": "你的家庭食谱",
+      "title": "创建自己的食谱",
+      "editTitle": "编辑食谱",
+      "dishTitleLabel": "菜品名称",
+      "dishTitlePlaceholder": "例如：爸爸的招牌肉酱面",
+      "prepTimeLabel": "准备时间",
+      "servingsLabel": "份数",
+      "imageLabel": "食谱图片",
+      "imagePlaceholder": "https://…/recipe-image.jpg",
+      "imageHint": "所选图片仅保存在你自己的 LX 服务器上。",
+      "chooseImage": "选择图片",
+      "takePhoto": "拍照",
+      "imageUploading": "正在保存图片…",
+      "imageSavedTitle": "食谱图片已保存",
+      "imageSavedBody": "图片现已保存在你的 LX 服务器上。",
+      "imageUploadFailedTitle": "图片未保存",
+      "imageUploadFailedBody": "食谱图片未能保存。",
+      "removeImage": "删除食谱图片",
+      "imagePreviewAlt": "{{title}}的预览",
+      "ingredientsLabel": "食材",
+      "addIngredient": "添加食材",
+      "ingredientPlaceholder": "例如：2根西葫芦",
+      "removeIngredient": "删除食材",
+      "instructionsLabel": "做法步骤",
+      "addStep": "添加步骤",
+      "stepPlaceholder": "描述一个完整的做法步骤…",
+      "removeStep": "删除步骤",
+      "saveChanges": "保存更改",
+      "submit": "保存食谱"
+    }
+  },
+  "cookingMode": {
+    "activeBadge": "烹饪模式进行中",
+    "adjustPortions": "调整份数：",
+    "timer": {
+      "title": "厨房计时器",
+      "minutesUnit": "分钟",
+      "start": "开始",
+      "stop": "停止",
+      "resetTitle": "重置计时器",
+      "startedTitle": "⏱️ 烹饪计时器已启动",
+      "startedBody_one": "计时器已启动，{{count}}分钟。",
+      "startedBody_other": "计时器已启动，{{count}}分钟。",
+      "finishedTitle": "⏰ 烹饪完成！",
+      "finishedBody": "“{{title}}”的烹饪计时器到时间了！"
+    },
+    "ingredients": {
+      "title": "食材（{{count}}）",
+      "addToList": "🛒 加入 Bring! 清单",
+      "addedTitle": "🛒 食材已添加",
+      "addedBody_one": "“{{title}}”的{{count}}种食材已加入购物清单！",
+      "addedBody_other": "“{{title}}”的{{count}}种食材已加入购物清单！"
+    },
+    "steps": {
+      "title": "逐步做法",
+      "progress": "{{completed}} / {{total}} 已完成",
+      "progressAria": "准备进度",
+      "parallelHint": "可并行准备",
+      "stepTimer": "计时器 · {{minutes}}分钟"
+    }
+  }
+}

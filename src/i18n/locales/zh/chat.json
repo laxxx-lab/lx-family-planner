@@ -1,0 +1,83 @@
+{
+  "errors": {
+    "attachmentLoad": "附件加载失败。"
+  },
+  "imageViewer": {
+    "label": "聊天图片",
+    "viewLarge": "全屏查看{{name}}",
+    "closeAria": "关闭图片查看",
+    "tapToClose": "点图片外部关闭"
+  },
+  "attachment": {
+    "open": "打开",
+    "download": "下载",
+    "kinds": {
+      "apk": "安卓应用",
+      "archive": "归档",
+      "pdf": "PDF 文档",
+      "video": "视频",
+      "audio": "音频",
+      "document": "文档"
+    }
+  },
+  "toasts": {
+    "attachmentOpenFailedTitle": "附件未打开",
+    "downloadFailedTitle": "下载失败",
+    "attachmentLimitTitle": "达到附件上限",
+    "attachmentLimitBody": "一条消息最多包含{{max}}个文件。",
+    "fileTooLargeTitle": "文件太大",
+    "fileTooLargeBody": "{{name}}超过 100 MB。",
+    "selectionTrimmedTitle": "选择已精简",
+    "selectionTrimmedBody_one": "已附加第一个文件。",
+    "selectionTrimmedBody_other": "已附加前{{count}}个文件。",
+    "attachmentSendFailedTitle": "附件未发送",
+    "attachmentSendFailedBody": "文件无法保存到家庭云。"
+  },
+  "preview": {
+    "fileShared": "📎 已分享文件",
+    "invitedChat": "受邀的家庭聊天",
+    "openGroup": "打开群组",
+    "noMessages": "还没有消息",
+    "photo": "📷 照片",
+    "file": "📎 文件",
+    "newMessage": "新消息"
+  },
+  "directory": {
+    "kicker": "家庭聊天",
+    "title": "聊天",
+    "groupChannel": "大家一起",
+    "directLabel": "私聊",
+    "invitedLabel": "受邀"
+  },
+  "room": {
+    "familyProfiles_one": "{{count}}个家庭成员",
+    "familyProfiles_other": "{{count}}个家庭成员",
+    "guestInvited": "你已收到专属邀请",
+    "groupTitle": "家庭聊天",
+    "visibleToAll": "所有人可见",
+    "guestAccess": "接受后获得访客权限",
+    "directMessage": "私信"
+  },
+  "empty": {
+    "title": "这里还很安静",
+    "prompt": "给{{name}}写第一条消息吧。",
+    "familyName": "你们家"
+  },
+  "message": {
+    "you": "你",
+    "chatPhoto": "聊天照片",
+    "sentAttachmentAlt": "已发送的附件",
+    "viewLarge": "查看大图"
+  },
+  "composer": {
+    "removeAttachment": "移除{{name}}",
+    "uploadingFile": "正在保存第{{current}}/{{total}}个文件到云端",
+    "sendingMessage": "正在发送消息",
+    "attachFiles": "添加附件",
+    "placeholder": "给{{name}}的消息…",
+    "placeholderFamilyName": "全家",
+    "sending": "发送中…",
+    "send": "发送",
+    "cloudNote": "附件自动归档到家庭档案 · 上限 100 MB"
+  }
+}

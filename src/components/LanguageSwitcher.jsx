@@ -15,7 +15,8 @@ const LANGUAGE_OPTIONS = [
   { code: 'es', short: 'ES', label: 'Español' },
   { code: 'it', short: 'IT', label: 'Italiano' },
   { code: 'nl', short: 'NL', label: 'Nederlands' },
-  { code: 'pl', short: 'PL', label: 'Polski' }
+  { code: 'pl', short: 'PL', label: 'Polski' },
+  { code: 'zh', short: 'ZH', label: '中文' }
 ];
 
 export default function LanguageSwitcher({ variant = 'header' }) {

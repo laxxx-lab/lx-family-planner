@@ -15,7 +15,7 @@
   <Category>Tools:Utilities</Category>
   <ExtraSearchTerms>LX Family private family OS family organizer calendar household children meal shopping self hosted</ExtraSearchTerms>
   <Requires>A 32-character or longer random APP_SECRET. Keep the same value for every update.</Requires>
-  <Changes>v1.21.3: Adult-only calendar editing, secure wall-display profile switching, themes and family task visibility. Corrected notification and theme contrast, translated reward errors. Persistent data and backups remain intact.</Changes>
+  <Changes>v1.21.4: Adds optional Simplified Chinese while preserving German as the default. Includes calendar permission, wall-display, notification and theme fixes from 1.21.3. Persistent data and backups remain intact.</Changes>
   <Date>2026-08-27</Date>
   <License>MIT</License>
   <Screenshot>https://raw.githubusercontent.com/laxxx-lab/lx-family-planner/main/docs/screenshots/demo-dashboard.png</Screenshot>

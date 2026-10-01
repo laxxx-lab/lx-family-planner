@@ -1,0 +1,152 @@
+{
+  "center": {
+    "trigger": {
+      "unread_one": "家庭收件箱中有{{count}}条未读通知",
+      "unread_other": "家庭收件箱中有{{count}}条未读通知",
+      "open": "打开家庭收件箱",
+      "title": "家庭收件箱"
+    },
+    "header": {
+      "kicker": "家庭电台",
+      "title": "家庭收件箱",
+      "subtitle": "{{name}}的每日概览和通知尽在一处。",
+      "subtitleFallbackName": "你",
+      "close": "关闭通知"
+    },
+    "tabs": {
+      "label": "选择收件箱",
+      "today": "今天",
+      "notifications": "通知"
+    },
+    "markAllRead": "全部标为已读",
+    "time": {
+      "today": "今天，{{time}}",
+      "yesterday": "昨天，{{time}}"
+    },
+    "digest": {
+      "summary_one": "今天有{{count}}件事需要你关注。",
+      "summary_other": "今天有{{count}}件事需要你关注。",
+      "allClear": "今天一切平静安好。",
+      "intro": "快速浏览一下——新的一天就可以开始了。",
+      "events": {
+        "label": "活动",
+        "free": "今天空闲",
+        "count_one": "今天{{count}}个活动",
+        "count_other": "今天{{count}}个活动",
+        "empty": "日历中没有条目"
+      },
+      "tasks": {
+        "label": "任务",
+        "approvals_one": "{{count}}个等待审核",
+        "approvals_other": "{{count}}个等待审核",
+        "open_one": "今天{{count}}个待办",
+        "open_other": "今天{{count}}个待办",
+        "done": "全部完成",
+        "empty": "没有紧急任务"
+      },
+      "meals": {
+        "label": "今日餐食",
+        "unplanned": "还没有安排",
+        "empty": "膳食计划还有空间"
+      },
+      "shopping": {
+        "label": "购物",
+        "missing_one": "缺{{count}}件商品",
+        "missing_other": "缺{{count}}件商品",
+        "listEmpty": "清单是空的",
+        "nothingToBuy": "目前没有需要购买的"
+      }
+    },
+    "empty": {
+      "title": "这里很安静",
+      "text": "新的活动、消息和任务都会准时出现在这里。"
+    },
+    "meta": {
+      "groupChat": "家庭聊天",
+      "directMessages": "私信",
+      "taskAssigned": "新任务",
+      "taskApproval": "任务审核",
+      "taskCompleted": "完成",
+      "events": "家庭日历",
+      "moodHelp": "家庭指南针",
+      "moodUpdates": "心情",
+      "problemReports": "问题报告",
+      "encouragements": "鼓励",
+      "familyPolls": "家庭投票",
+      "familyMissions": "家庭任务",
+      "schoolItems": "学校",
+      "rewards": "奖励",
+      "pocketMoney": "零花钱",
+      "familyConnections": "家庭网络",
+      "familyMail": "家庭邮件",
+      "familyChatInvites": "聊天邀请",
+      "default": "家庭计划器"
+    },
+    "footer": {
+      "today": "每日概览根据你的家庭计划实时生成。",
+      "notifications": "通知保留 90 天。"
+    }
+  },
+  "permissionBanner": {
+    "child": {
+      "eyebrow": "不错过任何重要事项",
+      "title": "需要我通知你吗，{{name}}？",
+      "textNative": "当有新消息或新任务时，LX 应用会通知你。",
+      "textWeb": "当有新消息或新任务时，本设备会通知你。",
+      "action": "好的，请通知我"
+    },
+    "adult": {
+      "eyebrow": "让家人随时了解最新动态",
+      "titleNative": "安卓原生通知",
+      "titleWeb": "本设备通知",
+      "textNative": "聊天、活动和任务会显示在安卓通知栏中——即使 LX 应用已关闭。",
+      "textWeb": "即使计划器已关闭，聊天、活动和任务也会送达。",
+      "action": "立即开启"
+    },
+    "profileOnly": "仅适用于{{name}}的成员",
+    "busy": "请稍候……",
+    "later": "稍后",
+    "close": "忽略"
+  },
+  "webPush": {
+    "secureContext": "通知需要安全的 HTTPS 地址。",
+    "iosHomeScreen": "在 iPhone 和 iPad 上，请先选择\"添加到主屏幕\"，然后从主屏幕打开家庭应用。",
+    "unsupported": "此浏览器不支持网页通知。",
+    "permissionDenied": "浏览器中已拒绝通知。",
+    "permissionNotGranted": "尚未允许通知。",
+    "deviceNames": {
+      "apple": "苹果移动设备",
+      "android": "安卓设备",
+      "windows": "Windows 电脑",
+      "mac": "Mac",
+      "chromebook": "Chromebook",
+      "fallback": "家庭设备"
+    }
+  },
+  "nativePush": {
+    "timeoutDefault": "安卓未及时响应。",
+    "registrationFailed": "安卓应用无法注册推送。",
+    "serviceStartFailed": "安卓无法启动通知服务。请完全关闭 LX 并重新打开应用。",
+    "channels": {
+      "updatesName": "家庭动态",
+      "updatesDescription": "消息、活动、任务和家庭动态",
+      "urgentName": "紧急家庭动态",
+      "urgentDescription": "紧急求助和限时提醒",
+      "createFailed": "安卓无法创建通知渠道。请在安卓设置中检查应用通知。"
+    },
+    "onlyInApp": "安卓原生通知仅在 LX 安卓应用中可用。",
+    "onlyInAppRegister": "安卓原生通知仅在应用中可用。",
+    "permissionCheckTimeout": "安卓未响应权限检查。请完全关闭 LX 并重新打开应用。",
+    "diagnoseTimeout": "安卓无法检查 Google Play 服务状态。",
+    "firebaseNotReady": "安卓应用中 Firebase 未就绪：{{error}}",
+    "firebaseNotConfigured": "安卓应用中未设置 Firebase。",
+    "playServicesUnavailable": "本设备上 Google Play 服务未就绪：{{status}}。请更新 Google Play 服务后重试。",
+    "playServicesUnknownStatus": "未知状态",
+    "tokenTimeout": "Firebase 未下发设备密钥。Google Play 服务可用；请检查手机上的 VPN、防火墙和私密 DNS。",
+    "tokenEmpty": "Firebase 下发了空的设备密钥。",
+    "permissionRequestTimeout": "安卓权限请求未完成。请在应用设置中允许通知后重试。",
+    "permissionDenied": "安卓应用设置中已关闭通知。",
+    "permissionNotGranted": "尚未允许通知。",
+    "deviceName": "LX 安卓应用"
+  }
+}

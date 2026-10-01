@@ -4,6 +4,13 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.21.4] – 2026-10-01
+
+- Vereinfachtes Chinesisch ist optional verfügbar; Deutsch bleibt Standard auf Server und Client.
+- WebDAV-Einrichtung übersetzt und vorhandene Sprachpräferenzen beibehalten.
+- Enthält die Kalender-, Wanddisplay-, Benachrichtigungs- und Theme-Korrekturen aus 1.21.3.
+
+
 ## [1.21.3] – 2026-10-01
 
 - Kalenderänderungen und ICS-Importe sind Erwachsenenprofilen vorbehalten, auch über die API.

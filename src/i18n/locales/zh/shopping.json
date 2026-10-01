@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "eyebrow": "家庭市场",
+    "title": "家里缺什么？",
+    "subtitle": "浏览完整的 Bring! 商品库，或添加自己的商品。",
+    "statusLive": "与“{{listName}}”实时同步",
+    "statusLocal": "本地家庭清单",
+    "catalogItems": "{{total}}个标准商品",
+    "syncing": "同步中",
+    "refreshBring": "刷新 Bring!",
+    "connection": "连接",
+    "connectBring": "连接 Bring!"
+  },
+  "search": {
+    "placeholder": "鸡蛋、Nutella、面包卷、韭菜…",
+    "searchAria": "搜索商品或新建一个",
+    "quantityLabel": "数量",
+    "quantityAria": "数量或备注",
+    "hint": "没找到？你输入的内容将作为你的自有 Bring! 商品添加。"
+  },
+  "list": {
+    "kicker": "你的清单",
+    "title": "购物清单",
+    "emptyTitle": "购物篮在等你。",
+    "emptyHint": "点下方标准商品，或直接搜索。",
+    "recentToggle": "最近购买 ({{count}})",
+    "backToList": "回到清单"
+  },
+  "catalog": {
+    "sourceBring": "Bring! 商品库",
+    "sourceDefault": "基础品类",
+    "resultsFor": "“{{query}}”的搜索结果",
+    "quickAdd": "快速添加",
+    "customCategory": "自有商品",
+    "shownCount": "显示{{count}}个",
+    "departmentsAria": "商品分类",
+    "popular": "热门",
+    "onList": "在清单上",
+    "noResultsTitle": "商品库中没有匹配——没关系。",
+    "noResultsHint": "用添加功能把{{query}}创建为你的自有商品。"
+  },
+  "accountModal": {
+    "eyebrow": "可选集成",
+    "title": "连接 Bring! 购物",
+    "connectedEyebrow": "实时连接中",
+    "defaultListName": "家庭清单",
+    "securityNote": "你的密码加密存储在你自己的服务器上，从不保存在浏览器中。",
+    "syncNow": "立即同步",
+    "disconnect": "断开连接",
+    "intro": "接管你现有的 Bring! 清单。登录后，准确选择属于家庭计划的那个清单。",
+    "emailLabel": "Bring! 邮箱",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Bring! 密码",
+    "passwordPlaceholder": "仅用于安全登录",
+    "selectListLabel": "要连接哪个清单？",
+    "connectSelected": "连接选中的清单",
+    "loginButton": "使用 Bring! 安全登录",
+    "fineprint": "LX Family 不是 Bring! Labs AG 的产品，你可以随时断开连接。",
+    "toastConnectedTitle": "Bring! 已连接",
+    "toastConnectedBody": "{{listName}}正在同步。",
+    "toastDefaultList": "购物清单"
+  }
+}

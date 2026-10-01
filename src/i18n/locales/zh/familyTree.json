@@ -1,0 +1,179 @@
+{
+  "toggle": {
+    "on": "开启",
+    "off": "关闭"
+  },
+  "access": {
+    "grants": {
+      "sharedCalendar": {
+        "label": "共享活动",
+        "help": "这个家庭可以邀请你参加对双方家庭可见的活动。"
+      },
+      "tasks": {
+        "label": "任务",
+        "help": "这个家庭的成人成员可以给你的孩子布置任务。"
+      },
+      "rewards": {
+        "label": "星星和奖励",
+        "help": "允许任务获得星星积分和自定义奖励。"
+      },
+      "pocketMoney": {
+        "label": "零花钱",
+        "help": "允许为你的孩子记录可追溯的零花钱收支。"
+      }
+    },
+    "childPosition": {
+      "teenager": "青少年",
+      "grandchild": "孙辈"
+    },
+    "header": {
+      "kicker": "安全地一起安排生活",
+      "title": "家庭网络中的权限",
+      "description": "每个连接由你决定。对方家庭无法看到你的私人日历、聊天或留言板内容。"
+    },
+    "card": {
+      "subtitle": "这个家庭可以为你的孩子做什么",
+      "grantedFromOther": "对方已分享给你：",
+      "nothingYet": "暂无"
+    },
+    "planner": {
+      "kicker": "为孙辈",
+      "title": "家庭之间",
+      "description": "任务、奖励或零花钱会直接、可追溯地记入孩子的家庭账户。",
+      "familyBranch": "家庭分支",
+      "tools": {
+        "task": "任务",
+        "reward": "奖励",
+        "money": "零花钱"
+      },
+      "task": {
+        "label": "任务",
+        "placeholder": "例如：帮奶奶打理花园",
+        "dueDate": "截止时间？",
+        "stars": "星星"
+      },
+      "reward": {
+        "label": "奖励",
+        "placeholder": "例如：去动物园玩一个下午",
+        "costStars": "所需星星",
+        "image": "奖励图片"
+      },
+      "money": {
+        "amount": "金额（欧元）",
+        "note": "这是干嘛的？",
+        "defaultNote": "来自爷爷奶奶"
+      },
+      "submit": "发送给孩子的成员"
+    }
+  },
+  "tree": {
+    "relations": {
+      "parent": {
+        "label": "上级家庭",
+        "help": "所选家庭位于你们家之上。"
+      },
+      "child": {
+        "label": "下级家庭",
+        "help": "所选家庭是你们家的下级分支。"
+      },
+      "sibling": {
+        "label": "同辈家庭",
+        "help": "两个家庭在同一层级。"
+      },
+      "relative": {
+        "label": "其他亲属家庭",
+        "help": "例如叔伯、姑姨、堂表亲，或亲近的自选家人。"
+      },
+      "fallback": "关联家庭"
+    },
+    "node": {
+      "ourFamily": "我们家",
+      "profiles_one": "{{count}}个成员",
+      "profiles_other": "{{count}}个成员"
+    },
+    "branch": {
+      "membersAria": "{{familyName}}的成员",
+      "thisFamily": "本家庭",
+      "noProfiles": "暂无成员"
+    },
+    "header": {
+      "kicker": "需确认才能建立连接",
+      "title": "你的家庭网络",
+      "description": "连接真实的家庭账户。只有对方家庭同意后，连接才会生效。",
+      "closeAria": "关闭家庭树"
+    },
+    "generations": {
+      "parents": "上级家庭",
+      "parentsEmpty": "尚未关联",
+      "children": "下级家庭",
+      "childrenEmpty": "暂无家庭分支",
+      "ourAccount": "你的账户"
+    },
+    "inbox": {
+      "kicker": "等你决定",
+      "title": "家庭请求",
+      "request": "{{familyName}}希望把你添加为他们的{{relation}}。",
+      "accept": "接受",
+      "decline": "拒绝"
+    },
+    "request": {
+      "kicker": "连接家庭账户",
+      "title": "新建连接",
+      "registeredFamily": "已注册家庭",
+      "selectFamily": "选择家庭…",
+      "relationLabel": "这个家庭是你的…",
+      "send": "发送请求",
+      "allConnected": "所有已注册的家庭都已连接或已发送请求。",
+      "adultsOnly": "只有成人成员才能关联家庭账户。"
+    },
+    "manage": {
+      "kicker": "管理",
+      "title": "连接与请求",
+      "pending": "等待确认",
+      "removeTitle": "移除连接",
+      "empty": "暂无连接。"
+    }
+  },
+  "settings": {
+    "header": {
+      "eyebrow": "家庭管理",
+      "title": "我们的家"
+    },
+    "form": {
+      "newImage": "新的家庭照片",
+      "familyName": "家庭名称",
+      "badge": "简短标语",
+      "badgeDefault": "我们家",
+      "badgePlaceholder": "例如：我们的家",
+      "newPassword": "新的家庭密码（可选）",
+      "passwordPlaceholder": "留空则不修改"
+    },
+    "household": {
+      "title": "显示第二个规划地点",
+      "description": "在应用顶部把“爷爷奶奶家”显示为独立的规划区域。",
+      "why": "为什么需要这个？",
+      "explainer": "适合爷爷奶奶不使用自己的家庭账户的情况：可以单独为他们家规划活动、任务、餐食计划、垃圾收运日期和留言板。"
+    },
+    "about": {
+      "version": "版本{{version}}"
+    },
+    "github": {
+      "aria": "在 GitHub 上查看 LX Family",
+      "kicker": "开源",
+      "title": "喜欢 LX 吗？",
+      "description": "访问项目主页或给我们点个星。"
+    },
+    "actions": {
+      "saving": "保存中…",
+      "save": "保存更改",
+      "deleteAccount": "删除家庭账户"
+    },
+    "delete": {
+      "title": "永久删除这个家庭账户？",
+      "description": "这将删除所有成员、活动、任务以及其他家庭内容。此操作无法撤销。",
+      "passwordLabel": "输入家庭密码以确认",
+      "deleting": "删除中…",
+      "confirm": "永久删除家庭"
+    }
+  }
+}
