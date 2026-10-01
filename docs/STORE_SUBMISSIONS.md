@@ -13,7 +13,7 @@ Unraid Community Applications, Umbrel, CasaOS and Cosmos.
   [IceWhaleTech/CasaOS-AppStore#999](https://github.com/IceWhaleTech/CasaOS-AppStore/pull/999).
 - **Cosmos:** the initial package was merged in
   [azukaar/cosmos-servapps-official#267](https://github.com/azukaar/cosmos-servapps-official/pull/267).
-  The 1.21.3 patch update is submitted in
+  The 1.21.4 patch update is submitted in
   [azukaar/cosmos-servapps-official#312](https://github.com/azukaar/cosmos-servapps-official/pull/312).
 
 Store submissions and updates require a maintainer to approve and publish the
