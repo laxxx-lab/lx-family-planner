@@ -1,0 +1,274 @@
+{
+  "child": {
+    "fallbackName": "冒险家",
+    "worlds": {
+      "space": {
+        "label": "火箭基地",
+        "mission": "星星能量",
+        "greeting": "准备好升空了吗？"
+      },
+      "unicorn": {
+        "label": "独角兽乐园",
+        "mission": "彩虹能量",
+        "greeting": "今天会很神奇！"
+      },
+      "fairy": {
+        "label": "仙女魔法",
+        "mission": "魔法粉尘",
+        "greeting": "魔法森林在召唤！"
+      },
+      "dino": {
+        "label": "恐龙世界",
+        "mission": "恐龙能量",
+        "greeting": "出发去大冒险！"
+      },
+      "sunshine": {
+        "label": "阳光岛",
+        "mission": "阳光",
+        "greeting": "美好的一天开始了！"
+      },
+      "adventure": {
+        "label": "英雄营地",
+        "mission": "英雄能量",
+        "greeting": "你的任务在等你！"
+      }
+    },
+    "moods": {
+      "super": "太棒了！",
+      "gut": "很好",
+      "okay": "一般",
+      "hilfe": "需要抱抱"
+    },
+    "hero": {
+      "defaultTitle": "家庭英雄",
+      "kicker": "{{level}}级 · {{title}}",
+      "hey": "嘿{{name}}！",
+      "intro_zero": "今天没有你的任务，每完成一个任务都会让你的星星宝藏增加。",
+      "intro_one": "今天有{{count}}个任务，每完成一个任务都会让你的星星宝藏增加。",
+      "intro_other": "今天有{{count}}个任务，每完成一个任务都会让你的星星宝藏增加。",
+      "starsToNextLevel_one": "还差{{count}}颗星到{{level}}级",
+      "starsToNextLevel_other": "还差{{count}}颗星到{{level}}级",
+      "openMissions": "个任务待完成",
+      "done": "已完成"
+    },
+    "map": {
+      "kicker": "你的冒险之路",
+      "progress": "已完成{{done}}/{{total}}个任务",
+      "freeDay": "今天是自由探索日",
+      "progressAria": "任务进度",
+      "goalDone": "完成！",
+      "goalLabel": "每日目标",
+      "unbeatable": "你今天势不可挡",
+      "missionsToGoal_one": "还差{{count}}个任务达标",
+      "missionsToGoal_other": "还差{{count}}个任务达标"
+    },
+    "today": {
+      "routine": {
+        "label": "你的日常",
+        "allDone": "今天全部完成！",
+        "discover": "发现日常",
+        "steps": "{{done}}/{{total}}步"
+      },
+      "saving": {
+        "label": "你的存钱罐",
+        "noGoal": "还没有储蓄目标",
+        "percentDone": "已完成{{percent}}%"
+      },
+      "badges": {
+        "label": "你的收藏",
+        "count_one": "发现{{count}}个徽章",
+        "count_other": "发现{{count}}个徽章",
+        "hint": "有新成就等着你"
+      }
+    },
+    "story": {
+      "encouragementFrom": "来自{{name}}的加油",
+      "familyFallback": "你们家",
+      "quote": "“{{message}}”",
+      "togetherStrong": "齐心协力",
+      "pollKicker": "你的一票很重要"
+    },
+    "mood": {
+      "kicker": "家庭指南针",
+      "title": "今天感觉怎么样？",
+      "checkedIn": "感谢你今天的签到。",
+      "prompt": "点一下就够了——家人会知道你的状态。"
+    },
+    "quests": {
+      "kicker": "你的任务",
+      "title": "今天收集星星",
+      "viewAll": "全部",
+      "defaultCategory": "家庭任务",
+      "emptyTitle": "全部完成！",
+      "emptyText": "你的任务都完成了，干得好。"
+    },
+    "rewards": {
+      "kicker": "心愿站",
+      "title": "你的星星商店",
+      "shop": "商店",
+      "cost_one": "{{count}}颗星星",
+      "cost_other": "{{count}}颗星星",
+      "redeem": "兑换",
+      "collect": "继续收集",
+      "empty": "商店里还没有心愿。"
+    },
+    "media": {
+      "kicker": "家人已审核",
+      "title": "你的媒体室",
+      "safeBadge": "✓ 爸妈精选",
+      "spotifyPlaylist": "Spotify 播放列表",
+      "youtubeChannel": "YouTube 频道",
+      "playMusic": "播放音乐",
+      "playVideo": "播放视频",
+      "pausedLabel": "媒体室休息中",
+      "pausedUntil": "将于{{time}}为你回来。"
+    },
+    "homeControlsTitle": "你的家居控制",
+    "buddy": {
+      "kicker": "你的世界，你做主",
+      "title": "冒险伙伴",
+      "text": "选择陪你完成任务的伙伴。该选择仅保存于你的成员。"
+    },
+    "familyStrip": {
+      "nextLabel": "接下来",
+      "nothingPlanned": "今天没有安排",
+      "calendar": "日历",
+      "chatLabel": "家庭电台",
+      "chatPrompt": "和大家打个招呼吧！",
+      "open": "打开"
+    }
+  },
+  "personal": {
+    "widgets": {
+      "calendar": {
+        "label": "我的活动",
+        "description": "你即将到来的活动和家庭场合",
+        "action": "查看全部"
+      },
+      "tasks": {
+        "label": "任务与审核",
+        "description": "你的任务和待家长审核项",
+        "action": "任务计划"
+      },
+      "meals": {
+        "label": "今日餐桌",
+        "description": "你家庭的当前膳食计划",
+        "action": "膳食计划"
+      },
+      "shopping": {
+        "label": "购物清单",
+        "description": "重要待购商品一目了然",
+        "action": "购物清单"
+      },
+      "trash": {
+        "label": "下次垃圾收运",
+        "description": "你规划地点的下次收运日期",
+        "action": "垃圾收运日历"
+      },
+      "board": {
+        "label": "留言板",
+        "description": "最新的共享家庭便签",
+        "action": "前往留言板"
+      },
+      "cloud": {
+        "label": "家庭档案",
+        "description": "直接上传照片、文档和回忆"
+      },
+      "home-assistant": {
+        "label": "我们的家",
+        "description": "来自 Home Assistant 的共享设备、传感器和场景"
+      }
+    },
+    "hero": {
+      "kicker": "你的家庭概览",
+      "greeting": {
+        "morning": "早上好",
+        "day": "你好",
+        "evening": "晚上好"
+      },
+      "title": "{{greeting}}，{{name}}！",
+      "summary": "今日关注：{{events}}、{{tasks}}和{{shopping}}。",
+      "events_one": "{{count}}个活动",
+      "events_other": "{{count}}个活动",
+      "tasks_one": "{{count}}个待办任务",
+      "tasks_other": "{{count}}个待办任务",
+      "shopping_one": "{{count}}件待购商品",
+      "shopping_other": "{{count}}件待购商品",
+      "customize": "布局",
+      "quickAdd": "添加内容"
+    },
+    "widgetHeader": {
+      "open": "打开"
+    },
+    "calendar": {
+      "empty": "你没有已安排的活动。",
+      "allDay": "全天",
+      "defaultLocation": "家庭活动"
+    },
+    "tasks": {
+      "approvals_one": "已完成任务等待你审核",
+      "approvals_other": "已完成任务等待你审核",
+      "empty": "所有任务都完成了。",
+      "due": "{{date}}到期",
+      "defaultCategory": "任务"
+    },
+    "meals": {
+      "empty": "今天还没有安排。",
+      "types": {
+        "lunch": "午餐",
+        "dinner": "晚餐"
+      }
+    },
+    "shopping": {
+      "empty": "购物清单已完成。"
+    },
+    "trash": {
+      "pickupOn": "{{date}}收运",
+      "empty": "暂无垃圾收运日期。"
+    },
+    "board": {
+      "title": "留言板新动态",
+      "empty": "还没有便签。"
+    }
+  },
+  "customizer": {
+    "kicker": "视图工作室",
+    "personalTitle": "你的概览",
+    "tabletTitle": "平板磁贴",
+    "scopeNote": "此选择仅适用于本设备上的{{name}}。",
+    "thisProfile": "本成员",
+    "closeAria": "关闭视图工作室",
+    "density": {
+      "title": "磁贴间距",
+      "hint": "触控舒适，或紧凑以显示更多概览。",
+      "groupAria": "选择磁贴间距",
+      "comfortable": "舒适",
+      "compact": "紧凑"
+    },
+    "tabletPreview": {
+      "title": "平板磁贴内容",
+      "hint": "更多条目可在磁贴内直接滚动查看。",
+      "events": "活动",
+      "tasks": "任务",
+      "four": "4 条",
+      "eight": "8 条",
+      "all": "全部"
+    },
+    "trash": {
+      "title": "自动显示垃圾收运",
+      "hint": "可选择仅在下次收运前不久显示该磁贴。",
+      "visibility": "显示磁贴",
+      "always": "始终",
+      "upcoming": "仅在收运前",
+      "never": "从不",
+      "days": "提前多少天？"
+    },
+    "moveUp": "将{{label}}上移",
+    "moveDown": "将{{label}}下移",
+    "minVisible": "至少保留一个磁贴可见。",
+    "visibilityOn": "开",
+    "visibilityOff": "关闭",
+    "reset": "恢复默认",
+    "done": "完成"
+  }
+}

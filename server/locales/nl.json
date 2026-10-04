@@ -114,6 +114,7 @@
     "reminderBody": "Ophaling {{lead}}. Zet het op tijd buiten."
   },
   "errors": {
+    "insufficientStars": "Niet genoeg sterren",
     "tooManyLoginAttempts": "Te veel inlogpogingen. Wacht even een moment.",
     "loginRequired": "Log eerst in.",
     "adultProfileRequired": "Selecteer eerst een volwassenenprofiel.",

@@ -3,7 +3,8 @@ import i18n from '../i18n/index.js';
 // Zentrale Zuordnung von App-Sprache zu Formatierungs-Locale.
 const LOCALE_BY_LANGUAGE = {
   de: 'de-DE',
-  en: 'en-GB'
+  en: 'en-GB',
+  zh: 'zh-CN'
 };
 
 export function getActiveLocale() {

@@ -216,7 +216,7 @@ function CalendarTimeline({
     const end = Math.min(bounds.endHour * 60, Math.max(selected.start, current) + 30);
     slotStartRef.current = null;
     setSlotSelection(null);
-    onCreateFromSlot({
+    onCreateFromSlot?.({
       date: selected.dateKey,
       time: timelineTimeLabel(start),
       endTime: timelineTimeLabel(end)
@@ -618,7 +618,7 @@ export default function CalendarView() {
               )}
             </button>
           )}
-          <button
+          {canManage && <button
             type="button"
             className="calendar-add-button"
             onClick={() => {
@@ -628,7 +628,7 @@ export default function CalendarView() {
             }}
           >
             <Plus size={18} /> {t('view.actions.newEvent')}
-          </button>
+          </button>}
         </div>
 
         <div className="calendar-hero-orbit" aria-hidden="true">
@@ -725,14 +725,14 @@ export default function CalendarView() {
           <button type="button" onClick={exportICS}>
             <Download size={15} /> {t('view.tools.export')}
           </button>
-          <label className="calendar-import-action">
+          {canManage && <label className="calendar-import-action">
             <Upload size={15} /> {t('view.tools.import')}
             <input
               type="file"
               accept=".ics,text/calendar"
               onChange={handleFileUpload}
             />
-          </label>
+          </label>}
         </div>
       </section>
 
@@ -788,7 +788,7 @@ export default function CalendarView() {
             <span><CalendarPlus size={30} /></span>
             <h3>{t('view.empty.title')}</h3>
             <p>{t('view.empty.description')}</p>
-            <button
+            {canManage && <button
               type="button"
               onClick={() => {
                 setQuickAddDefaultType('event');
@@ -797,7 +797,7 @@ export default function CalendarView() {
               }}
             >
               <Plus size={16} /> {t('view.empty.cta')}
-            </button>
+            </button>}
           </div>
         ) : (
           <div className="calendar-day-groups">
@@ -942,7 +942,7 @@ export default function CalendarView() {
                           {displayEvent.notes && <p>{displayEvent.notes}</p>}
                         </div>
 
-                        {event.readOnly ? (
+                        {event.readOnly || !canManage ? (
                           <span
                             className="calendar-event-readonly"
                             title={t('view.event.readOnlyTitle')}
@@ -1005,11 +1005,11 @@ export default function CalendarView() {
           anchorDate={calendarAnchorDate}
           events={gridEvents}
           members={members}
-          onCreateFromSlot={slot => {
+          onCreateFromSlot={canManage ? slot => {
             setQuickAddDefaultType('event');
             setQuickAddEventPreset(slot);
             setIsQuickAddOpen(true);
-          }}
+          } : undefined}
           onSelectEvent={setSelectedEvent}
           t={t}
           todayKey={todayKey}
@@ -1040,6 +1040,7 @@ export default function CalendarView() {
         }
       />
       <CalendarEventDialog
+        canEdit={canManage}
         event={selectedEvent}
         members={members}
         onClose={() => setSelectedEvent(null)}

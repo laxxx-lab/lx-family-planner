@@ -3,7 +3,11 @@ import fs from 'node:fs';
 import { createServer } from 'node:http';
 import os from 'node:os';
 import path from 'node:path';
-import test, { after } from 'node:test';
+import test, { after, mock } from 'node:test';
+
+// Calendar fixtures below are in August 2026. Keep the discovery window stable
+// so these sync regressions remain meaningful after those dates have passed.
+mock.method(Date, 'now', () => new Date('2026-08-12T12:00:00Z').getTime());
 
 const directory = fs.mkdtempSync(
   path.join(os.tmpdir(), 'lx-family-nextcloud-')

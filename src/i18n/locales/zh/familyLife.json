@@ -1,0 +1,279 @@
+{
+  "sections": {
+    "today": "周视图",
+    "routines": "日常",
+    "money": "零花钱",
+    "school": "学校",
+    "contacts": "电话簿",
+    "polls": "投票",
+    "safety": "安全与安宁"
+  },
+  "hero": {
+    "kicker": "日常生活，一个好团队",
+    "title": "家庭旅程",
+    "intro": "日常、上学、零花钱和各种决定都汇聚于此——孩子一看就懂，家长用着放心。",
+    "viewFor": "当前查看",
+    "yourJourney": "你的旅程",
+    "navAria": "家庭旅程版块导航"
+  },
+  "adultsOnly": "仅成人",
+  "weekly": {
+    "kicker": "过去七天",
+    "title": "{{name}}的这一周",
+    "metrics": {
+      "missions": "任务",
+      "routineDays": "日常天数",
+      "polls": "投票",
+      "stars": "星星"
+    },
+    "strongWeek": "这一周真的很棒！",
+    "everyStepCounts": "每一个小进步都值得肯定。",
+    "nextEvent": "接下来，“{{title}}”在等着你。",
+    "spontaneousMoment": "下一个家庭温馨时刻可能随时到来。"
+  },
+  "achievements": {
+    "kicker": "奖杯柜",
+    "title": "徽章",
+    "firstStep": "第一步",
+    "routinePro": "日常达人",
+    "starCollector": "星星收藏家",
+    "teamSpirit": "团队精神",
+    "collected": "已获得",
+    "stillSecret": "尚未解锁"
+  },
+  "missions": {
+    "kicker": "一起，而不是独自",
+    "title": "家庭任务",
+    "progress": "已完成 {{completed}} / {{total}}",
+    "empty": "还没有共享任务。",
+    "creatorTitle": "新建家庭任务",
+    "titlePlaceholder": "例如：一起拯救花园",
+    "descriptionPlaceholder": "你们打算一起做什么？",
+    "start": "开始任务"
+  },
+  "encouragement": {
+    "kicker": "小小的话，大大的力量",
+    "title": "加油打气",
+    "quote": "“{{message}}”",
+    "fromFamily": "你的家人",
+    "empty": "一句暖心的鼓励很快会出现在这里。",
+    "messagePlaceholder": "你想对{{name}}说什么？",
+    "send": "发送"
+  },
+  "routines": {
+    "kicker": "一步一步来",
+    "title": "{{name}}的日常",
+    "timeOfDay": {
+      "morning": "早晨",
+      "afternoon": "下午",
+      "evening": "晚上"
+    },
+    "streak_one": "🔥 连续{{count}}天",
+    "streak_other": "🔥 连续{{count}}天",
+    "deleteAria": "删除日常",
+    "emptyTitle": "还没有日常安排",
+    "emptyText": "好的日常安排能让早晨和晚上轻松不慌。",
+    "workshop": {
+      "kicker": "日常工作坊",
+      "title": "创建日常",
+      "namePlaceholder": "日常名称",
+      "stepsLabel": "每行一个步骤",
+      "save": "保存日常"
+    },
+    "defaults": {
+      "title": "早晨开始",
+      "steps": "起床\n穿衣服\n刷牙\n检查书包"
+    }
+  },
+  "money": {
+    "kicker": "家庭账户",
+    "title": "{{name}}的零花钱",
+    "balanceLabel": "当前余额",
+    "starsAvailable": "{{count}} ⭐ 可用",
+    "starCost_one": "{{count}}颗星星",
+    "starCost_other": "{{count}}颗星星",
+    "emptyLedger": "零花钱账本还是空的。",
+    "goals": {
+      "kicker": "心愿看得见",
+      "title": "储蓄目标",
+      "progress": "{{current}} / {{target}}",
+      "deleteAria": "删除储蓄目标",
+      "empty": "还没有要存钱实现的心愿。",
+      "creatorTitle": "添加储蓄目标",
+      "titlePlaceholder": "你在为什么存钱？",
+      "amountAria": "目标金额（欧元）",
+      "create": "创建目标"
+    },
+    "booking": {
+      "title": "记一笔零花钱",
+      "amountLabel": "金额（欧元）——支出填负数",
+      "noteLabel": "备注",
+      "starsLabel": "兑换星星（可选）",
+      "submit": "安全记账",
+      "defaultNote": "零花钱"
+    }
+  },
+  "school": {
+    "kicker": "上学所需的一切",
+    "title": "{{name}}的学校专区",
+    "settings": {
+      "enabled": "课程表已开启",
+      "disabled": "课程表已关闭",
+      "disabledTitle": "该孩子的学校专区已关闭",
+      "disabledHint": "仅为学龄儿童开启。家长可以编辑，孩子可以查看自己的课程表。",
+      "enable": "开启学校专区"
+    },
+    "timetable": {
+      "period": "第{{count}}节",
+      "periodShort": "节",
+      "periodLabel": "节次",
+      "free": "空闲",
+      "cancelled": "本周取消",
+      "lessonActions": "管理课程",
+      "cancellationDate": "单次停课日期",
+      "cancelOnce": "停课一次",
+      "restore": "恢复课程"
+    },
+    "kinds": {
+      "lesson": "课程表",
+      "homework": "作业",
+      "exam": "课堂测验",
+      "bag": "书包检查"
+    },
+    "colors": {
+      "ocean": "海洋蓝",
+      "meadow": "草地绿",
+      "ochre": "赭色",
+      "terracotta": "陶土色",
+      "indigo": "靛蓝",
+      "berry": "浆果色",
+      "slate": "石板灰",
+      "sky": "天空蓝",
+      "jade": "翡翠绿",
+      "fern": "蕨叶绿",
+      "amber": "琥珀色",
+      "coral": "珊瑚色",
+      "rose": "玫瑰色",
+      "lilac": "淡紫色",
+      "steel": "钢蓝色",
+      "cocoa": "可可色"
+    },
+    "deleteAria": "删除学校条目",
+    "emptyKind": "还没有录入内容。",
+    "form": {
+      "kicker": "录入一次，安心无忧",
+      "title": "新建学校条目",
+      "subjectPlaceholder": "主题",
+      "titlePlaceholder": "有什么安排？",
+      "weekday": "星期",
+      "period": "节次",
+      "startsAt": "开始时间",
+      "endsAt": "结束时间",
+      "roomPlaceholder": "教室（可选）",
+      "teacherPlaceholder": "老师（可选）",
+      "detailsPlaceholder": "书本、学习用品或简短备注",
+      "colorLabel": "科目颜色",
+      "colorHint": "在课程表中柔和地标记该科目。",
+      "colorReset": "默认颜色",
+      "submit": "添加条目",
+      "editTitle": "编辑学校条目",
+      "save": "保存更改",
+      "cancel": "取消"
+    }
+  },
+  "contacts": {
+    "kicker": "重要号码随手可得",
+    "title": "家庭电话簿",
+    "intro": "医生、学校、保险等重要联系方式，都保存在同一个私密的地方。",
+    "count_one": "{{count}}个联系人",
+    "count_other": "{{count}}个联系人",
+    "searchPlaceholder": "搜索姓名、号码或关键词",
+    "categoryFilterAria": "按联系人类别筛选",
+    "allCategories": "全部分类",
+    "emptyTitle": "还没有联系人",
+    "emptyText": "把家庭最重要的联系方式保存在这里。",
+    "noMatchesTitle": "没有匹配的联系人",
+    "noMatchesText": "试试调整搜索或分类。",
+    "call": "拨打",
+    "editAria": "编辑{{name}}",
+    "deleteAria": "删除{{name}}",
+    "categories": {
+      "medical": "医生与医疗",
+      "services": "服务",
+      "school": "学校与托管",
+      "authorities": "政府部门",
+      "insurance": "保险",
+      "emergency": "紧急",
+      "other": "其他"
+    },
+    "form": {
+      "kicker": "关键时刻有准备",
+      "title": "添加联系人",
+      "editTitle": "编辑联系人",
+      "namePlaceholder": "姓名或机构",
+      "categoryAria": "联系人类别",
+      "phonePlaceholder": "电话号码（可选）",
+      "emailPlaceholder": "电子邮箱（可选）",
+      "addressPlaceholder": "地址（可选）",
+      "notesPlaceholder": "备注、接听时间或编号（可选）",
+      "submit": "保存联系人",
+      "save": "保存更改",
+      "cancel": "取消"
+    }
+  },
+  "polls": {
+    "kicker": "每一票都重要",
+    "title": "家庭投票",
+    "votes_one": "{{count}}票",
+    "votes_other": "{{count}}票",
+    "deleteAria": "删除投票",
+    "emptyTitle": "还没有投票",
+    "emptyText": "下一次关于吃什么或去哪玩的问题，交给全家人一起决定。",
+    "form": {
+      "kicker": "快速决定",
+      "title": "发起新问题",
+      "questionPlaceholder": "你们想一起决定什么？",
+      "optionsLabel": "每行一个选项——可以使用表情符号",
+      "closesLabel": "投票截止日期（可选）",
+      "submit": "发起投票",
+      "defaultOptions": "🍕 披萨\n🍝 意面\n🥞 煎饼"
+    }
+  },
+  "safety": {
+    "emergency": {
+      "kicker": "以防万一",
+      "fallbackTitle": "紧急联系卡",
+      "defaultTitle": "我们家庭的重要求助信息",
+      "empty": "家长可以在这里保存安全的紧急联系人。"
+    },
+    "quiet": {
+      "kicker": "受保护的家庭时光",
+      "title": "安静时段与媒体时段",
+      "notifications": "通知免打扰时段",
+      "range": "{{start}} 至 {{end}}",
+      "notActive": "未启用",
+      "mediaLounge": "媒体休息室",
+      "alwaysVisible": "始终可见",
+      "explanation": "如果你愿意，紧急的“需要抱抱”提醒在免打扰时段仍可送达。普通消息会留在家庭收件箱中。"
+    },
+    "editor": {
+      "title": "编辑保护规则",
+      "quietSwitch": "通知免打扰时段",
+      "quietSwitchHint": "暂停普通推送消息。",
+      "startLabel": "开始",
+      "endLabel": "结束",
+      "urgentSwitch": "允许紧急求助通过",
+      "urgentSwitchHint": "“需要抱抱”保持可达。",
+      "mediaSwitch": "使用媒体时段",
+      "mediaSwitchHint": "仅在时间窗口内显示 YouTube 和 Spotify。",
+      "mediaFromLabel": "媒体开始时间",
+      "mediaToLabel": "媒体结束时间",
+      "emergencyTitleLabel": "紧急联系卡标题",
+      "contactsLabel": "联系人——姓名 | 电话号码 | 备注",
+      "contactsPlaceholder": "儿科医生 | 0123 456789 | 带上疫苗接种本\n奶奶 | 0987 654321 | 可以接孩子",
+      "notesLabel": "重要备注",
+      "notesPlaceholder": "过敏史、用药或重要事项",
+      "save": "保存保护规则"
+    }
+  }
+}

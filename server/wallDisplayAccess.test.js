@@ -21,8 +21,18 @@ test('wall display permits reading and the two intended check-off actions', () =
   assert.equal(wallDisplayMutationAllowed({ method: 'POST', path: '/api/auth/logout' }), true);
 });
 
-test('wall display cannot edit content, settings or change profiles', () => {
-  assert.equal(wallDisplayMutationAllowed({ method: 'POST', path: '/api/auth/member' }), false);
+test('wall display can switch profiles through the authenticated login route', () => {
+  assert.equal(wallDisplayMutationAllowed({ method: 'POST', path: '/api/auth/member' }), true);
+});
+
+test('wall display can change only its own theme', () => {
+  const session = { memberId: 'wall-1' };
+  assert.equal(wallDisplayMutationAllowed({ method: 'PATCH', path: '/api/members/wall-1', session, body: { theme: 'graphite' } }), true);
+  assert.equal(wallDisplayMutationAllowed({ method: 'PATCH', path: '/api/members/parent-1', session, body: { theme: 'graphite' } }), false);
+  assert.equal(wallDisplayMutationAllowed({ method: 'PATCH', path: '/api/members/wall-1', session, body: { theme: 'graphite', role: 'adult' } }), false);
+});
+
+test('wall display cannot edit family content or settings', () => {
   assert.equal(wallDisplayMutationAllowed({ method: 'POST', path: '/api/resources/events' }), false);
   assert.equal(wallDisplayMutationAllowed({
     method: 'PATCH',

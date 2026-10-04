@@ -4,6 +4,22 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.21.4] – 2026-10-01
+
+- Vereinfachtes Chinesisch ist optional verfügbar; Deutsch bleibt Standard auf Server und Client.
+- WebDAV-Einrichtung übersetzt und vorhandene Sprachpräferenzen beibehalten.
+- Enthält die Kalender-, Wanddisplay-, Benachrichtigungs- und Theme-Korrekturen aus 1.21.3.
+
+
+## [1.21.3] – 2026-10-01
+
+- Kalenderänderungen und ICS-Importe sind Erwachsenenprofilen vorbehalten, auch über die API.
+- Wanddisplays erlauben den sicheren Profilwechsel, eigene Themes und Kachelanpassungen. Die Aufgabenansicht zeigt Familienaufgaben einschließlich später geplanter Aufgaben.
+- Englische Fehlermeldungen beim Einlösen von Sternen und Theme-Kontraste wurden korrigiert.
+- Der Android-Aktivierungshinweis erscheint auch nach einer früheren Berechtigungsablehnung. Native Meldungen benötigen weiterhin eine eingerichtete Firebase-Verbindung auf dem eigenen Server.
+- CalDAV-Tests verwenden ein festes Testdatum; CasaOS-, Cosmos- und Umbrel-Pakete werden auf das Patch-Release aktualisiert.
+
+
 ## [1.21.2] – 2026-09-17
 
 ### Verlässlicher im Familienalltag

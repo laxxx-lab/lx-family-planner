@@ -6,6 +6,22 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.21.4] — 2026-10-01
+
+- Add optional Simplified Chinese, keeping German as the default on server and client.
+- Translate WebDAV setup and preserve existing device language preferences.
+- Include the calendar, wall-display, notification and theme fixes from 1.21.3.
+
+
+## [1.21.3] — 2026-10-01
+
+- Calendar changes and ICS imports require an adult profile, including direct API calls.
+- Wall displays support authenticated profile switching, personal themes and tile settings. The task view shows family tasks, including future scheduled tasks.
+- Reward redemption errors follow the interface language, and theme contrast is corrected.
+- Android notification activation is offered after a previous permission denial. Native notifications still require Firebase credentials on the self-hosted server.
+- CalDAV tests use a fixed fixture date; CasaOS, Cosmos and Umbrel packages are updated for this patch release.
+
+
 ## [1.21.2] — 2026-09-17
 
 ### More reliable daily planning

@@ -152,6 +152,9 @@ sowie das neue Issue #15 und das Reddit-Feedback auf.
   ersten Version keine Standort-Historie; Ankunftshinweise und kurze
   Aufbewahrung erst nach einem geprüften Einwilligungs- und Akkukonzept
 - WhatsApp nur über die offizielle WhatsApp Business Platform
+- optionale Cosmos-OpenID-Connect-Anmeldung mit ausdrücklicher
+  Profilverknüpfung, automatischer Anlage des ersten Profils und sorgfältig
+  zugeordneten Cosmos-Gruppen
 - Sprach-Schnelleingabe in der Küche
 - Geburtstags- und Geschenkideenliste
 - Taschengeld mit freigegebenen Sparzielen

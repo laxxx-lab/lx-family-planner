@@ -1,0 +1,285 @@
+{
+  "view": {
+    "hero": {
+      "eyebrow": "家庭时光",
+      "title": "你的日历，告别排期混乱。",
+      "todayCount_one": "今天有<1>{{count}}</1>个活动。",
+      "todayCount_other": "今天有<1>{{count}}</1>个活动。",
+      "nextUp": "接下来：{{title}}。",
+      "noNext": "下一个空闲时刻属于你。"
+    },
+    "actions": {
+      "sources": "日历来源",
+      "newEvent": "新建活动"
+    },
+    "filter": {
+      "ariaLabel": "按成员筛选",
+      "all": "全部",
+      "managed": "代管"
+    },
+    "tools": {
+      "hidePast": "隐藏过去",
+      "showPast": "显示过去",
+      "export": "导出",
+      "import": "导入文件"
+    },
+    "layouts": {
+      "ariaLabel": "日历视图",
+      "agenda": "日程",
+      "week": "周",
+      "month": "月",
+      "previous": "上一时段",
+      "next": "下一时段",
+      "today": "今天",
+      "more": "还有{{count}}个",
+      "free": "空闲"
+    },
+    "timeline": {
+      "kicker": "周计划表",
+      "allDay": "全天",
+      "now": "现在",
+      "selectHint": "点击或拖拽空闲时间来准备一个活动。"
+    },
+    "agenda": {
+      "kicker": "日程",
+      "title": "接下来有什么",
+      "count_one": "{{count}}个活动",
+      "count_other": "{{count}}个活动"
+    },
+    "empty": {
+      "title": "还有空间安排一些美好的事",
+      "description": "添加活动或连接现有日历。",
+      "cta": "添加第一个活动"
+    },
+    "day": {
+      "today": "今天",
+      "tomorrow": "明天"
+    },
+    "event": {
+      "allDay": "全天",
+      "until": "至 {{time}}",
+      "throughDate": "至 {{date}}",
+      "untilDateTime": "至 {{date}} {{time}}",
+      "fromSubscriptionTitle": "来自日历订阅",
+      "birthdayTitle": "自动家庭生日",
+      "familyBirthday": "家庭生日",
+      "fromFamily": "来自{{name}}",
+      "subscriptionFallback": "日历订阅",
+      "sharedWithTitle": "已与关联家庭共享",
+      "sharedWith": "与{{names}}",
+      "memberManaged": "{{name}} · 代管",
+      "wholeFamily": "全家人",
+      "openAria": "打开活动{{title}}",
+      "readOnlyTitle": "该活动由其日历来源管理",
+      "editRemindersTitle": "编辑提醒",
+      "editRemindersAria": "编辑{{title}}的提醒",
+      "deleteTitle": "删除活动",
+      "deleteAria": "删除{{title}}"
+    }
+  },
+  "editor": {
+    "kicker": "活动详情",
+    "title": "编辑活动",
+    "description": "一起更改时间、人员、地点和提醒。",
+    "readOnlyKicker": "日历来源",
+    "readOnlyDescription": "该活动由其关联的日历来源管理，只能在这里查看。",
+    "birthdayKicker": "家庭生日",
+    "birthdayDescription": "该生日根据成员资料自动创建。LX 会在生日前一周和生日当天提醒全家。",
+    "save": "保存更改",
+    "duplicate": "复制活动",
+    "duplicateTitle": "{{title}} —— 副本",
+    "delete": "删除活动",
+    "deleteConfirm": "确定删除“{{title}}”吗？",
+    "fields": {
+      "title": "标题",
+      "allDay": "全天活动",
+      "allDayHint": "无固定时间——可跨越多天。",
+      "startDate": "开始日期",
+      "startTime": "开始时间",
+      "endDate": "结束日期（可选）",
+      "endDateInclusive": "持续至（可选）",
+      "endTime": "结束时间（可选）",
+      "location": "地点（可选）",
+      "locationPlaceholder": "例如：学校或医生诊所",
+      "notes": "备注（可选）"
+    },
+    "recurrence": {
+      "title": "重复",
+      "hint": "该活动保存为一个系列——提醒适用于每一次。",
+      "frequency": "重复频率",
+      "every": "每",
+      "unit": "单位",
+      "until": "结束日期（可选）",
+      "rules": {
+        "none": "不重复",
+        "daily": "每天",
+        "weekly": "每周",
+        "monthly": "每月",
+        "yearly": "每年",
+        "custom": "自定义周期"
+      },
+      "units": {
+        "days": "天",
+        "weeks": "周",
+        "months": "月"
+      },
+      "seriesNote": "你正在编辑一个活动系列。更改将应用于整个系列。"
+    },
+    "audience": {
+      "title": "这个活动是为谁准备的？",
+      "hint": "选择全家人或多位成员。",
+      "everyone": "全家人"
+    }
+  },
+  "trash": {
+    "types": {
+      "rest": "一般垃圾（黑桶）",
+      "papier": "纸张（蓝桶）",
+      "bio": "有机垃圾（棕桶/绿桶）",
+      "gelb": "黄袋/可回收物"
+    },
+    "header": {
+      "title": "数字垃圾收运日历",
+      "description": "导入垃圾收运公司的 .ics 文件，或手动添加收运日期。LX 默认提前一天提醒你。",
+      "connectUrl": "连接日历链接",
+      "import": "导入垃圾收运日历",
+      "add": "添加收运"
+    },
+    "feed": {
+      "kicker": "自动收运计划",
+      "title": "通过链接获取收运日历",
+      "description": "连接垃圾收运公司或 Home Assistant 的 ICS 地址。LX 会自动同步新的收运日期。",
+      "empty": "还没有连接垃圾收运日历链接。",
+      "name": "来源名称",
+      "namePlaceholder": "例如：区垃圾收运日历",
+      "url": "ICS 日历地址",
+      "security": "该链接加密保存在你的服务器上，仅以只读方式访问。",
+      "connect": "连接链接",
+      "connecting": "连接中…",
+      "sync": "立即同步",
+      "remove": "删除来源",
+      "confirmRemove": "删除“{{name}}”及其读取的所有收运日期吗？",
+      "pickupCount_one": "{{count}}次收运",
+      "pickupCount_other": "{{count}}次收运"
+    },
+    "next": {
+      "kicker": "下次垃圾收运",
+      "callout": "把垃圾桶推出去"
+    },
+    "schedule": {
+      "kicker": "收运计划",
+      "title": "即将到来的收运",
+      "emptyTitle": "还没有收运日期",
+      "emptyDescription": "上传垃圾收运公司的 .ics 文件。",
+      "reminderOff": "提醒已关闭",
+      "editReminderTitle": "更改提醒",
+      "editReminderAria": "更改{{title}}的提醒",
+      "removeTitle": "删除收运",
+      "removeAria": "删除{{title}}"
+    },
+    "dialog": {
+      "eyebrow": "新收运",
+      "title": "添加收运日期",
+      "typeLabel": "垃圾类型",
+      "nameLabel": "名称",
+      "dateLabel": "收运日期",
+      "save": "保存收运"
+    },
+    "toast": {
+      "importFailedTitle": "无法导入",
+      "importFailedBody": "该文件中没有找到垃圾收运日期。",
+      "importSuccessTitle": "垃圾收运日历已导入",
+      "importSuccessBody_one": "已导入{{count}}个收运日期，默认提前一天提醒。",
+      "importSuccessBody_other": "已导入{{count}}个收运日期，默认提前一天提醒。",
+      "addedTitle": "收运已保存",
+      "addedBody": "{{date}}的收运已保存。",
+      "reminderSavedTitle": "提醒已保存",
+      "reminderOffTitle": "提醒已关闭",
+      "reminderSavedBody": "LX 将{{leads}}提醒你。",
+      "reminderOffBody": "{{title}}将不再发送提醒。"
+    }
+  },
+  "sources": {
+    "header": {
+      "kicker": "日历桥接",
+      "title": "外部日历",
+      "description": "自动从 Google、Outlook、Nextcloud 及其他 ICS 日历拉取活动。",
+      "closeAria": "关闭日历来源"
+    },
+    "list": {
+      "heading": "已连接的来源",
+      "activeCount": "{{count}}个活跃",
+      "syncAll": "全部同步",
+      "emptyTitle": "还没有日历桥接",
+      "emptyDescription": "在右侧粘贴私有 ICS 链接。新活动将自动流入你的家庭日历。",
+      "everyone": "全部",
+      "icsProvider": "ICS",
+      "caldavProvider": "CalDAV",
+      "readOnly": "只读",
+      "twoWay": "双向",
+      "eventCount_one": "{{count}}个活动",
+      "eventCount_other": "{{count}}个活动",
+      "syncNever": "尚未成功同步",
+      "syncToday": "今天 {{time}}",
+      "syncNowTitle": "立即同步",
+      "syncNowAria": "立即同步{{name}}",
+      "pauseAria": "暂停{{name}}",
+      "resumeAria": "激活{{name}}",
+      "removeTitle": "删除来源",
+      "removeAria": "移除{{name}}",
+      "confirmRemove": "删除“{{name}}”及其导入的所有活动吗？"
+    },
+    "form": {
+      "connect": "连接日历",
+      "connectHint": "该链接加密保存在你的服务器上。",
+      "providerLabel": "连接类型",
+      "providerIcs": "ICS 链接（公开或私有）",
+      "providerCalDav": "CalDAV（含凭据）",
+      "nameLabel": "来源名称",
+      "namePlaceholder": "例如：学校日历",
+      "urlLabel": "私有 ICS 链接",
+      "caldavUrlLabel": "CalDAV 日历地址",
+      "caldavUsernameLabel": "CalDAV 用户名",
+      "caldavPasswordLabel": "CalDAV 应用密码",
+      "syncModeLabel": "同步模式",
+      "syncModeRead": "仅显示（外部日历推荐）",
+      "syncModeTwoWay": "双向——LX 可以写入活动",
+      "visibilityLabel": "可见范围",
+      "allMembers": "所有家庭成员",
+      "visibilityHint": "选择要分配该来源活动的每个成员。",
+      "colors": {
+        "green": "绿色",
+        "blue": "蓝色",
+        "orange": "橙色",
+        "pink": "粉色",
+        "purple": "紫色",
+        "turquoise": "青绿色"
+      },
+      "colorConflict": "{{color}}已被{{names}}使用。使用相同颜色可能让日历混乱。",
+      "householdLabel": "规划空间",
+      "householdFamily": "我们的家",
+      "householdGrandparents": "爷爷奶奶家",
+      "colorLegend": "日历颜色",
+      "pickColorAria": "选择颜色{{color}}",
+      "privacyNote": "只读：家庭计划器无法更改或删除外部日历中的任何内容。但请勿公开分享私密链接。",
+      "caldavPrivacyNote": "只读：用户名和应用密码仅加密保存在你的 LX 服务器上。LX 绝不会更改或删除 CalDAV 日历中的任何内容。",
+      "caldavTwoWayNote": "双向：LX 导入更改并将你的本地活动写入该日历。LX 不会远程删除他人的活动；同时编辑会产生可见的冲突副本。",
+      "connecting": "连接中…"
+    }
+  },
+  "reminderDialog": {
+    "trashKicker": "收运提醒",
+    "eventKicker": "活动提醒",
+    "atTime": "{{time}}",
+    "noneActive": "没有启用的提醒",
+    "note": "每个成员都需要启用一次通知。通知也会出现在家庭收件箱中。",
+    "save": "保存提醒"
+  },
+  "reminderPicker": {
+    "title": "LX 应该在什么时候提醒你？",
+    "subtitle": "选择一个或多个时间",
+    "off": "关闭",
+    "activeHint": "LX 会在该成员启用的所有设备上提醒你。",
+    "inactiveHint": "不做选择则不会为该条目发送提醒。"
+  }
+}

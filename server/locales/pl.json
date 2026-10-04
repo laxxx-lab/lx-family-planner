@@ -114,6 +114,7 @@
     "reminderBody": "Odbiór {{lead}}. Wystaw na czas."
   },
   "errors": {
+    "insufficientStars": "Za mało gwiazdek",
     "tooManyLoginAttempts": "Zbyt wiele prób logowania. Odczekaj chwilę.",
     "loginRequired": "Najpierw się zaloguj.",
     "adultProfileRequired": "Najpierw wybierz profil dorosłego.",

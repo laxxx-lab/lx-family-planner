@@ -271,7 +271,7 @@ const APP_SECRET =
   'lx-family-development-secret-change-me';
 const ENCRYPTION_KEY = createHash('sha256').update(APP_SECRET).digest();
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-const SUPPORTED_APP_LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl'];
+const SUPPORTED_APP_LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl', 'zh'];
 const APP_LANGUAGE = (() => {
   const configured = String(process.env.APP_LANGUAGE || '')
     .trim()
@@ -302,7 +302,8 @@ const APP_LOCALE = {
   es: 'es-ES',
   it: 'it-IT',
   nl: 'nl-NL',
-  pl: 'pl-PL'
+  pl: 'pl-PL',
+  zh: 'zh-CN'
 }[APP_LANGUAGE] || 'de-DE';
 const REGISTRATION_MODE = (() => {
   const configured = String(
@@ -396,6 +397,7 @@ const SCHOOL_SUBJECT_COLORS = new Set([
   '#60798a'
 ]);
 const ADULT_MANAGED_RESOURCES = new Set([
+  'events',
   'tasks',
   'rewards',
   'trashEvents',
@@ -11825,6 +11827,8 @@ export function createApp() {
             : error.message || translate('errors.importedPageTooLarge')
           : status >= 500
           ? translate('errors.internal')
+          : error.translationKey
+          ? translate(error.translationKey)
           : error.message || translate('errors.requestFailed')
     });
   });

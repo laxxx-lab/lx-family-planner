@@ -114,6 +114,7 @@
     "reminderBody": "Raccolta {{lead}}. Esponilo in tempo."
   },
   "errors": {
+    "insufficientStars": "Stelle insufficienti",
     "tooManyLoginAttempts": "Troppi tentativi di accesso. Attendi un momento.",
     "loginRequired": "Accedi prima.",
     "adultProfileRequired": "Seleziona prima un profilo adulto.",

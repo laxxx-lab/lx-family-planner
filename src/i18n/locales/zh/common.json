@@ -1,0 +1,55 @@
+{
+  "app": {
+    "title": "LX Family · 私人家庭系统",
+    "description": "清晰直观的家庭计划工具，包含日历、Bring! 购物清单、膳食计划、家务分工、奖励系统和留言板。"
+  },
+  "actions": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "add": "添加",
+    "close": "关闭",
+    "back": "返回",
+    "next": "下一步",
+    "confirm": "确认",
+    "search": "搜索",
+    "reset": "重置",
+    "refresh": "刷新",
+    "retry": "重试"
+  },
+  "status": {
+    "loading": "加载中…",
+    "saving": "保存中…",
+    "error": "出错了。",
+    "empty": "暂无条目。"
+  },
+  "labels": {
+    "optional": "可选",
+    "date": "日期",
+    "time": "时间",
+    "title": "标题",
+    "description": "描述",
+    "location": "地点",
+    "name": "名称"
+  },
+  "language": {
+    "label": "语言",
+    "title": "选择语言",
+    "choose": "选择界面语言"
+  },
+  "birthdays": {
+    "eventTitle": "🎂 今天是{{name}}的生日",
+    "location": "家庭",
+    "ageNote_one": "{{name}}满{{count}}岁了。",
+    "ageNote_other": "{{name}}满{{count}}岁了。",
+    "sourceName": "家庭生日"
+  },
+  "projectSupport": {
+    "aria": "通过 GitHub Sponsors 自愿支持 LX Family",
+    "kicker": "一次性或按月",
+    "title": "请 LX 喝杯咖啡",
+    "description": "LX 永久免费。哪怕一杯咖啡也能帮助测试、托管和持续开发。",
+    "action": "GitHub Sponsors"
+  }
+}

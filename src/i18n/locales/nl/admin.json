@@ -335,5 +335,35 @@
       "hint": "Het is hier momenteel rustig."
     },
     "openCount": "{{count}} open"
+  },
+  "webdav": {
+    "kicker": "Eigen cloud",
+    "title": "WebDAV-familiearchief",
+    "subtitle": "Voor NAS en DAV-servers zonder Nextcloud.",
+    "statusReady": "Klaar",
+    "statusConnected": "Verbonden",
+    "connectedWith": "Verbonden met",
+    "displayNameFallback": "WebDAV",
+    "accountMeta": "{{host}} · Map: {{folder}}",
+    "testButton": "Verbinding testen",
+    "disconnectButton": "Verbinding verbreken",
+    "securityNote1": "Gebruik indien mogelijk een apart app-wachtwoord.",
+    "securityNote2": "Voor een NAS in het thuisnetwerk moet het volgende ook worden ingesteld op de LX-server:",
+    "addressLabel": "WebDAV-adres",
+    "folderLabel": "Familiemap",
+    "usernameLabel": "Gebruikersnaam",
+    "passwordLabel": "App-wachtwoord",
+    "connectButton": "WebDAV verbinden",
+    "disconnectConfirm": "WebDAV-verbinding verbreken? De bestanden op de server blijven behouden.",
+    "toasts": {
+      "connectedTitle": "WebDAV verbonden",
+      "connectedBody": "Je familiearchief gebruikt nu deze WebDAV-map.",
+      "connectFailedTitle": "WebDAV kon niet worden verbonden",
+      "testOkTitle": "WebDAV bereikbaar",
+      "testFailedTitle": "WebDAV-test mislukt",
+      "disconnectedTitle": "WebDAV verbroken",
+      "disconnectedBody": "De inloggegevens zijn verwijderd van LX.",
+      "disconnectFailedTitle": "WebDAV kon niet worden verbroken"
+    }
   }
 }

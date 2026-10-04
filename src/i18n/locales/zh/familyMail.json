@@ -1,0 +1,56 @@
+{
+  "hero": {
+    "kicker": "相连的家庭 · 刻意保持私密",
+    "title": "家庭邮箱",
+    "description": "按自己的节奏一起规划，或直接邀请爷爷奶奶加入家庭聊天。",
+    "writeLetter": "写信"
+  },
+  "filters": {
+    "inbox": "收件箱",
+    "sent": "已发送"
+  },
+  "list": {
+    "emptyTitle": "还没有信件",
+    "emptyConnected": "家庭书信往来的安静开端。",
+    "emptyUnconnected": "先在家庭网络中连接另一个家庭。"
+  },
+  "reader": {
+    "sentTo": "已发送给{{family}}",
+    "from": "来自{{family}}的信",
+    "reply": "回复",
+    "archiveLetter": "归档信件",
+    "privacyNote": "只有双方家庭的成人成员能看到这封信。",
+    "placeholderTitle": "有一封信等你来取",
+    "placeholderText": "比聊天更私密，更适合安排事务和共享计划。"
+  },
+  "guests": {
+    "kicker": "经同意的家庭聊天",
+    "title": "家庭聊天中的客人",
+    "description": "爷爷奶奶等成人成员从接受邀请那一刻起才能看到新的群消息。",
+    "connectedFamily": "已连接的家庭",
+    "adultProfile": "成人成员",
+    "selectProfile": "选择成员",
+    "sendInvitation": "发送邀请",
+    "status": {
+      "accepted": "在聊天中",
+      "pending": "等待同意",
+      "revoked": "访问已结束",
+      "declined": "已拒绝"
+    },
+    "accept": "接受",
+    "decline": "拒绝",
+    "endAccess": "结束访问",
+    "empty": "还没有邀请聊天客人。"
+  },
+  "compose": {
+    "kicker": "新家庭邮件",
+    "title": "写信",
+    "recipientFamily": "收件家庭",
+    "subject": "主题",
+    "subjectPlaceholder": "关于什么？",
+    "body": "你的信",
+    "bodyPlaceholder": "大家好，…",
+    "privacyNote": "仅通过已确认的家庭连接",
+    "submit": "寄出信件"
+  }
+}

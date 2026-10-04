@@ -1,0 +1,166 @@
+{
+  "header": {
+    "title": "任务与星星奖励商店",
+    "createReward": "创建自定义奖励",
+    "assignTask": "分配新任务",
+    "intro": "孩子将任务报告为已完成。只有创建该任务的家长确认完成后，才会发放星星。",
+    "approvalsWaiting_one": "有{{count}}个任务等待你的审核",
+    "approvalsWaiting_other": "有{{count}}个任务等待你的审核"
+  },
+  "repeat": {
+    "none": "一次性",
+    "daily": "每天",
+    "weekdays": "周一至周五",
+    "weekly": "每周",
+    "monthly": "每月",
+    "custom": "自定义间隔",
+    "units": {
+      "days": "天",
+      "weeks": "周",
+      "months": "月"
+    },
+    "recurring": "重复"
+  },
+  "memberCard": {
+    "managedOnly": "仅代管",
+    "noTasks": "没有分配给{{name}}的任务。"
+  },
+  "scheduled": {
+    "title_one": "{{count}}个已计划任务",
+    "title_other": "{{count}}个已计划任务",
+    "hint": "这些重复任务保持计划状态，仅在选定的时间段内显示给指定成员。点击编辑。"
+  },
+  "shared": {
+    "title": "一起完成",
+    "description": "任何选定的人都可以接这些任务。星星归完成者所有。",
+    "open": "谁先完成谁勾选",
+    "reportedBy": "{{name}}说已完成——等待确认",
+    "completedBy": "由{{name}}完成",
+    "someone": "家里的某个人"
+  },
+  "taskItem": {
+    "reviewWaitingFor": "正在等待{{name}}审核。",
+    "fallbackCreator": "创建者",
+    "fallbackParent": "一位家长",
+    "statusConfirmed": "已确认并发放",
+    "statusPendingWith": "等待{{name}}审核",
+    "statusCreatedBy": "由{{name}}创建",
+    "statusTapWhenDone": "完成后点击",
+    "rotationTitle": "每次重复轮换",
+    "fairRotation": "公平轮换（{{count}}）",
+    "approve": "真的完成了",
+    "reject": "重试",
+    "edit": "编辑",
+    "delete": "删除",
+    "confirmDelete": "确定删除吗？"
+  },
+  "shop": {
+    "title": "星星奖励商店",
+    "titleForChild": "{{name}}的星星奖励商店",
+    "editRewardTitle": "编辑奖励",
+    "deleteRewardTitle": "删除奖励",
+    "forChild": "🧒 给{{name}}",
+    "forAllChildren": "✨ 给所有孩子",
+    "requiresStars": "需要{{count}}颗星星",
+    "redeemFor": "为{{name}}兑换！"
+  },
+  "rewardModal": {
+    "editTitle": "编辑奖励",
+    "createTitle": "创建新奖励",
+    "titleLabel": "奖励标题",
+    "titlePlaceholder": "如：1 次动物园之旅、30 分钟游戏时间……",
+    "forWhichChild": "该奖励是给哪个孩子的？",
+    "childOption": "🧒 {{name}}",
+    "starCost": "星星花费",
+    "imageLabel": "奖励图片"
+  },
+  "taskModal": {
+    "editTitle": "编辑任务",
+    "taskLabel": "任务 / 家务",
+    "taskPlaceholder": "如：整理房间、清空洗碗机……",
+    "descriptionLabel": "描述（可选）",
+    "descriptionPlaceholder": "详情、小提示，或具体需要做什么……",
+    "assignTo": "分配给",
+    "sharedToggle": "共享家庭任务",
+    "sharedHint": "一个任务多人参与——星星归完成者所有。",
+    "eligibleProfiles": "谁可以接？",
+    "eligibleHint": "至少选择一个成员。孩子仍需家长确认。",
+    "managedSuffix": "，代管",
+    "scheduleTitle": "任务何时到期？",
+    "scheduleHint": "确认后重复任务会自动重新排期。",
+    "dueDate": "到期日",
+    "dueTime": "时间（可选）",
+    "repeatLabel": "重复",
+    "repeatEvery": "每隔",
+    "repeatUnit": "时间单位",
+    "visibilityLabel": "对成员可见",
+    "visibilityHint": "任务保持计划状态，但仅在选定时间显示给指定人员。",
+    "visibility": {
+      "onDueDate": "到期当天",
+      "oneDay": "提前 1 天",
+      "twoDays": "提前 2 天",
+      "threeDays": "提前 3 天",
+      "oneWeek": "提前 1 周",
+      "twoWeeks": "提前 2 周",
+      "always": "立即并始终"
+    },
+    "rotationToggle": "在成员之间公平轮换",
+    "rotationHint": "每次确认重复后，自动轮到下一个人。",
+    "category": "分类",
+    "categories": {
+      "household": "家务",
+      "kitchen": "厨房",
+      "room": "房间",
+      "school": "学校",
+      "pet": "宠物",
+      "garden": "花园",
+      "custom": "添加自定义区域……"
+    },
+    "customCategoryPlaceholder": "如：浴室、地下室、汽车……",
+    "managedNoteTitle": "代管任务",
+    "managedNoteHint": "代管成员不获得星星，也无需单独报告完成。",
+    "starsLabel": "星星奖励（+ 星星）",
+    "submit": "创建任务",
+    "save": "保存更改"
+  },
+  "rewardIcon": {
+    "defaultLabel": "奖励",
+    "customImage": "自定义图片",
+    "customSymbol": "自定义图标",
+    "customImageTitle": "{{label}}：自定义图片"
+  },
+  "presets": {
+    "gift": "礼物",
+    "iceCream": "冰淇淋",
+    "gaming": "游戏时间",
+    "movie": "电影之夜",
+    "popcorn": "电影院",
+    "pizza": "披萨",
+    "trip": "出游",
+    "outdoors": "户外",
+    "bike": "骑车",
+    "swimming": "游泳",
+    "creative": "创意时间",
+    "music": "音乐",
+    "book": "书",
+    "party": "聚会",
+    "animal": "动物探险",
+    "cake": "甜点",
+    "rocket": "冒险",
+    "trophy": "大奖",
+    "crown": "许个愿",
+    "surprise": "惊喜"
+  },
+  "iconPicker": {
+    "hint": "孩子一眼就能认出的清晰图片。",
+    "uploadAriaLabel": "选择自定义奖励图片",
+    "presetsAriaLabel": "奖励图标",
+    "removeCustomImage": "移除自定义图片",
+    "errors": {
+      "invalidType": "请选择 PNG、JPG 或 WebP 图片。",
+      "tooLarge": "图片不得大于 5 MB。",
+      "stillTooLarge": "调整大小后图片仍然过大。",
+      "readFailed": "图片无法读取。"
+    }
+  }
+}

@@ -1,0 +1,554 @@
+{
+  "defaults": {
+    "you": "你",
+    "thisProfile": "此成员",
+    "aParent": "一位家长",
+    "familyAuthor": "家庭",
+    "familyName": "我们家",
+    "familyArchive": "家庭归档",
+    "shoppingQuantity": "1 件",
+    "recipeServings": "4 人份"
+  },
+  "ics": {
+    "defaultFamilyName": "LX Family",
+    "calendarName": "{{familyName}}的日历",
+    "defaultEventTitle": "家庭活动",
+    "exportFileName": "family_calendar_{{date}}.ics"
+  },
+  "shared": {
+    "changeSaved": "更改已保存。"
+  },
+  "errors": {
+    "changeFailed": "更改失败",
+    "deviceNotRegistered": "此设备尚未注册。",
+    "androidPermissionReadFailed": "无法读取安卓权限。",
+    "androidPushStatusLoadFailed": "无法加载安卓推送状态。",
+    "pushCheckTimeout": "家庭服务器没有响应推送检查。请检查服务器地址后重试。",
+    "fcmNotConfigured": "服务器尚未连接到 Firebase Cloud Messaging。",
+    "deviceKeySaveTimeout": "设备密钥可用，但保存时家庭服务器没有响应。",
+    "androidPushActivationFailed": "无法启用安卓通知。",
+    "appNotRegistered": "此应用尚未为该成员注册。",
+    "calendarConnectFailed": "日历无法连接",
+    "calendarUpdateFailed": "日历无法更改",
+    "calendarSyncFailed": "日历无法刷新",
+    "calendarsSyncFailed": "日历无法刷新",
+    "calendarSourceRemoveFailed": "日历源无法移除",
+    "eventRemindersSaveFailed": "活动提醒无法保存",
+    "eventSaveFailed": "活动无法保存",
+    "shoppingItemAddFailed": "商品无法添加",
+    "bringItemUpdateFailed": "无法更新 Bring! 商品",
+    "bringIngredientsTransferFailed": "无法将食材转入 Bring!",
+    "redeemFailed": "无法兑换",
+    "familyDeleteFailed": "家庭无法删除",
+    "bringCatalogLoadFailed": "无法加载 Bring! 商品库",
+    "bringSyncFailed": "Bring! 同步失败",
+    "gotifyConnectFailed": "Gotify 无法连接",
+    "gotifySettingsSaveFailed": "Gotify 设置无法保存",
+    "gotifyTestFailed": "Gotify 测试失败",
+    "ntfyConnectFailed": "ntfy 无法连接",
+    "ntfySettingsSaveFailed": "ntfy 设置无法保存",
+    "ntfyTestFailed": "ntfy 测试失败",
+    "homeAssistantConnectFailed": "Home Assistant 无法连接",
+    "deviceListLoadFailed": "设备列表无法加载",
+    "homeAssistantSettingsSaveFailed": "Home Assistant 设置无法保存",
+    "homeAssistantNoResponse": "Home Assistant 没有响应",
+    "deviceControlFailed": "设备无法控制",
+    "nextcloudConnectFailed": "Nextcloud 无法连接",
+    "nextcloudBundledSetupFailed": "Family Cloud 无法自动设置",
+    "cloudAccessLoadFailed": "云访问信息无法加载",
+    "nextcloudSettingsSaveFailed": "Nextcloud 设置无法保存",
+    "nextcloudNoResponse": "Nextcloud 没有响应",
+    "nextcloudSyncFailed": "Nextcloud 日历无法同步",
+    "cloudBackupFailed": "云备份无法创建",
+    "familyRequestFailed": "家庭请求失败",
+    "requestAnswerFailed": "请求无法回复",
+    "relationshipRemoveFailed": "连接无法移除",
+    "familyGrantsSaveFailed": "家庭共享设置无法保存",
+    "familyMailLoadFailed": "家庭邮件无法加载",
+    "letterSendFailed": "信件无法发送",
+    "letterUpdateFailed": "信件无法更新",
+    "chatInvitationsLoadFailed": "聊天邀请无法加载",
+    "chatInvitationSendFailed": "聊天邀请无法发送",
+    "chatAccessUpdateFailed": "聊天访问权限无法更新",
+    "guestChatLoadFailed": "受邀的家庭聊天无法加载",
+    "messageSendFailed": "消息无法发送",
+    "taskSendFailed": "任务无法发送",
+    "rewardCreateFailed": "奖励无法创建",
+    "pocketMoneyBookFailed": "零花钱无法记账",
+    "reportSaveFailed": "报告无法保存",
+    "problemReportsLoadFailed": "问题报告无法加载",
+    "reportStatusChangeFailed": "报告状态无法更改",
+    "mediaWidgetSaveFailed": "媒体小组件无法保存",
+    "entrySaveFailed": "条目无法保存",
+    "entryUpdateFailed": "条目无法更新",
+    "entryDeleteFailed": "条目无法删除",
+    "routineUpdateFailed": "日常无法更新",
+    "schoolItemUpdateFailed": "学校条目无法更新",
+    "pollSaveFailed": "投票无法保存",
+    "familyMissionUpdateFailed": "家庭任务无法更新",
+    "kidWorldSaveFailed": "儿童世界无法保存"
+  },
+  "toasts": {
+    "connectionMissing": {
+      "title": "缺少连接"
+    },
+    "refreshFailed": {
+      "title": "刷新失败"
+    },
+    "homeStatusUnreachable": {
+      "title": "家庭状态不可达"
+    },
+    "notificationsUnreachable": {
+      "title": "通知不可达"
+    },
+    "notificationNotSaved": {
+      "title": "通知未保存"
+    },
+    "notificationsNotSaved": {
+      "title": "通知未保存"
+    },
+    "releaseNotesNotSaved": {
+      "title": "尚未保存",
+      "message": "无法将消息标记为已读，请重试。"
+    },
+    "themeNotSaved": {
+      "title": "主题未保存"
+    },
+    "customThemeSaved": {
+      "title": "我的设计已保存",
+      "message": "自定义主题已创建，并已为此成员激活。",
+      "resetMessage": "自定义主题已移除。该成员现在使用亚麻主题。"
+    },
+    "webPushUnreachable": {
+      "title": "推送通知不可达"
+    },
+    "webPushUnavailable": {
+      "title": "通知暂时不可用"
+    },
+    "webPushEnabled": {
+      "title": "通知已开启",
+      "message": "此设备现在会为{{name}}发送提醒。"
+    },
+    "activationFailed": {
+      "title": "无法激活"
+    },
+    "webPushDisabled": {
+      "title": "通知已关闭",
+      "message": "此设备将不再接收浏览器通知。"
+    },
+    "disableFailed": {
+      "title": "无法关闭"
+    },
+    "notificationPrefsSaved": {
+      "title": "通知已保存"
+    },
+    "webPushSaved": {
+      "message": "你的选择会立即在此设备上生效。"
+    },
+    "saveFailed": {
+      "title": "无法保存"
+    },
+    "webPushTestSent": {
+      "title": "测试已发送",
+      "message": "通知应很快出现在此设备上。"
+    },
+    "testFailed": {
+      "title": "测试失败"
+    },
+    "androidPushUnreachable": {
+      "title": "安卓通知不可达"
+    },
+    "nativePushEnabled": {
+      "title": "安卓通知已开启",
+      "message": "LX 应用现在会为{{name}}发送提醒。"
+    },
+    "nativePushDisabled": {
+      "title": "应用通知已关闭",
+      "message": "此设备不再为{{name}}发送提醒。"
+    },
+    "nativePushSaved": {
+      "title": "应用通知已保存",
+      "message": "你的选择会立即在这台安卓设备上生效。"
+    },
+    "nativePushTestSent": {
+      "title": "安卓测试已发送",
+      "message": "通知应很快出现在安卓通知栏中。"
+    },
+    "nativeTestFailed": {
+      "title": "安卓测试失败"
+    },
+    "deviceRemoved": {
+      "title": "设备已移除",
+      "message": "此设备将不再接收家庭通知。"
+    },
+    "calendarSourceSaved": {
+      "title": "日历源已保存",
+      "warningMessage": "首次刷新仍然失败：{{warning}}"
+    },
+    "calendarConnected": {
+      "title": "日历已连接",
+      "message": "{{name}}已导入，包含{{count}}个活动。"
+    },
+    "calendarSaved": {
+      "title": "日历已保存"
+    },
+    "calendarUpdated": {
+      "title": "日历已更新",
+      "message": "日历源已更新。"
+    },
+    "calendarSynced": {
+      "title": "日历已是最新",
+      "message": "已同步{{count}}个活动。"
+    },
+    "calendarSyncPartial": {
+      "title": "同步部分完成",
+      "message": "目前无法访问{{count}}个日历。"
+    },
+    "calendarSyncAll": {
+      "title": "所有日历都是最新的",
+      "message": "已同步{{count}}个日历源。"
+    },
+    "calendarSourceRemoved": {
+      "title": "日历源已移除",
+      "message": "关联的活动已从家庭规划器中移除。"
+    },
+    "sharedEventCreated": {
+      "title": "家庭活动已分享",
+      "message": "“{{title}}”已对受邀家庭可见。"
+    },
+    "eventAdded": {
+      "title": "活动已添加",
+      "message": "“{{title}}”已加入日历。"
+    },
+    "eventUpdated": {
+      "title": "活动已保存",
+      "message": "“{{title}}”已为所有选中的成员更新。"
+    },
+    "eventRemindersSaved": {
+      "title": "活动提醒已保存",
+      "enabledMessage": "“{{title}}”现在将提醒你{{count}}次。",
+      "disabledMessage": "“{{title}}”的提醒已关闭。"
+    },
+    "sharedEventDeleted": {
+      "title": "共享活动已删除",
+      "message": "该活动已对所有受邀家庭移除。"
+    },
+    "eventDeleted": {
+      "title": "活动已删除",
+      "message": "活动已移除。"
+    },
+    "icsImportFailed": {
+      "title": "无法导入",
+      "message": "未找到有效活动。"
+    },
+    "icsImported": {
+      "title": "日历已导入",
+      "message": "已导入{{count}}个活动。"
+    },
+    "icsExported": {
+      "title": "日历已导出",
+      "message": "日历文件已创建。"
+    },
+    "bringAdded": {
+      "title": "已添加到 Bring!",
+      "itemMessage": "{{name}}已加入共享清单。",
+      "ingredientsMessage": "已转入{{count}}种食材。"
+    },
+    "shoppingItemAdded": {
+      "title": "已加入购物清单",
+      "message": "{{name}}已添加。"
+    },
+    "shoppingListNotSaved": {
+      "title": "购物清单未保存"
+    },
+    "ingredientsAdded": {
+      "title": "已加入购物清单",
+      "message": "已添加{{count}}种食材。"
+    },
+    "recipeSaved": {
+      "title": "食谱已保存",
+      "message": "“{{name}}”已加入食谱书。"
+    },
+    "recipeDeleted": {
+      "title": "食谱已删除",
+      "message": "食谱已移除。"
+    },
+    "recipeUpdated": {
+      "title": "食谱已更新",
+      "message": "“{{name}}”已保存。"
+    },
+    "taskSentForReview": {
+      "title": "已送审",
+      "message": "“{{title}}”正在等待{{name}}的审核。"
+    },
+    "taskReportWithdrawn": {
+      "title": "报告已撤回",
+      "message": "“{{title}}”已重新开放。"
+    },
+    "starsEarned": {
+      "title": "获得星星！",
+      "nextMessage": "+{{stars}} 颗星——下次重复已安排在{{date}}。",
+      "message": "“{{title}}”获得 +{{stars}} 颗星。"
+    },
+    "taskApproved": {
+      "title": "任务已通过",
+      "nextMessage": "“{{title}}”已通过审核。下次重复已安排。",
+      "message": "“{{title}}”已通过审核——星星已到账。"
+    },
+    "taskRejected": {
+      "title": "重试",
+      "message": "“{{title}}”已重新标记为待办。"
+    },
+    "taskCreated": {
+      "title": "任务已创建",
+      "message": "“{{title}}”已准备就绪。"
+    },
+    "taskUpdated": {
+      "title": "任务已更新",
+      "message": "“{{title}}”已保存。"
+    },
+    "taskDeleted": {
+      "title": "任务已删除",
+      "message": "条目已永久移除。"
+    },
+    "rewardCreated": {
+      "title": "奖励已创建",
+      "message": "“{{title}}”已上架星星商店。",
+      "grandchildMessage": "“{{title}}”正在等待孙辈领取。"
+    },
+    "rewardUpdated": {
+      "title": "奖励已更新"
+    },
+    "rewardDeleted": {
+      "title": "奖励已删除",
+      "message": "条目已移除。"
+    },
+    "rewardRedeemed": {
+      "title": "奖励已兑换！",
+      "message": "“{{title}}”实至名归。"
+    },
+    "mealPlanUpdated": {
+      "title": "膳食计划已更新",
+      "message": "{{recipe}}已安排。"
+    },
+    "mealRemoved": {
+      "title": "菜品已移除",
+      "message": "膳食计划中的该时段已空出。"
+    },
+    "noteAdded": {
+      "title": "便签已张贴",
+      "message": "“{{title}}”已贴上留言板。"
+    },
+    "noteUpdated": {
+      "title": "便签已更新"
+    },
+    "noteDeleted": {
+      "title": "便签已移除",
+      "message": "该便签已从留言板取下。"
+    },
+    "memberAdded": {
+      "title": "成员已创建",
+      "message": "{{name}}现在已成为家庭的一员。"
+    },
+    "starsReset": {
+      "title": "积分已重置",
+      "message": "{{name}}从 0 颗星重新开始。"
+    },
+    "tasksCleared": {
+      "title": "任务列表已清理",
+      "message_one": "已移除{{count}}个任务。",
+      "message_other": "已移除{{count}}个任务。"
+    },
+    "nothingToClear": {
+      "title": "没有可删除的内容",
+      "message": "此筛选条件下没有匹配的任务。"
+    },
+    "memberDeleted": {
+      "title": "成员已删除",
+      "message": "家庭成员已移除。"
+    },
+    "familyUpdated": {
+      "title": "家庭已更新",
+      "message": "设置已保存。"
+    },
+    "familyDeleted": {
+      "title": "家庭已删除",
+      "message": "家庭账号已移除。"
+    },
+    "bringSynced": {
+      "title": "Bring! 已同步",
+      "message": "购物清单已是最新。"
+    },
+    "bringDisconnected": {
+      "title": "Bring! 已断开连接",
+      "message": "凭证已安全移除。"
+    },
+    "gotifyConnected": {
+      "title": "Gotify 已连接",
+      "message": "测试消息已发送成功。"
+    },
+    "gotifySaved": {
+      "message": "新的 Gotify 规则已生效。"
+    },
+    "gotifyTestSent": {
+      "title": "测试消息已发送",
+      "message": "现在请查看你的 Gotify 应用。"
+    },
+    "gotifyDisconnected": {
+      "title": "Gotify 已断开连接",
+      "message": "家庭规划器将不再发送推送消息。"
+    },
+    "ntfyConnected": {
+      "title": "ntfy 已连接",
+      "message": "LX 现在也会将家庭通知发送到你的 ntfy 主题。"
+    },
+    "ntfySaved": {
+      "message": "ntfy 事件设置已保存。"
+    },
+    "ntfyTestSent": {
+      "title": "ntfy 测试已发送",
+      "message": "测试通知已发送到你的主题。"
+    },
+    "ntfyDisconnected": {
+      "title": "ntfy 已断开连接",
+      "message": "LX 不再向 ntfy 发送通知。"
+    },
+    "homeAssistantConnected": {
+      "title": "Home Assistant 已连接",
+      "message": "找到{{count}}个设备和传感器。"
+    },
+    "homeDashboardSaved": {
+      "title": "家庭仪表盘已保存",
+      "message": "共享设置和设备选择现已生效。"
+    },
+    "connectionOk": {
+      "title": "连接已建立"
+    },
+    "homeAssistantDisconnected": {
+      "title": "Home Assistant 已断开连接",
+      "message": "访问密钥已从家庭规划器中移除。"
+    },
+    "nextcloudConnected": {
+      "title": "Family Cloud 已连接",
+      "message": "日历、家庭文件夹和安全备份已就绪。"
+    },
+    "nextcloudBundledReady": {
+      "title": "Family Cloud 已就绪",
+      "message": "你的家庭账号、日历和云文件夹已自动设置。"
+    },
+    "nextcloudSaved": {
+      "title": "Family Cloud 已保存",
+      "message": "Nextcloud 规则现已生效。"
+    },
+    "nextcloudReachable": {
+      "title": "Family Cloud 可访问"
+    },
+    "nextcloudSynced": {
+      "title": "日历已同步",
+      "changedMessage": "{{count}}处更改已安全同步。",
+      "unchangedMessage": "LX Family 和 Nextcloud 已经同步。"
+    },
+    "cloudBackupCreated": {
+      "title": "云备份已创建",
+      "message": "{{name}}已加密存储在 Nextcloud 中。"
+    },
+    "nextcloudDisconnected": {
+      "title": "Family Cloud 已断开连接",
+      "message": "本地家庭条目保持完整。"
+    },
+    "moodShared": {
+      "title": "感谢分享",
+      "message": "你的心情已记录在家庭指南针中。"
+    },
+    "relationshipRequested": {
+      "title": "请求已发送",
+      "message": "对方家庭现在可以确认连接。"
+    },
+    "familiesConnected": {
+      "title": "家庭已连接",
+      "message": "该连接现在已在家庭树中可见。"
+    },
+    "requestDeclined": {
+      "title": "请求已拒绝",
+      "message": "请求已移除。"
+    },
+    "relationshipRemoved": {
+      "title": "连接已移除",
+      "message": "家庭账号已不再关联。"
+    },
+    "familyGrantsSaved": {
+      "title": "家庭共享已保存",
+      "message": "对方家庭会立即看到他们可以协助规划的内容。"
+    },
+    "letterSent": {
+      "title": "信件已寄出",
+      "message": "已连接的家庭现在可以在他们的邮箱中找到它。"
+    },
+    "chatInvitationSent": {
+      "title": "聊天邀请已发送",
+      "message": "所选成员自行决定访问权限。"
+    },
+    "invitationAccepted": {
+      "title": "邀请已接受",
+      "message": "家庭聊天现在显示为独立频道。"
+    },
+    "guestAccessEnded": {
+      "title": "访客访问已结束"
+    },
+    "invitationDeclined": {
+      "title": "邀请已拒绝"
+    },
+    "chatAccessUpdated": {
+      "message": "访问设置已更新。"
+    },
+    "taskSentToGrandchild": {
+      "title": "任务已发送",
+      "message": "“{{title}}”现在已对孙辈可见。"
+    },
+    "grandchildPocketMoneyBooked": {
+      "message": "该记账现在已在孙辈的家庭账号中可见。"
+    },
+    "pocketMoneyBooked": {
+      "title": "零花钱已记账",
+      "message": "{{name}}的家庭账号已更新。"
+    },
+    "starsConverted": {
+      "title": "星星已兑换"
+    },
+    "problemReportSaved": {
+      "title": "感谢你的报告",
+      "message": "问题详情已安全存储在家庭规划器中。"
+    },
+    "dashboardLinkAdded": {
+      "title": "仪表盘已扩展",
+      "message": "“{{title}}”现在已在儿童成员上可见。"
+    },
+    "dashboardLinkRemoved": {
+      "title": "仪表盘链接已移除",
+      "message": "该磁贴已从儿童成员中移除。"
+    },
+    "familyLifeSaved": {
+      "title": "已保存",
+      "message": "家庭生活已更新。"
+    },
+    "familyLifeUpdated": {
+      "title": "已更新"
+    },
+    "familyLifeRemoved": {
+      "title": "已移除",
+      "message": "条目已删除。"
+    },
+    "routineCompleted": {
+      "title": "日常完成！",
+      "message": "所有步骤都已点亮——做得好。"
+    },
+    "voteCounted": {
+      "title": "投票已计入",
+      "message": "你的家庭现在可以看到你的选择。"
+    },
+    "kidWorldReady": {
+      "title": "你的世界已就绪",
+      "message": "你的伙伴现在与你同行。"
+    }
+  }
+}

@@ -11,10 +11,12 @@ Unraid Community Applications, Umbrel, CasaOS and Cosmos.
   [getumbrel/umbrel-apps#5939](https://github.com/getumbrel/umbrel-apps/pull/5939).
 - **CasaOS:** package review is open at
   [IceWhaleTech/CasaOS-AppStore#999](https://github.com/IceWhaleTech/CasaOS-AppStore/pull/999).
-- **Cosmos:** package review is open at
+- **Cosmos:** the initial package was merged in
   [azukaar/cosmos-servapps-official#267](https://github.com/azukaar/cosmos-servapps-official/pull/267).
+  The 1.21.4 patch update is submitted in
+  [azukaar/cosmos-servapps-official#312](https://github.com/azukaar/cosmos-servapps-official/pull/312).
 
-The three pending platforms require a maintainer to approve and publish the
+Store submissions and updates require a maintainer to approve and publish the
 package after automated checks have passed. A published LX Family GitHub
 release updates the source package, but never bypasses that external review.
 
@@ -105,11 +107,11 @@ Files:
 - `/deploy/cosmos/SUBMISSION.md`
 
 Cosmos uses a JSON Compose superset with a generated `APP_SECRET`, two named
-volumes and a routed web entry point. LX Family intentionally keeps its own
-login: the Cosmos route has `AuthEnabled: false`, avoiding a second account
-wall that would break the Android app and family-specific permissions. Since
-the route is the only web entry point, `TRUST_PROXY=1` lets LX recognize the
-HTTPS connection forwarded by Cosmos safely.
+volumes and a routed web entry point. The Cosmos route has `AuthEnabled: true`,
+so Cosmos authentication is the first gate. LX Family keeps its own login for
+family-specific profiles and permissions. Since the route is the only web
+entry point, `TRUST_PROXY=1` lets LX recognize the HTTPS connection forwarded
+by Cosmos safely.
 
 `cosmos-auto-update` remains disabled. LX updates must follow a published
 release and preserve the database and backup volumes; platform-wide automatic

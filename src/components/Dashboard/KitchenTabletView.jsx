@@ -394,7 +394,7 @@ export default function KitchenTabletView() {
           {!isWall && <button type="button" onClick={() => setActiveTab('dashboard')}>
             {t('kitchen.quickActions.standardView')} <ArrowUpRight size={16} />
           </button>}
-          {!isWall && <button type="button" onClick={() => setIsCustomizerOpen(true)}>
+          {<button type="button" onClick={() => setIsCustomizerOpen(true)}>
             <SlidersHorizontal size={16} /> {t('kitchen.quickActions.tiles')}
           </button>}
         </div>

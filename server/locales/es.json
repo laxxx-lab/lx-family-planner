@@ -114,6 +114,7 @@
     "reminderBody": "Recogida {{lead}}. Sácalo a tiempo, por favor."
   },
   "errors": {
+    "insufficientStars": "No hay suficientes estrellas",
     "tooManyLoginAttempts": "Demasiados intentos de inicio de sesión. Espera un momento, por favor.",
     "loginRequired": "Inicia sesión primero, por favor.",
     "adultProfileRequired": "Selecciona primero un perfil adulto, por favor.",

@@ -313,7 +313,7 @@ test('CasaOS and Cosmos packages use a pinned multi-architecture release with pe
   assert.equal(cosmosService.labels['cosmos-persistent-env'], 'APP_SECRET');
   assert.equal(cosmosService.environment.includes('TRUST_PROXY=1'), true);
   assert.equal(cosmosService.init, undefined);
-  assert.equal(cosmosService.routes[0].AuthEnabled, false);
+  assert.equal(cosmosService.routes[0].AuthEnabled, true);
   assert.equal(cosmosCompose.volumes['{ServiceName}-data'] !== undefined, true);
   assert.equal(cosmosCompose.volumes['{ServiceName}-backups'] !== undefined, true);
   assert.deepEqual(cosmosDescription.supported_architectures, ['amd64', 'arm64']);

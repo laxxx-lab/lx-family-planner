@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import { plannerApiFetch } from '../utils/apiConfig.js';
 import { resources } from './resources.js';
 
-export const SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl'];
+export const SUPPORTED_LANGUAGES = ['de', 'en', 'fr', 'es', 'it', 'nl', 'pl', 'zh'];
 export const DEFAULT_LANGUAGE = 'de';
 const LANGUAGE_STORAGE_KEY = 'lx_family_language';
 
