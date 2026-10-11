@@ -49,6 +49,10 @@
     "loadFailed": "Foto kon niet worden geladen"
   },
   "form": {
+    "iconLabel": "Emoji (optioneel)",
+    "visibility": "Zichtbaarheid",
+    "family": "Hele familie",
+    "adultsOnly": "Alleen volwassenen",
     "shared": "🤝 Gedeeld (ook tonen bij oma & opa)"
   },
   "addModal": {

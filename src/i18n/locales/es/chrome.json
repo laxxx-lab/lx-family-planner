@@ -191,6 +191,9 @@
     "close": "Cerrar aviso de instalación"
   },
   "serverConfig": {
+    "proxyLogin": "Iniciar sesión en el proxy",
+    "proxyReturn": "Volver a LX",
+    "proxyRequired": "El servidor requiere iniciar sesión en el proxy. Hazlo primero.",
     "kicker": "Conexión",
     "title": "Tu servidor familiar",
     "subtitle": "Para casa, NAS o tu propio dominio.",

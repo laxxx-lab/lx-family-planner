@@ -490,7 +490,7 @@ export default function ChildDashboard() {
                 >
                   <span className="child-quest-number">{index + 1}</span>
                   <span className="child-quest-copy">
-                    <strong>{task.title}</strong>
+                    <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                     <small>{task.category || t('child.quests.defaultCategory')}</small>
                   </span>
                   <span className="child-quest-stars">

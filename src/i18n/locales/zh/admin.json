@@ -1,4 +1,5 @@
 {
+  "calendarTargets": {"title":"个人日历","intro":"单个成员使用自己的日历。共同活动保留在家庭日历中。","shared":"家庭日历","active":"已启用","notConfigured":"未配置","lastSync":"上次成功同步","check":"测试连接","sync":"同步","pause":"暂停","resume":"启用","removeConfirm":"移除此目标？LX 活动会先转移到家庭日历。Nextcloud 中的其他活动将保留。","member":"家庭成员","name":"名称","address":"Nextcloud 地址","username":"用户名","password":"应用密码","load":"加载日历","calendar":"日历"},
   "parentAdmin": {
     "accessDenied": {
       "title": "家长区",

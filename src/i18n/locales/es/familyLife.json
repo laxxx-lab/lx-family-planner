@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Horarios y asignaturas","hint":"Configúralos una vez para la familia. Las clases nuevas usan los horarios de su periodo.","label":"Nombre","addPeriod":"Añadir periodo","subjects":"Asignaturas (separadas por comas)","invalidTimes":"Introduce horarios válidos sin solapamientos.","defaultSubjects":"Matemáticas, Lengua, Inglés, Ciencias, Educación física, Música, Arte, Biología, Historia, Geografía"},
     "kicker": "Todo para el día de colegio",
     "title": "Área de colegio de {{name}}",
     "settings": {

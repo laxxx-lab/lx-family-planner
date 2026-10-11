@@ -71,6 +71,7 @@
     "imageLabel": "Immagine del premio"
   },
   "taskModal": {
+    "iconLabel": "Emoji (facoltativa)",
     "editTitle": "Modifica incombenza",
     "taskLabel": "Incombenza / mestiere",
     "taskPlaceholder": "es. riordinare la stanza, svuotare la lavastoviglie…",

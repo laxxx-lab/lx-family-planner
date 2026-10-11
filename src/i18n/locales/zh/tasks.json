@@ -75,6 +75,7 @@
     "imageLabel": "奖励图片"
   },
   "taskModal": {
+    "iconLabel": "表情符号（可选）",
     "editTitle": "编辑任务",
     "taskLabel": "任务 / 家务",
     "taskPlaceholder": "如：整理房间、清空洗碗机……",

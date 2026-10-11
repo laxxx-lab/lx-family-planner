@@ -191,6 +191,9 @@
     "close": "Close install hint"
   },
   "serverConfig": {
+    "proxyLogin": "Sign in to server proxy",
+    "proxyReturn": "Return to LX",
+    "proxyRequired": "The server requires a proxy login. Sign in there first.",
     "kicker": "Connection",
     "title": "Your Family Server",
     "subtitle": "For home, NAS or your own domain.",

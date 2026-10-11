@@ -71,6 +71,7 @@
     "imageLabel": "Image de la récompense"
   },
   "taskModal": {
+    "iconLabel": "Emoji (facultatif)",
     "editTitle": "Modifier la tâche",
     "taskLabel": "Tâche / corvée",
     "taskPlaceholder": "ex. ranger la chambre, vider le lave-vaisselle...",

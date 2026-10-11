@@ -191,6 +191,9 @@
     "close": "Fermer le conseil d’installation"
   },
   "serverConfig": {
+    "proxyLogin": "Se connecter au proxy du serveur",
+    "proxyReturn": "Retour à LX",
+    "proxyRequired": "Le serveur nécessite une connexion au proxy. Connectez-vous d’abord.",
     "kicker": "Connexion",
     "title": "Votre serveur familial",
     "subtitle": "Pour la maison, le NAS ou votre propre domaine.",

@@ -34,7 +34,8 @@ import {
 import {
   isChildProfile,
   isManagedProfile,
-  isWallProfile
+  isWallProfile,
+  canAccessAppView
 } from '../../constants/roles';
 import DashboardCustomizer from './DashboardCustomizer';
 import OrderedDashboardGrid, {
@@ -182,7 +183,8 @@ export default function KitchenTabletView() {
     toggleShoppingInCart,
     toggleTask,
     completeTaskAs,
-    trashEvents
+    trashEvents,
+    familySettings
   } = useFamily();
   const { t } = useTranslation('widgets');
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -192,12 +194,14 @@ export default function KitchenTabletView() {
   const availableWidgets = useMemo(
     () => TABLET_WIDGETS.filter(
       widget =>
-        widget.id !== 'home-assistant' ||
+        (!['family', 'home-assistant'].includes(widget.id)
+          ? canAccessAppView(activeMember, widget.id, familySettings[0]?.disabledModules || [])
+          : true) && (widget.id !== 'home-assistant' ||
         (
           homeAssistantIntegration?.connected &&
           homeAssistantIntegration?.enabled !== false &&
           homeAssistantIntegration?.selectedEntities?.length > 0
-        )
+        ))
     ).map(widget => ({
       ...widget,
       label: t(widget.labelKey),
@@ -207,7 +211,9 @@ export default function KitchenTabletView() {
       homeAssistantIntegration?.connected,
       homeAssistantIntegration?.enabled,
       homeAssistantIntegration?.selectedEntities?.length,
-      t
+      t,
+      activeMember,
+      familySettings
     ]
   );
   const dashboardLayout = useDashboardLayout(
@@ -512,7 +518,7 @@ export default function KitchenTabletView() {
                       {pendingApproval ? <Clock3 size={15} /> : <Check size={15} />}
                     </span>
                     <span>
-                      <strong>{task.title}</strong>
+                      <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                       <small>
                         {pendingApproval
                           ? t('kitchen.cards.tasks.pendingApproval')
@@ -625,7 +631,7 @@ export default function KitchenTabletView() {
                   key={note.id}
                   onClick={() => setActiveTab('board')}
                 >
-                  <strong>{note.title}</strong>
+                  <strong>{note.icon && <span aria-hidden="true">{note.icon} </span>}{note.title}</strong>
                   <span>{note.content}</span>
                 </button>
               ))}
@@ -713,7 +719,7 @@ export default function KitchenTabletView() {
         </DashboardWidget>
       </OrderedDashboardGrid>
 
-      {!isWall && <DashboardCustomizer
+      {<DashboardCustomizer
         isOpen={isCustomizerOpen}
         layout={dashboardLayout.layout}
         mode="tablet"

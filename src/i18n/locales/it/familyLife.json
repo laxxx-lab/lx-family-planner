@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Orari e materie","hint":"Impostali una volta per la famiglia. Le nuove lezioni usano gli orari del periodo.","label":"Nome","addPeriod":"Aggiungi periodo","subjects":"Materie (separate da virgole)","invalidTimes":"Inserisci orari validi senza sovrapposizioni.","defaultSubjects":"Matematica, Italiano, Inglese, Scienze, Educazione fisica, Musica, Arte, Biologia, Storia, Geografia"},
     "kicker": "Tutto per la giornata scolastica",
     "title": "Area scuola di {{name}}",
     "settings": {

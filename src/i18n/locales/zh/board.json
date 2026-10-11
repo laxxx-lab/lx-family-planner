@@ -49,6 +49,10 @@
     "loadFailed": "照片加载失败"
   },
   "form": {
+    "iconLabel": "表情符号（可选）",
+    "visibility": "可见范围",
+    "family": "全家",
+    "adultsOnly": "仅限成人",
     "shared": "🤝 已分享（爷爷奶奶家也可见）"
   },
   "addModal": {

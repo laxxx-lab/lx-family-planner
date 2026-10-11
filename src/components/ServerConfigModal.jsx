@@ -5,7 +5,10 @@ import {
   DEFAULT_SERVER_URL,
   getStoredServerUrl,
   normalizeServerUrl,
-  setStoredServerUrl
+  setStoredServerUrl,
+  isCapacitorNative,
+  serverJsonFetch,
+  signInToServerProxy
 } from '../utils/apiConfig';
 
 export default function ServerConfigModal({ isOpen, onClose, onSave }) {
@@ -36,11 +39,16 @@ export default function ServerConfigModal({ isOpen, onClose, onSave }) {
       if (!target) {
         throw new Error(t('serverConfig.errors.emptyUrl'));
       }
-      const response = await fetch(`${target}/api/health`, {
+      const response = await serverJsonFetch(`${target}/api/health`, {
         method: 'GET',
+        credentials: 'include',
         headers: { Accept: 'application/json' },
         signal: AbortSignal.timeout(5000)
       });
+      if ((response.status >= 300 && response.status < 400) ||
+          response.headers.get('content-type')?.includes('text/html')) {
+        throw new Error(t('serverConfig.proxyRequired'));
+      }
       if (!response.ok) {
         throw new Error(t('serverConfig.errors.badStatus', { status: response.status }));
       }
@@ -144,6 +152,22 @@ export default function ServerConfigModal({ isOpen, onClose, onSave }) {
               components={{ code: <code /> }}
             />
           </p>
+
+          {isCapacitorNative() && <button type="button" className="btn-secondary"
+            disabled={testing || saving || !url.trim()}
+            onClick={async () => {
+              setSaving(true);
+              try {
+                await signInToServerProxy(url, {
+                  title: t('serverConfig.proxyLogin'), closeLabel: t('serverConfig.proxyReturn')
+                });
+                await handleTestConnection();
+              } catch (error) {
+                setStatus({ success: false, message: error.message });
+              } finally { setSaving(false); }
+            }}>
+            {t('serverConfig.proxyLogin')}
+          </button>}
 
           {status && (
             <div

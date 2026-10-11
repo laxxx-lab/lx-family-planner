@@ -50,6 +50,8 @@ import {
   normalizeSchoolSubjectKey,
   resolveSchoolSubjectColor
 } from '../../../shared/schoolSubjectColors.js';
+import { resolveSchoolLesson } from '../../../shared/schoolTimetable.js';
+import SchoolTimetableTemplate from './SchoolTimetableTemplate';
 
 const SECTIONS = [
   { id: 'today', labelKey: 'sections.today', icon: Sparkles },
@@ -237,6 +239,7 @@ export default function FamilyLifeHub() {
     time: '',
     endTime: '',
     period: '1',
+    usesTimetableTemplate: true,
     room: '',
     teacher: '',
     details: '',
@@ -273,6 +276,7 @@ export default function FamilyLifeHub() {
     dueDate: ''
   });
   const settings = familySettings[0] || null;
+  const schoolTimetable = settings?.schoolTimetable;
   const [settingsForm, setSettingsForm] = useState({
     quietHoursEnabled: false,
     quietStart: '20:00',
@@ -327,6 +331,7 @@ export default function FamilyLifeHub() {
     );
   const timetableLessons = mySchoolItems
     .filter(item => item.kind === 'lesson')
+    .map(item => resolveSchoolLesson(item, schoolTimetable))
     .sort((left, right) =>
       `${left.weekday}${String(left.period || 0).padStart(2, '0')}${left.time || ''}`
         .localeCompare(
@@ -337,6 +342,7 @@ export default function FamilyLifeHub() {
     {
       length: Math.max(
         8,
+        ...(schoolTimetable?.periods || []).map(entry => entry.period),
         ...timetableLessons.map(lesson => Math.min(20, Math.max(1, Number(lesson.period) || 1)))
       )
     },
@@ -497,6 +503,7 @@ export default function FamilyLifeHub() {
     const payload = {
       memberId: selectedId,
       ...schoolForm,
+      title: schoolForm.title.trim() || schoolForm.subject.trim(),
       weekday: Number(schoolForm.weekday)
     };
     const saved = editingSchoolItemId
@@ -584,6 +591,7 @@ export default function FamilyLifeHub() {
       time: item.time || '',
       endTime: item.endTime || '',
       period: String(Number(item.period) || 1),
+      usesTimetableTemplate: Boolean(item.usesTimetableTemplate),
       room: item.room || '',
       teacher: item.teacher || '',
       details: item.details || '',
@@ -611,8 +619,9 @@ export default function FamilyLifeHub() {
       subject: '',
       weekday: String(weekday),
       period: String(period),
-      time: '',
-      endTime: '',
+      usesTimetableTemplate: true,
+      time: schoolTimetable?.periods?.find(entry => entry.period === period)?.time || '',
+      endTime: schoolTimetable?.periods?.find(entry => entry.period === period)?.endTime || '',
       room: '',
       teacher: '',
       details: '',
@@ -1190,6 +1199,10 @@ export default function FamilyLifeHub() {
               </div>
             ) : (
               <>
+                {isAdult && <SchoolTimetableTemplate template={schoolTimetable} onSave={async template => {
+                  if (settings) return updateFamilyLifeRecord('familySettings', settings.id, { schoolTimetable: template });
+                  return addFamilyLifeRecord('familySettings', { id: 'family-settings', schoolTimetable: template });
+                }} />}
                 <div className="school-timetable" role="grid">
                   <div className="school-timetable-corner">{t('school.timetable.periodLabel')}</div>
                   {[1, 2, 3, 4, 5].map(weekday => {
@@ -1211,11 +1224,13 @@ export default function FamilyLifeHub() {
                     const periodTimes = periodLessons
                       .map(lesson => [lesson.time, lesson.endTime].filter(Boolean).join('–'))
                       .filter(Boolean);
+                    const templatePeriod = schoolTimetable?.periods?.find(entry => entry.period === period);
+                    const periodTimeLabel = templatePeriod ? `${templatePeriod.time}–${templatePeriod.endTime}` : periodTimes[0];
                     return [
                       <div key={`period-${period}`} className="school-timetable-period" role="rowheader">
                         <strong>{period}</strong>
-                        <span>{t('school.timetable.periodShort')}</span>
-                        {periodTimes[0] && <small>{periodTimes[0]}</small>}
+                        <span>{schoolTimetable?.periods?.find(entry => entry.period === period)?.label || t('school.timetable.periodShort')}</span>
+                        {periodTimeLabel && <small>{periodTimeLabel}</small>}
                       </div>,
                       ...[1, 2, 3, 4, 5].map(weekday => {
                         const lessonsInSlot = periodLessons.filter(
@@ -1407,6 +1422,7 @@ export default function FamilyLifeHub() {
                   </select>
                   <input
                     value={schoolForm.subject}
+                    list="school-subject-suggestions"
                     onChange={event => {
                       const subject = event.target.value;
                       setSchoolColorWasChosen(false);
@@ -1420,12 +1436,15 @@ export default function FamilyLifeHub() {
                     }}
                     placeholder={t('school.form.subjectPlaceholder')}
                   />
+                  <datalist id="school-subject-suggestions">
+                    {[...new Set([...(schoolTimetable?.subjects || t('school.template.defaultSubjects').split(',').map(value => value.trim())), ...schoolItems.map(item => item.subject).filter(Boolean)])].map(subject => <option key={subject} value={subject} />)}
+                  </datalist>
                 </div>
                 <input
                   value={schoolForm.title}
                   onChange={event => setSchoolForm(previous => ({ ...previous, title: event.target.value }))}
                   placeholder={t('school.form.titlePlaceholder')}
-                  required
+                  required={!schoolForm.subject.trim()}
                 />
                 {schoolForm.kind === 'lesson' ? (
                   <div className="school-lesson-form-fields">
@@ -1448,7 +1467,12 @@ export default function FamilyLifeHub() {
                           min="1"
                           max="20"
                           value={schoolForm.period}
-                          onChange={event => setSchoolForm(previous => ({ ...previous, period: event.target.value }))}
+                          onChange={event => {
+                            const period = schoolTimetable?.periods?.find(entry => entry.period === Number(event.target.value));
+                            setSchoolForm(previous => ({ ...previous, period: event.target.value,
+                              usesTimetableTemplate: Boolean(period),
+                              time: period?.time || '', endTime: period?.endTime || '' }));
+                          }}
                         />
                       </label>
                     </div>
@@ -1458,7 +1482,7 @@ export default function FamilyLifeHub() {
                         <input
                           type="time"
                           value={schoolForm.time}
-                          onChange={event => setSchoolForm(previous => ({ ...previous, time: event.target.value }))}
+                          onChange={event => setSchoolForm(previous => ({ ...previous, time: event.target.value, usesTimetableTemplate: false }))}
                         />
                       </label>
                       <label>
@@ -1466,7 +1490,7 @@ export default function FamilyLifeHub() {
                         <input
                           type="time"
                           value={schoolForm.endTime}
-                          onChange={event => setSchoolForm(previous => ({ ...previous, endTime: event.target.value }))}
+                          onChange={event => setSchoolForm(previous => ({ ...previous, endTime: event.target.value, usesTimetableTemplate: false }))}
                         />
                       </label>
                     </div>

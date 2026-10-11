@@ -1,4 +1,5 @@
 {
+  "calendarTargets": {"title":"Personal calendars","intro":"A single member uses their calendar. Shared events stay in the family calendar.","shared":"Family calendar","active":"active","notConfigured":"not configured","lastSync":"Last successful sync","check":"Test connection","sync":"Sync","pause":"Pause","resume":"Enable","removeConfirm":"Remove this target? LX events are transferred to the family calendar first. Foreign Nextcloud events are preserved.","member":"Family member","name":"Name","address":"Nextcloud address","username":"Username","password":"App password","load":"Load calendars","calendar":"Calendar"},
   "parentAdmin": {
     "accessDenied": {
       "title": "Parents' area",

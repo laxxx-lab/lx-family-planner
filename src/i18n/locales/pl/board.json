@@ -49,6 +49,10 @@
     "loadFailed": "Nie udało się wczytać zdjęcia"
   },
   "form": {
+    "iconLabel": "Emoji (opcjonalnie)",
+    "visibility": "Widoczność",
+    "family": "Cała rodzina",
+    "adultsOnly": "Tylko dorośli",
     "shared": "🤝 Współdzielone (pokaż też u babci i dziadka)"
   },
   "addModal": {

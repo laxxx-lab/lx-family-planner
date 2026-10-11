@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Stundenzeiten & Fächer","hint":"Einmal für die Familie festlegen. Neue Stunden übernehmen die Zeiten ihrer Unterrichtsstunde.","label":"Bezeichnung","addPeriod":"Weitere Stunde","subjects":"Fächer (durch Kommas getrennt)","invalidTimes":"Bitte gültige Start- und Endzeiten ohne Überschneidung eintragen.","defaultSubjects":"Mathematik, Deutsch, Englisch, Sachkunde, Sport, Musik, Kunst, Biologie, Geschichte, Geografie"},
     "kicker": "Alles für den Schultag",
     "title": "{{name}}s Schulbereich",
     "settings": {

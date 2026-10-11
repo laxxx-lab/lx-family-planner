@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Lestijden en vakken","hint":"Stel deze eenmaal in voor de familie. Nieuwe lessen gebruiken de tijden van hun lesuur.","label":"Naam","addPeriod":"Lesuur toevoegen","subjects":"Vakken (gescheiden door komma’s)","invalidTimes":"Voer geldige tijden in zonder overlap.","defaultSubjects":"Wiskunde, Nederlands, Engels, Natuurkunde, Gym, Muziek, Kunst, Biologie, Geschiedenis, Aardrijkskunde"},
     "kicker": "Alles voor de schooldag",
     "title": "Schoolgebied van {{name}}",
     "settings": {

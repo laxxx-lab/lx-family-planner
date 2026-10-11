@@ -13,7 +13,7 @@ Unraid Community Applications, Umbrel, CasaOS and Cosmos.
   [IceWhaleTech/CasaOS-AppStore#999](https://github.com/IceWhaleTech/CasaOS-AppStore/pull/999).
 - **Cosmos:** the initial package was merged in
   [azukaar/cosmos-servapps-official#267](https://github.com/azukaar/cosmos-servapps-official/pull/267).
-  The 1.21.4 patch update is submitted in
+  The 1.21.4 patch update was merged in
   [azukaar/cosmos-servapps-official#312](https://github.com/azukaar/cosmos-servapps-official/pull/312).
 
 Store submissions and updates require a maintainer to approve and publish the
@@ -22,7 +22,7 @@ release updates the source package, but never bypasses that external review.
 
 ## Shared release image
 
-All stores use the same signed release source:
+Stores use the same published release image. CasaOS and Umbrel pin a version:
 
 ```text
 ghcr.io/laxxx-lab/lx-family-planner:<published-release-version>
@@ -113,9 +113,24 @@ family-specific profiles and permissions. Since the route is the only web
 entry point, `TRUST_PROXY=1` lets LX recognize the HTTPS connection forwarded
 by Cosmos safely.
 
-`cosmos-auto-update` remains disabled. LX updates must follow a published
-release and preserve the database and backup volumes; platform-wide automatic
-container updates would bypass LX's own pre-update backup checks.
+Cosmos uses `ghcr.io/laxxx-lab/lx-family-planner:latest`, which our release
+workflow publishes only for a verified release. Cosmos currently cannot bump
+versioned image tags in existing installations (maintainer feedback in
+[PR #312](https://github.com/azukaar/cosmos-servapps-official/pull/312#issuecomment-6080736072)).
+
+Existing Cosmos installations need a one-time change of the LX container image
+from `:1.21.4` (or another fixed tag) to `:latest`, followed by an image update
+in Cosmos. Updating the store catalog alone does not change installed tags.
+Keep the existing data/backup volumes and `APP_SECRET`; do not reinstall the app.
+Take an LX database backup before updating. `cosmos-auto-update` remains
+disabled, so updates are chosen by the administrator rather than unattended.
+
+The Android APK uses native HTTP and offers **Sign in to server proxy** in
+server settings. With Cosmos authentication enabled, enter the LX route URL,
+sign in to Cosmos in that window, return to LX, test the connection and save.
+The proxy login and LX family/profile login remain separate. Session expiry
+can require opening the proxy login again. This does not require OIDC support
+in LX and does not remove the Cosmos authentication gate.
 
 ## Release safety
 

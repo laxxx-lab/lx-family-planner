@@ -75,6 +75,7 @@
     "imageLabel": "Reward image"
   },
   "taskModal": {
+    "iconLabel": "Emoji (optional)",
     "editTitle": "Edit task",
     "taskLabel": "Task / chore",
     "taskPlaceholder": "e.g. tidy up the room, unload the dishwasher...",

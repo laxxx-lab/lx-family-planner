@@ -65,6 +65,7 @@ export default function ChoreRewardsPlanner() {
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [taskTitle, setTaskTitle] = useState('');
+  const [taskIcon, setTaskIcon] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
   const [taskMemberId, setTaskMemberId] = useState(members[0]?.id || '');
   const [taskStars, setTaskStars] = useState(15);
@@ -103,6 +104,7 @@ export default function ChoreRewardsPlanner() {
   const openCreateTask = () => {
     setEditingTask(null);
     setTaskTitle('');
+    setTaskIcon('');
     setTaskDescription('');
     setTaskMemberId(activeMemberIdForTask());
     setTaskStars(15);
@@ -128,6 +130,7 @@ export default function ChoreRewardsPlanner() {
   const openEditTask = task => {
     setEditingTask(task);
     setTaskTitle(task.title || '');
+    setTaskIcon(task.icon || '');
     setTaskDescription(task.description || '');
     setTaskMemberId(task.memberId || members[0]?.id || '');
     setTaskStars(Number(task.stars ?? 15));
@@ -167,6 +170,7 @@ export default function ChoreRewardsPlanner() {
 
     const changes = {
       title: taskTitle.trim(),
+      icon: taskIcon.trim(),
       description: taskDescription.trim(),
       memberId: taskMemberId,
       assignmentMode: taskAssignmentMode,
@@ -381,7 +385,7 @@ export default function ChoreRewardsPlanner() {
                         isPending ? <Clock3 size={17} /> : <span />}
                     </span>
                     <span className="task-approval-copy">
-                      <strong>{task.title}</strong>
+                      <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                       {task.description && (
                         <span className="task-description">
                           {task.description}
@@ -476,7 +480,7 @@ export default function ChoreRewardsPlanner() {
                   disabled={isWall}
                 >
                   <span>
-                    <strong>{task.title}</strong>
+                    <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                     <small>{task.category || t('taskModal.categories.household')}</small>
                   </span>
                   <time>{formatTaskDate(task.dueDate)}</time>
@@ -582,7 +586,7 @@ export default function ChoreRewardsPlanner() {
                             )}
                           </span>
                           <span className="task-approval-copy">
-                            <strong>{task.title}</strong>
+                            <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                             {task.description && (
                               <span className="task-description">{task.description}</span>
                             )}
@@ -1152,6 +1156,11 @@ export default function ChoreRewardsPlanner() {
                 )}
               </div>
 
+              <label className="form-group">
+                <span className="form-label">{t('taskModal.iconLabel')}</span>
+                <input className="form-input" value={taskIcon} maxLength={24}
+                  placeholder="🪥" onChange={event => setTaskIcon(event.target.value)} />
+              </label>
               {taskIsForManagedProfile ? (
                 <div className="managed-task-form-note">
                   <ShieldCheck size={18} />
@@ -1167,8 +1176,8 @@ export default function ChoreRewardsPlanner() {
                   <label className="form-label">{t('taskModal.starsLabel')}</label>
                   <input
                     type="number"
-                    min="5"
-                    step="5"
+                    min="0"
+                    step="1"
                     className="form-input"
                     value={taskStars}
                     onChange={e => setTaskStars(e.target.value)}

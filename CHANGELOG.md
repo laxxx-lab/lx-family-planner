@@ -6,6 +6,18 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.22.0] — 2026-10-11
+
+- Add personal Nextcloud calendar targets alongside the shared family calendar, with encrypted app passwords and safe target transfers.
+- Repair wall tile customization and honour globally disabled/profile-restricted modules.
+- Add optional task emojis and allow zero-star chores without awarding fallback points.
+- Add adult-only pinboard notes, enforced in bootstrap, direct API reads and mutations, plus optional note emojis.
+- Add reusable family lesson times and subject suggestions; preserve legacy custom lesson times.
+- Support Android connections through authenticated proxies using native HTTP and an isolated proxy sign-in window.
+- Use the latest release image in Cosmos; existing fixed-tag installations need a one-time image-tag change. Unattended updates stay disabled.
+- Include a signed Android APK. CasaOS and Umbrel updates remain subject to their store review.
+
+
 ## [1.21.4] — 2026-10-01
 
 - Add optional Simplified Chinese, keeping German as the default on server and client.

@@ -1,4 +1,5 @@
 {
+  "calendarTargets": {"title":"Persoonlijke agenda’s","intro":"Elk lid gebruikt een eigen agenda. Gezamenlijke afspraken blijven in de familieagenda.","shared":"Familieagenda","active":"actief","notConfigured":"niet ingesteld","lastSync":"Laatste geslaagde synchronisatie","check":"Verbinding testen","sync":"Synchroniseren","pause":"Pauzeren","resume":"Inschakelen","removeConfirm":"Dit doel verwijderen? LX-afspraken worden eerst naar de familieagenda verplaatst. Andere Nextcloud-afspraken blijven behouden.","member":"Familielid","name":"Naam","address":"Nextcloud-adres","username":"Gebruikersnaam","password":"App-wachtwoord","load":"Agenda’s laden","calendar":"Agenda"},
   "parentAdmin": {
     "accessDenied": {
       "title": "Oudersgedeelte",

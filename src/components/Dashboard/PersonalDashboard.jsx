@@ -433,7 +433,7 @@ export default function PersonalDashboard() {
                 >
                   <span className="adult-task-check" />
                   <span>
-                    <strong>{task.title}</strong>
+                    <strong>{task.icon && <span aria-hidden="true">{task.icon} </span>}{task.title}</strong>
                     <small>
                       {task.dueDate
                         ? t('personal.tasks.due', {
@@ -578,7 +578,7 @@ export default function PersonalDashboard() {
                   onClick={() => setActiveTab('board')}
                   style={{ '--note-color': note.color || '#fef08a' }}
                 >
-                  <strong>{note.title}</strong>
+                  <strong>{note.icon && <span aria-hidden="true">{note.icon} </span>}{note.title}</strong>
                   <span>{note.content}</span>
                 </button>
               ))}

@@ -1161,7 +1161,8 @@ function eligibleLocalEvent(
     !event.sharedOwnerFamilyId &&
     event.nextcloudExcluded !== true &&
     event.syncExcluded !== true &&
-    (allowProviderTransfer ||
+    ((allowProviderTransfer && (!event.syncProvider || event.syncProvider === PROVIDER ||
+      String(event.syncProvider).startsWith('nextcloud-target:'))) ||
       !event.syncProvider ||
       event.syncProvider === provider) &&
     (includeGrandparents || (event.household || 'familie') === 'familie') &&
@@ -1305,6 +1306,8 @@ export async function syncNextcloudEvents({
   provider = PROVIDER,
   sourceName = 'Nextcloud',
   ownsEvent,
+  destinationProviderForEvent,
+  importRemoteEvents = true,
   request = nextcloudRequest
 }) {
   if (!calendarHref) {
@@ -1339,6 +1342,8 @@ export async function syncNextcloudEvents({
     mappings.map(mapping => [mapping.localId, mapping])
   );
   const mappedRemoteHrefs = new Set(mappings.map(mapping => mapping.remoteHref));
+  const detachedRemoteHrefs = new Set(listIntegrationSyncItems(familyId, provider, 'events-detached').map(mapping => mapping.remoteHref));
+  const createdRemoteHrefs = new Set(listIntegrationSyncItems(familyId, provider, 'events-created').map(mapping => mapping.remoteHref));
   const eligibleEvents = () => listRecords(familyId, 'events').filter(event =>
     eligibleLocalEvent(
       event,
@@ -1357,16 +1362,22 @@ export async function syncNextcloudEvents({
     let local = eligibleLocalById.get(mapping.localId);
     const remoteResource = remoteByHref.get(mapping.remoteHref);
     if (local && !eventIsOwned(local)) {
+      if (destinationProviderForEvent) {
+        const destination = destinationProviderForEvent(local);
+        const destinationMapping = destination && listIntegrationSyncItems(familyId, destination, 'events')
+          .find(item => item.localId === local.id && item.localHash === eventContentHash(local));
+        // Keep both the original copy and its mapping until export is proven.
+        if (!destinationMapping) continue;
+      }
       const remoteWasCreatedByLx = Boolean(
-        remoteResource &&
-        customIcsValue(
-          remoteResource.calendarData,
-          'X-LX-FAMILY-ID'
-        ) === familyId
+        remoteResource && createdRemoteHrefs.has(mapping.remoteHref)
       );
       if (remoteWasCreatedByLx) {
         await deleteRemoteEvent(connection, mapping.remoteHref, request);
         stats.deletedRemote += 1;
+      } else if (remoteResource) {
+        saveIntegrationSyncItem(familyId, provider, 'events-detached', mapping);
+        detachedRemoteHrefs.add(mapping.remoteHref);
       }
       deleteIntegrationSyncItem(
         familyId,
@@ -1374,19 +1385,19 @@ export async function syncNextcloudEvents({
         'events',
         mapping.localId
       );
+      deleteIntegrationSyncItem(familyId, provider, 'events-created', mapping.localId);
       continue;
     }
     if (!local) {
       const remoteWasCreatedByLx = Boolean(
-        remoteResource &&
-        customIcsValue(
-          remoteResource.calendarData,
-          'X-LX-FAMILY-ID'
-        ) === familyId
+        remoteResource && createdRemoteHrefs.has(mapping.remoteHref)
       );
-      if (remoteResource && (provider === PROVIDER || remoteWasCreatedByLx)) {
+      if (remoteWasCreatedByLx) {
         await deleteRemoteEvent(connection, mapping.remoteHref, request);
         stats.deletedRemote += 1;
+      } else if (remoteResource) {
+        saveIntegrationSyncItem(familyId, provider, 'events-detached', mapping);
+        detachedRemoteHrefs.add(mapping.remoteHref);
       }
       deleteIntegrationSyncItem(
         familyId,
@@ -1394,6 +1405,7 @@ export async function syncNextcloudEvents({
         'events',
         mapping.localId
       );
+      deleteIntegrationSyncItem(familyId, provider, 'events-created', mapping.localId);
       continue;
     }
     if (!remoteResource) {
@@ -1408,6 +1420,7 @@ export async function syncNextcloudEvents({
           'events',
           local.id
         );
+        deleteIntegrationSyncItem(familyId, provider, 'events-created', local.id);
       } else {
         const pushed = await putRemoteEvent(
           connection,
@@ -1429,6 +1442,7 @@ export async function syncNextcloudEvents({
           nextcloudManaged: true
         });
         saveEventMapping(familyId, local, pushed, provider);
+        saveIntegrationSyncItem(familyId, provider, 'events-created', { localId: local.id, remoteHref: pushed.href });
         stats.updatedRemote += 1;
       }
       continue;
@@ -1590,6 +1604,11 @@ export async function syncNextcloudEvents({
       nextcloudManaged: true
     });
     saveEventMapping(familyId, updated, pushed, provider);
+    // Provenance is recorded only for a new remote resource. Editing an
+    // imported event also writes LX metadata but must never grant deletion.
+    saveIntegrationSyncItem(familyId, provider, 'events-created', {
+      localId: updated.id, remoteHref: pushed.href
+    });
     mappedRemoteHrefs.add(pushed.href);
     stats.exported += 1;
   }
@@ -1598,7 +1617,7 @@ export async function syncNextcloudEvents({
     listRecords(familyId, 'events').map(event => event.id)
   );
   for (const resource of remoteResources) {
-    if (mappedRemoteHrefs.has(resource.href)) continue;
+    if (!importRemoteEvents || mappedRemoteHrefs.has(resource.href) || detachedRemoteHrefs.has(resource.href)) continue;
     const remote = remoteEvent(
       resource,
       familyId,
@@ -1614,12 +1633,13 @@ export async function syncNextcloudEvents({
       resource.calendarData,
       'X-LX-EVENT-ID'
     );
-    const id = requestedId && !occupiedLocalIds.has(requestedId)
+    let id = requestedId && !occupiedLocalIds.has(requestedId)
       ? requestedId
       : `${provider.replace(/[^a-z0-9-]/gi, '-')}-event-${createHash('sha256')
         .update(resource.href)
         .digest('hex')
         .slice(0, 28)}`;
+    if (occupiedLocalIds.has(id)) id = `${id}-${randomUUID()}`;
     const inserted = upsertRecord(familyId, 'events', {
       ...remote,
       id,

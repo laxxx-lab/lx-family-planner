@@ -1,4 +1,5 @@
 {
+  "calendarTargets": {"title":"Calendari personali","intro":"Ogni membro usa il proprio calendario. Gli eventi condivisi restano nel calendario familiare.","shared":"Calendario familiare","active":"attivo","notConfigured":"non configurato","lastSync":"Ultima sincronizzazione riuscita","check":"Verifica connessione","sync":"Sincronizza","pause":"Sospendi","resume":"Attiva","removeConfirm":"Rimuovere la destinazione? Gli eventi LX vengono prima trasferiti nel calendario familiare. Gli eventi Nextcloud esterni restano intatti.","member":"Familiare","name":"Nome","address":"Indirizzo Nextcloud","username":"Nome utente","password":"Password dell’app","load":"Carica calendari","calendar":"Calendario"},
   "parentAdmin": {
     "accessDenied": {
       "title": "Area genitori",

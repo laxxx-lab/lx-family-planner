@@ -52,6 +52,7 @@ test('one assigned member uses that member target', () => {
   );
 
   assert.equal(target.id, 'anna');
+  assert.equal(routeEventToCalendarTarget({ memberId: 'anna' }, { sharedTarget, personalTargets }).id, 'anna');
 });
 
 test('family, multiple members and missing targets use the shared target', () => {
@@ -71,6 +72,10 @@ test('family, multiple members and missing targets use the shared target', () =>
 test('target providers keep the legacy shared name and isolate personal mappings', () => {
   assert.equal(targetProvider(sharedTarget), 'nextcloud');
   assert.equal(targetProvider(personalTargets[0]), 'nextcloud-target:anna');
+});
+
+test('without an enabled shared calendar no personal writer is selected', () => {
+  assert.equal(routeEventToCalendarTarget({ memberIds: ['anna'] }, { sharedTarget: null, personalTargets }), null);
 });
 
 test('personal targets require a current member and calendar URL', () => {

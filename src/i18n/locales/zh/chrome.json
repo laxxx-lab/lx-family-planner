@@ -248,6 +248,9 @@
     "close": "关闭安装提示"
   },
   "serverConfig": {
+    "proxyLogin": "登录服务器代理",
+    "proxyReturn": "返回 LX",
+    "proxyRequired": "服务器需要代理登录。请先登录代理。",
     "kicker": "连接",
     "title": "你的家庭服务器",
     "subtitle": "适用于家庭、NAS 或你自己的域名。",

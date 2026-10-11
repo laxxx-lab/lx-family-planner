@@ -49,6 +49,10 @@
     "loadFailed": "Non è stato possibile caricare la foto"
   },
   "form": {
+    "iconLabel": "Emoji (facoltativa)",
+    "visibility": "Visibilità",
+    "family": "Tutta la famiglia",
+    "adultsOnly": "Solo adulti",
     "shared": "🤝 Condiviso (mostra anche da nonna e nonno)"
   },
   "addModal": {

@@ -1,4 +1,5 @@
 {
+  "calendarTargets": {"title":"Persönliche Kalender","intro":"Ein einzelnes Mitglied nutzt seinen Kalender. Gemeinsame Termine bleiben im Familienkalender.","shared":"Familienkalender","active":"aktiv","notConfigured":"nicht eingerichtet","lastSync":"Letzter erfolgreicher Abgleich","check":"Verbindung prüfen","sync":"Abgleichen","pause":"Pausieren","resume":"Aktivieren","removeConfirm":"Das Ziel entfernen? Eigene Termine werden zuerst in den Familienkalender übertragen. Fremde Nextcloud-Termine bleiben dort erhalten.","member":"Familienmitglied","name":"Name","address":"Nextcloud-Adresse","username":"Benutzername","password":"App-Passwort","load":"Kalender laden","calendar":"Kalender"},
   "parentAdmin": {
     "accessDenied": {
       "title": "Elternbereich",

@@ -71,6 +71,7 @@
     "imageLabel": "Obrazek nagrody"
   },
   "taskModal": {
+    "iconLabel": "Emoji (opcjonalnie)",
     "editTitle": "Edytuj zadanie",
     "taskLabel": "Zadanie / obowiązek",
     "taskPlaceholder": "np. posprzątaj pokój, opróżnij zmywarkę...",

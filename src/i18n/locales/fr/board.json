@@ -49,6 +49,10 @@
     "loadFailed": "La photo n'a pas pu être chargée"
   },
   "form": {
+    "iconLabel": "Emoji (facultatif)",
+    "visibility": "Visibilité",
+    "family": "Toute la famille",
+    "adultsOnly": "Adultes uniquement",
     "shared": "🤝 Partagé (afficher aussi chez mamie & papi)"
   },
   "addModal": {

@@ -307,7 +307,7 @@ test('CasaOS and Cosmos packages use a pinned multi-architecture release with pe
   const cosmosService = cosmosCompose.services['{ServiceName}'];
   assert.equal(
     cosmosService.image,
-    `ghcr.io/laxxx-lab/lx-family-planner:${version}`
+    'ghcr.io/laxxx-lab/lx-family-planner:latest'
   );
   assert.equal(cosmosService.labels['cosmos-auto-update'], 'false');
   assert.equal(cosmosService.labels['cosmos-persistent-env'], 'APP_SECRET');

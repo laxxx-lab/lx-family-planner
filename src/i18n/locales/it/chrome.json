@@ -191,6 +191,9 @@
     "close": "Chiudi il suggerimento di installazione"
   },
   "serverConfig": {
+    "proxyLogin": "Accedi al proxy del server",
+    "proxyReturn": "Torna a LX",
+    "proxyRequired": "Il server richiede l’accesso al proxy. Accedi prima lì.",
     "kicker": "Connessione",
     "title": "Il tuo server di famiglia",
     "subtitle": "Per casa, NAS o dominio personale.",

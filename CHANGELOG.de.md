@@ -4,6 +4,18 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.22.0] – 2026-10-11
+
+- Persönliche Nextcloud-Kalender zusätzlich zum Familienkalender, mit verschlüsselten App-Passwörtern und abgesichertem Kalenderwechsel.
+- Kachelauswahl am Wanddisplay repariert; deaktivierte und für das Profil gesperrte Module werden ausgeblendet.
+- Optionale Aufgaben-Emojis und Aufgaben ohne Sterne; null Punkte bleiben auch bei der Erledigung null.
+- Pinnwand-Notizen nur für Erwachsene, serverseitig bei Startdaten, direkten API-Abfragen und Änderungen geschützt; optionale Emojis.
+- Zentrale Unterrichtszeiten und wiederverwendbare Fächer; bestehende individuelle Stundenzeiten bleiben erhalten.
+- Android-Verbindungen durch vorgeschaltete Anmeldungen mit nativen HTTP-Anfragen und separatem Proxy-Anmeldefenster.
+- Cosmos verwendet das aktuelle Release-Image über latest. Bestehende Installationen müssen den festen Image-Tag einmal umstellen; unbeaufsichtigte Updates bleiben aus.
+- Neue signierte Android-APK. CasaOS- und Umbrel-Pakete unterliegen weiterhin der Store-Prüfung.
+
+
 ## [1.21.4] – 2026-10-01
 
 - Vereinfachtes Chinesisch ist optional verfügbar; Deutsch bleibt Standard auf Server und Client.

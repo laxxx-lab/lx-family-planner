@@ -71,6 +71,7 @@
     "imageLabel": "Imagen de la recompensa"
   },
   "taskModal": {
+    "iconLabel": "Emoji (opcional)",
     "editTitle": "Editar tarea",
     "taskLabel": "Tarea / deber",
     "taskPlaceholder": "p. ej. recoger la habitación, vaciar el lavavajillas…",

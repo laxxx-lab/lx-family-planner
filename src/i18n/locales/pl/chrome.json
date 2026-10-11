@@ -191,6 +191,9 @@
     "close": "Zamknij wskazówkę instalacji"
   },
   "serverConfig": {
+    "proxyLogin": "Zaloguj się do proxy serwera",
+    "proxyReturn": "Powrót do LX",
+    "proxyRequired": "Serwer wymaga logowania do proxy. Zaloguj się tam najpierw.",
     "kicker": "Połączenie",
     "title": "Twój serwer rodzinny",
     "subtitle": "Dla domu, NAS lub własnej domeny.",

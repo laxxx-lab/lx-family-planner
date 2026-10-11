@@ -191,6 +191,9 @@
     "close": "Installationshinweis schließen"
   },
   "serverConfig": {
+    "proxyLogin": "Am vorgeschalteten Server anmelden",
+    "proxyReturn": "Zurück zu LX",
+    "proxyRequired": "Der Server verlangt eine vorgeschaltete Anmeldung. Melde dich zuerst dort an.",
     "kicker": "Verbindung",
     "title": "Dein Familien-Server",
     "subtitle": "Für Zuhause, NAS oder eure eigene Domain.",

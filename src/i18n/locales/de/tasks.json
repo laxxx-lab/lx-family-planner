@@ -75,6 +75,7 @@
     "imageLabel": "Bild der Belohnung"
   },
   "taskModal": {
+    "iconLabel": "Emoji (optional)",
     "editTitle": "Aufgabe bearbeiten",
     "taskLabel": "Aufgabe / Pflicht",
     "taskPlaceholder": "z. B. Zimmer aufräumen, Spülmaschine ausräumen...",

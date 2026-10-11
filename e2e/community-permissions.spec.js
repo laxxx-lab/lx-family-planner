@@ -23,6 +23,9 @@ test('wall display shows family tasks, saves its theme and switches to a child w
     data: { title: 'Family event', date: '2030-10-03', memberId: 'all' }
   });
   expect(event.status()).toBe(201);
+  expect((await page.request.post('/api/resources/familySettings', {
+    data: { id: 'family-settings', disabledModules: ['meals'] }
+  })).ok()).toBe(true);
   await page.goto('/?view=calendar');
   const releaseNotes = page.locator('.release-notes-confirm');
   await expect(releaseNotes).toBeVisible();
@@ -31,6 +34,15 @@ test('wall display shows family tasks, saves its theme and switches to a child w
   await expect(page.locator('.calendar-add-button')).toHaveCSS('color', 'rgb(25, 51, 47)');
   await expect(page.locator('.calendar-add-button')).toHaveCSS('background-color', 'rgb(255, 255, 255)');
   expect((await page.request.post('/api/auth/member', { data: { memberId: wall.id } })).ok()).toBe(true);
+  await page.goto('/?view=kitchen');
+  await expect(page.locator('.tablet-command-center')).toBeVisible();
+  await expect(page.locator('.tablet-command-card.meals')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Kacheln', exact: true }).click();
+  await expect(page.locator('.dashboard-studio')).toBeVisible();
+  const shoppingTile = page.locator('.dashboard-studio-list article').filter({ hasText: 'Einkauf' });
+  await shoppingTile.getByRole('button', { name: 'An', exact: true }).click();
+  await page.getByRole('button', { name: 'Ansichtsatelier schließen' }).click();
+  await expect(page.locator('.tablet-command-card.shopping')).toHaveCount(0);
   await page.goto('/?view=tasks');
   const notes = page.locator('.release-notes-confirm');
   if (await notes.isVisible()) await notes.click();

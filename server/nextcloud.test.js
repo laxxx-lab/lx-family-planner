@@ -38,6 +38,7 @@ const {
   listNextcloudFiles,
   provisionNextcloudUser,
   revokeNextcloudAppPassword,
+  nextcloudRequest,
   syncNextcloudEvents,
   uploadNextcloudFile,
   uploadNextcloudUserFile
@@ -226,9 +227,7 @@ const davServer = createServer(async (req, res) => {
     req.method === 'REPORT' &&
     /^\/remote\.php\/dav\/calendars\/[^/]+\/family\/$/.test(req.url || '')
   ) {
-    const reportEvents = req.url === calendarHref
-      ? [...remoteEvents.entries()]
-      : [];
+    const reportEvents = [...remoteEvents.entries()].filter(([href]) => href.startsWith(req.url));
     res.statusCode = 207;
     res.end(multiStatus(
       reportEvents.map(([href, item]) => (
@@ -637,7 +636,20 @@ test('moving a member event to family removes its personal remote copy', async (
     memberId: 'all',
     memberIds: []
   });
-  const moved = await syncNextcloudEvents(syncOptions);
+  const guardedOptions = { ...syncOptions, destinationProviderForEvent: () => 'nextcloud-target:new-family' };
+  const pending = await syncNextcloudEvents(guardedOptions);
+  assert.equal(pending.deletedRemote, 0);
+  assert.equal(remoteEvents.has(remoteHref), true);
+  assert.equal(listIntegrationSyncItems(familyId, provider, 'events').length, 1);
+  const destinationOptions = { ...syncOptions, provider: 'nextcloud-target:new-family',
+    calendarHref: '/remote.php/dav/calendars/destination/family/', ownsEvent: () => true };
+  await assert.rejects(syncNextcloudEvents({ ...destinationOptions, request: async (conn, href, options) => {
+    if (options.method === 'PUT') throw new Error('Destination offline');
+    return nextcloudRequest(conn, href, options);
+  }}), /Destination offline/);
+  assert.equal(remoteEvents.has(remoteHref), true);
+  await syncNextcloudEvents(destinationOptions);
+  const moved = await syncNextcloudEvents(guardedOptions);
 
   assert.equal(moved.deletedRemote, 1);
   assert.equal(remoteEvents.has(remoteHref), false);
@@ -680,6 +692,8 @@ test('moving an imported personal event keeps the foreign remote record', async 
   assert.equal(imported.imported, 1);
   const local = listRecords(familyId, 'events')[0];
   assert.deepEqual(local.memberIds, ['anna-import']);
+  updateRecord(familyId, 'events', local.id, { title: 'Edited foreign event' });
+  await syncNextcloudEvents(syncOptions);
 
   updateRecord(familyId, 'events', local.id, {
     memberId: 'all',
@@ -690,6 +704,60 @@ test('moving an imported personal event keeps the foreign remote record', async 
   assert.equal(moved.deletedRemote, 0);
   assert.equal(remoteEvents.has(foreignHref), true);
   assert.equal(listIntegrationSyncItems(familyId, provider, 'events').length, 0);
+  await syncNextcloudEvents(syncOptions);
+  assert.deepEqual(getRecord(familyId, 'events', local.id).memberIds, []);
+});
+
+test('personal Nextcloud targets never take ownership of a generic CalDAV event', async () => {
+  remoteEvents.clear();
+  const familyId = 'family-caldav-isolation';
+  createFamily({ id: familyId, familyName: 'CalDAV isolation', password: 'long-test-password', members: [{ id: 'caldav-owner', name: 'Owner', role: 'adult' }] });
+  createRecord(familyId, 'events', { id: 'generic-caldav-event', title: 'Foreign calendar', date: '2026-09-02', memberIds: ['caldav-owner'], syncProvider: 'caldav:external', source: 'caldav:external' });
+  const stats = await syncNextcloudEvents({ familyId, connection, calendarHref,
+    provider: 'nextcloud-target:isolated', memberIds: ['caldav-owner'], ownsEvent: () => true });
+  assert.equal(stats.exported, 0);
+  assert.equal(remoteEvents.size, 0);
+});
+
+test('calendar target configuration rejects reuse of shared and personal remote calendars', async t => {
+  const familyId = 'family-calendar-duplicates';
+  createFamily({ id: familyId, familyName: 'Calendar duplicates', password: 'long-test-password',
+    members: [{ id: 'duplicate-adult', name: 'Adult', role: 'adult' }, { id: 'duplicate-child', name: 'Child', role: 'child' }] });
+  const { createApp } = await import('./app.js');
+  const server = createApp().listen(0, '127.0.0.1');
+  await new Promise(resolve => server.once('listening', resolve));
+  t.after(() => new Promise(resolve => server.close(resolve)));
+  const cookie = `lx_session=${databaseModule.createSession(familyId, { memberId: 'duplicate-adult' })}`;
+  async function post(route, data, method = 'POST') {
+    const response = await fetch(`http://127.0.0.1:${server.address().port}${route}`, {
+      method, headers: { cookie, 'content-type': 'application/json' }, body: JSON.stringify(data)
+    });
+    return { status: response.status, body: await response.json() };
+  }
+  const setup = await post('/api/integrations/nextcloud/setup', { ...connection, folder: 'LX Family', eventSyncEnabled: false });
+  assert.equal(setup.status, 201, JSON.stringify(setup.body));
+  const reusedShared = await post('/api/integrations/nextcloud/calendar-targets', { ...connection, memberId: 'duplicate-child', calendarHref });
+  assert.equal(reusedShared.status, 400);
+  assert.match(reusedShared.body.error, /bereits.*zugeordnet/i);
+  const personal = { ...connection, username: 'personal', memberId: 'duplicate-child', calendarHref: '/remote.php/dav/calendars/personal/family/' };
+  const personalResult = await post('/api/integrations/nextcloud/calendar-targets', personal);
+  assert.equal(personalResult.status, 201);
+  const reusedPersonal = await post('/api/integrations/nextcloud/calendar-targets', { ...personal, memberId: 'duplicate-adult' });
+  assert.equal(reusedPersonal.status, 400);
+  assert.match(reusedPersonal.body.error, /bereits.*zugeordnet/i);
+  const personalId = personalResult.body.target.id;
+  assert.equal((await post(`/api/integrations/nextcloud/calendar-targets/${personalId}`, { enabled: false }, 'PATCH')).status, 200);
+  databaseModule.createCalendarSubscription(familyId, { name: 'Generic writer', provider: 'caldav', syncMode: 'two-way', secretEncrypted: 'test-only' });
+  assert.equal((await post(`/api/integrations/nextcloud/calendar-targets/${personalId}`, { enabled: true }, 'PATCH')).status, 409);
+  assert.equal(databaseModule.getNextcloudCalendarTarget(familyId, personalId).enabled, false);
+  createRecord(familyId, 'events', { id: 'mapped-family-event', title: 'Keep me', date: '2026-09-02', memberIds: [] });
+  databaseModule.saveIntegrationSyncItem(familyId, 'nextcloud', 'events', { localId: 'mapped-family-event', remoteHref: `${calendarHref}mapped.ics` });
+  assert.equal((await post('/api/integrations/nextcloud', { eventCalendarHref: '' }, 'PATCH')).status, 409);
+  assert.equal((await post('/api/integrations/nextcloud/setup', { ...connection, username: 'replacement', eventSyncEnabled: false })).status, 409);
+  const integration = getIntegration(familyId, 'nextcloud');
+  databaseModule.saveIntegration(familyId, 'nextcloud', { ...integration.config, eventCalendarHref: '/remote.php/dav/calendars/family/removed/' }, integration.secretEncrypted);
+  assert.equal((await post('/api/integrations/nextcloud/test', {})).status, 409);
+  assert.equal(getRecord(familyId, 'events', 'mapped-family-event').title, 'Keep me');
 });
 
 test('bundled Nextcloud users receive isolated renewable app credentials', async () => {

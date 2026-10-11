@@ -49,6 +49,10 @@
     "loadFailed": "Foto konnte nicht geladen werden"
   },
   "form": {
+    "iconLabel": "Emoji (optional)",
+    "visibility": "Sichtbarkeit",
+    "family": "Ganze Familie",
+    "adultsOnly": "Nur Erwachsene",
     "shared": "🤝 Geteilt (auch bei Oma & Opa anzeigen)"
   },
   "addModal": {

@@ -6,8 +6,10 @@ export function routeEventToCalendarTarget(
   event,
   { sharedTarget, personalTargets = [] }
 ) {
+  if (!sharedTarget?.enabled) return null;
   const memberIds = [...new Set(
-    Array.isArray(event?.memberIds) ? event.memberIds.filter(Boolean) : []
+    Array.isArray(event?.memberIds) ? event.memberIds.filter(Boolean) :
+      event?.memberId && event.memberId !== 'all' ? [event.memberId] : []
   )];
   if (memberIds.length === 1) {
     const personalTarget = personalTargets.find(target =>
@@ -52,4 +54,9 @@ export function normalizePersonalCalendarTarget(
     calendarHref,
     enabled: input?.enabled !== false
   };
+}
+
+export function calendarTargetIdentity(baseUrl, calendarHref) {
+  const url = new URL(calendarHref, `${String(baseUrl).replace(/\/+$/, '')}/`);
+  return `${url.origin}${decodeURIComponent(url.pathname).replace(/\/+$/, '')}`;
 }

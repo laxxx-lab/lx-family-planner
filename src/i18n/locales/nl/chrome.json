@@ -191,6 +191,9 @@
     "close": "Installatietip sluiten"
   },
   "serverConfig": {
+    "proxyLogin": "Aanmelden bij serverproxy",
+    "proxyReturn": "Terug naar LX",
+    "proxyRequired": "De server vereist een proxy-aanmelding. Meld je daar eerst aan.",
     "kicker": "Verbinding",
     "title": "Jouw gezinsserver",
     "subtitle": "Voor thuis, een NAS of jouw eigen domein.",

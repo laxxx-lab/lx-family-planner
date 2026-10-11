@@ -15,8 +15,14 @@ family-specific permissions inside the app.
 3. Validate the rendered Cosmos installer on a disposable server before
    submitting the PR. Confirm that the generated `APP_SECRET` remains intact
    after a normal platform update and that both named volumes remain attached.
-4. Keep the image tag, description, architecture list and GitHub release
-   version in sync. Store templates must never point at `latest`.
+4. Keep the description, architecture list and GitHub release version in sync.
+   Cosmos uses `:latest` so installed containers can receive later releases;
+   fixed version tags cannot be bumped by Cosmos (maintainer feedback in #312).
+   Leave `cosmos-auto-update=false` to keep updates administrator-controlled.
+
+Existing installations must change their image to `:latest` once and update
+the image, retaining both named volumes and their generated `APP_SECRET`.
+See `docs/STORE_SUBMISSIONS.md` for the Android proxy-login flow.
 
 After Cosmos authentication, the first launch opens LX Family onboarding. It
 creates the first family only; additional families require the administrator's

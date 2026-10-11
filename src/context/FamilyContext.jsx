@@ -1975,11 +1975,11 @@ export function FamilyProvider({ children }) {
           i18n.t('context:toasts.starsEarned.title'),
           data.nextTask
             ? i18n.t('context:toasts.starsEarned.nextMessage', {
-                stars: data.task.stars || 10,
+                stars: data.task.stars ?? 10,
                 date: data.nextTask.dueDate
               })
             : i18n.t('context:toasts.starsEarned.message', {
-                stars: data.task.stars || 10,
+                stars: data.task.stars ?? 10,
                 title: data.task.title
               }),
           'star'
@@ -2918,6 +2918,17 @@ export function FamilyProvider({ children }) {
       return refreshNextcloudCalendarTargets();
     }), [refreshNextcloudCalendarTargets, withActionError]);
 
+  const manageNextcloudCalendarTarget = useCallback((targetId, action, changes = {}) =>
+    withActionError(async () => {
+      const path = `/api/integrations/nextcloud/calendar-targets/${encodeURIComponent(targetId)}`;
+      await apiRequest(action === 'update' ? path : `${path}/${action}`, {
+        method: action === 'update' ? 'PATCH' : 'POST', body: JSON.stringify(changes)
+      });
+      await refreshNextcloudCalendarTargets();
+      if (action === 'sync') await refreshBootstrap({ silent: true });
+      return true;
+    }), [refreshNextcloudCalendarTargets, refreshBootstrap, withActionError]);
+
   const addChatMessage = useCallback(message =>
     withActionError(() => createResource('chatMessages', {
       id: makeId('message'),
@@ -3570,6 +3581,7 @@ export function FamilyProvider({ children }) {
     createNextcloudCalendarTarget,
     discoverNextcloudCalendars,
     deleteNextcloudCalendarTarget,
+    manageNextcloudCalendarTarget,
     setupNextcloud,
     setupBundledNextcloud,
     getBundledNextcloudAccess,
@@ -3636,7 +3648,7 @@ export function FamilyProvider({ children }) {
     updateReward,
     deleteReward,
     redeemReward,
-    notes: resources.notes,
+    notes: resources.notes.filter(note => note.visibility !== 'adults' || canManageFamily(activeMember)),
     addNote,
     updateNote,
     deleteNote,

@@ -1,4 +1,5 @@
-import { registerPlugin } from '@capacitor/core';
+import { CapacitorHttp, registerPlugin } from '@capacitor/core';
+import i18next from 'i18next';
 
 const SERVER_URL_KEY = 'lx_family_server_url';
 const SESSION_TOKEN_KEY = 'lx_family_session_token';
@@ -137,6 +138,52 @@ export function buildApiUrl(path) {
   return `${baseUrl}${cleanPath}`;
 }
 
+// Android HTTP shares cookies with the proxy login window and avoids CORS.
+// Do not forward LX authentication headers to redirect destinations.
+export async function serverJsonFetch(url, options = {}) {
+  if (!isCapacitorNative()) return fetch(url, options);
+  options.signal?.throwIfAborted();
+  const result = await CapacitorHttp.request({
+    url, method: options.method || 'GET',
+    headers: Object.fromEntries(new Headers(options.headers || {})),
+    ...(await nativeHttpBody(options.body)),
+    responseType: 'arraybuffer', disableRedirects: true,
+    connectTimeout: 10000, readTimeout: 15000
+  });
+  options.signal?.throwIfAborted();
+  return nativeHttpResponse(result);
+}
+
+export async function nativeHttpBody(body) {
+  if (body == null) return {};
+  if (typeof body === 'string') return { data: JSON.parse(body) };
+  const bytes = new Uint8Array(await new Response(body).arrayBuffer());
+  const chunks = [];
+  for (let offset = 0; offset < bytes.length; offset += 32768) {
+    chunks.push(String.fromCharCode(...bytes.subarray(offset, offset + 32768)));
+  }
+  return { data: btoa(chunks.join('')), dataType: 'file' };
+}
+
+export function nativeHttpResponse(result) {
+  const headers = new Headers(result.headers);
+  const isJson = headers.get('content-type')?.includes('application/json');
+  const body = [204, 205, 304].includes(result.status) || result.data == null
+    ? null
+    : isJson || typeof result.data === 'object'
+      ? JSON.stringify(result.data)
+      : result.status >= 400
+        ? String(result.data)
+        : Uint8Array.from(atob(String(result.data)), char => char.charCodeAt(0));
+  return new Response(body, { status: result.status, headers });
+}
+
+export async function signInToServerProxy(url, labels = {}) {
+  const target = normalizeServerUrl(url);
+  if (!target || !isCapacitorNative()) return;
+  await LXServerPreferences.authenticate({ url: target, ...labels });
+}
+
 export async function plannerApiFetch(path, options = {}) {
   const headers = new Headers(options.headers || {});
   if (options.body && !headers.has('Content-Type')) {
@@ -170,11 +217,19 @@ export async function plannerApiFetch(path, options = {}) {
   ) {
     requestOptions.cache = 'no-store';
   }
-  return fetch(buildApiUrl(path), requestOptions);
+  return serverJsonFetch(buildApiUrl(path), requestOptions);
 }
 
 export async function plannerApiRequest(path, options = {}) {
   const response = await plannerApiFetch(path, options);
+  if ((response.status >= 300 && response.status < 400) ||
+      response.headers.get('content-type')?.includes('text/html')) {
+    const error = new Error(i18next.t('chrome:serverConfig.proxyRequired', {
+      defaultValue: 'The server requires a proxy login. Open server settings and sign in to the proxy first.'
+    }));
+    error.code = 'PROXY_AUTH_REQUIRED';
+    throw error;
+  }
   let data = null;
   try {
     data = await response.json();

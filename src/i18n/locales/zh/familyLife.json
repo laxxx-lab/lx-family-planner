@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"课时与科目","hint":"为全家统一设置一次。新课程使用所选课时的时间。","label":"名称","addPeriod":"添加课时","subjects":"科目（用英文逗号分隔）","invalidTimes":"请输入有效且不重叠的开始和结束时间。","defaultSubjects":"数学, 语文, 英语, 科学, 体育, 音乐, 美术, 生物, 历史, 地理"},
     "kicker": "上学所需的一切",
     "title": "{{name}}的学校专区",
     "settings": {

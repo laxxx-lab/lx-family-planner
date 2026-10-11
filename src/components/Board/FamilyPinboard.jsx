@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { compressImageDataUrl } from '../../utils/imageCompressor';
 import i18n from '../../i18n/index.js';
+import { canManageFamily } from '../../constants/roles';
 
 const NOTE_COLORS = [
   '#fef08a', // Yellow
@@ -44,8 +45,10 @@ export default function FamilyPinboard() {
     updateNote,
     deleteNote,
     activeHousehold,
+    activeMember,
     showToast
   } = useFamily();
+  const isAdult = canManageFamily(activeMember);
 
   // Track flipped note cards { [noteId]: boolean }
   const [flippedCards, setFlippedCards] = useState({});
@@ -56,6 +59,8 @@ export default function FamilyPinboard() {
   const [editColor, setEditColor] = useState('#fef08a');
   const [editIsShared, setEditIsShared] = useState(false);
   const [editPhoto, setEditPhoto] = useState(null);
+  const [editVisibility, setEditVisibility] = useState('family');
+  const [editIcon, setEditIcon] = useState('');
 
   // New Note Modal State
   const [isAddNoteOpen, setIsAddNoteOpen] = useState(false);
@@ -64,6 +69,8 @@ export default function FamilyPinboard() {
   const [newColor, setNewColor] = useState('#fef08a');
   const [newIsShared, setNewIsShared] = useState(false);
   const [newPhoto, setNewPhoto] = useState(null);
+  const [newVisibility, setNewVisibility] = useState('family');
+  const [newIcon, setNewIcon] = useState('');
   const [photoBusy, setPhotoBusy] = useState('');
   const [saving, setSaving] = useState('');
   const [lightboxPhoto, setLightboxPhoto] = useState(null);
@@ -150,7 +157,9 @@ export default function FamilyPinboard() {
       content: newContent,
       color: newColor,
       isShared: newIsShared,
-      photo: newPhoto
+      photo: newPhoto,
+      visibility: isAdult ? newVisibility : 'family',
+      icon: newIcon
     });
     setSaving('');
     if (!created) return;
@@ -158,6 +167,8 @@ export default function FamilyPinboard() {
     setNewTitle('');
     setNewContent('');
     setNewPhoto(null);
+    setNewVisibility('family');
+    setNewIcon('');
     setIsAddNoteOpen(false);
   };
 
@@ -169,6 +180,8 @@ export default function FamilyPinboard() {
     setEditColor(note.color || '#fef08a');
     setEditIsShared(note.isShared || false);
     setEditPhoto(note.photo || null);
+    setEditVisibility(note.visibility || 'family');
+    setEditIcon(note.icon || '');
   };
 
   const handleSaveEdit = async (e) => {
@@ -181,7 +194,9 @@ export default function FamilyPinboard() {
       content: editContent,
       color: editColor,
       isShared: editIsShared,
-      photo: editPhoto
+      photo: editPhoto,
+      ...(isAdult ? { visibility: editVisibility } : {}),
+      icon: editIcon
     });
     setSaving('');
     if (!updated) return;
@@ -262,6 +277,8 @@ export default function FamilyPinboard() {
                   border: '1px solid rgba(0,0,0,0.08)'
                 }}>
                   <div>
+                    {note.visibility === 'adults' && <span className="badge">🔒 {t('form.adultsOnly')}</span>}
+                    {note.icon && <span aria-hidden="true" style={{ fontSize: '2rem' }}>{note.icon}</span>}
                     {note.isShared && (
                       <span className="badge" style={{ background: '#2563eb', color: 'white', marginBottom: 8, fontSize: '0.75rem' }}>
                         {t('note.shared')}
@@ -404,6 +421,18 @@ export default function FamilyPinboard() {
             </div>
 
             <form onSubmit={handleAddSubmit}>
+              <label className="form-group">
+                <span className="form-label">{t('form.iconLabel')}</span>
+                <input className="form-input" value={newIcon} maxLength={24} placeholder="📌"
+                  onChange={event => setNewIcon(event.target.value)} />
+              </label>
+              {isAdult && <label className="form-group">
+                <span className="form-label">{t('form.visibility')}</span>
+                <select className="form-select" value={newVisibility} onChange={event => setNewVisibility(event.target.value)}>
+                  <option value="family">{t('form.family')}</option>
+                  <option value="adults">{t('form.adultsOnly')}</option>
+                </select>
+              </label>}
               <div className="form-group">
                 <label className="form-label">{t('common:labels.title')}</label>
                 <input
@@ -535,6 +564,18 @@ export default function FamilyPinboard() {
             </div>
 
             <form onSubmit={handleSaveEdit}>
+              <label className="form-group">
+                <span className="form-label">{t('form.iconLabel')}</span>
+                <input className="form-input" value={editIcon} maxLength={24} placeholder="📌"
+                  onChange={event => setEditIcon(event.target.value)} />
+              </label>
+              {isAdult && <label className="form-group">
+                <span className="form-label">{t('form.visibility')}</span>
+                <select className="form-select" value={editVisibility} onChange={event => setEditVisibility(event.target.value)}>
+                  <option value="family">{t('form.family')}</option>
+                  <option value="adults">{t('form.adultsOnly')}</option>
+                </select>
+              </label>}
               <div className="form-group">
                 <label className="form-label">{t('common:labels.title')}</label>
                 <input

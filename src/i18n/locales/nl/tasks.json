@@ -71,6 +71,7 @@
     "imageLabel": "Beloningsafbeelding"
   },
   "taskModal": {
+    "iconLabel": "Emoji (optioneel)",
     "editTitle": "Taak bewerken",
     "taskLabel": "Taak / klusje",
     "taskPlaceholder": "bijv. kamer opruimen, de vaatwasser legen...",

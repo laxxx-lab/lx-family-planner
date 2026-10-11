@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Godziny lekcji i przedmioty","hint":"Ustaw raz dla rodziny. Nowe lekcje korzystają z godzin wybranej lekcji.","label":"Nazwa","addPeriod":"Dodaj lekcję","subjects":"Przedmioty (oddzielone przecinkami)","invalidTimes":"Podaj poprawne godziny bez nakładania się.","defaultSubjects":"Matematyka, Polski, Angielski, Przyroda, WF, Muzyka, Plastyka, Biologia, Historia, Geografia"},
     "kicker": "Wszystko na dzień szkolny",
     "title": "Sekcja szkolna {{name}}",
     "settings": {

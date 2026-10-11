@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Horaires et matières","hint":"Définissez-les une fois pour la famille. Les nouveaux cours reprennent les horaires de leur période.","label":"Libellé","addPeriod":"Ajouter une période","subjects":"Matières (séparées par des virgules)","invalidTimes":"Saisissez des horaires valides sans chevauchement.","defaultSubjects":"Mathématiques, Français, Anglais, Sciences, Sport, Musique, Arts, Biologie, Histoire, Géographie"},
     "kicker": "Tout pour la journée d'école",
     "title": "Espace scolaire de {{name}}",
     "settings": {

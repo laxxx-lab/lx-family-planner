@@ -49,6 +49,10 @@
     "loadFailed": "Photo could not be loaded"
   },
   "form": {
+    "iconLabel": "Emoji (optional)",
+    "visibility": "Visibility",
+    "family": "Whole family",
+    "adultsOnly": "Adults only",
     "shared": "🤝 Shared (also show at Grandma & Grandpa's)"
   },
   "addModal": {

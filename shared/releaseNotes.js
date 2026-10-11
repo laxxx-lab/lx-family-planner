@@ -1,4 +1,34 @@
 const RELEASE_NOTES = {
+  '1.22.0': {
+    version: '1.22.0',
+    eyebrow: 'Wünsche aus der Community',
+    title: 'Kalender, Wanddisplay und Familienalltag',
+    intro: 'Persönliche Kalender, geschützte Notizen und einfachere Stundenpläne ergänzen LX Family.',
+    highlights: [
+      { id: 'personal-calendars', title: 'Ein Kalender pro Mitglied', description: 'Persönliche Nextcloud-Kalender ergänzen den gemeinsamen Familienkalender.' },
+      { id: 'wall-tiles', title: 'Wanddisplay nach euren Wünschen', description: 'Die Kachelauswahl funktioniert und deaktivierte Module bleiben ausgeblendet.' },
+      { id: 'task-symbols', title: 'Aufgaben mit Emoji oder ohne Sterne', description: 'Symbole helfen Kindern beim Erkennen; null Sterne bleiben null.' },
+      { id: 'private-notes', title: 'Notizen nur für Erwachsene', description: 'Geschützte Pinnwand-Notizen erscheinen nicht bei Kinder- oder Wandprofilen.' },
+      { id: 'school-template', title: 'Stundenzeiten einmal festlegen', description: 'Zentrale Unterrichtszeiten und Fachvorschläge beschleunigen die Planung.' },
+      { id: 'cosmos-android', title: 'Android und Cosmos', description: 'Die App bietet eine Proxy-Anmeldung. Cosmos kann neue Release-Images über latest beziehen.' }
+    ],
+    closing: 'Eure Inhalte und Zugangsdaten bleiben erhalten. Bei Cosmos ist für bestehende Installationen eine einmalige Änderung des Image-Tags nötig.',
+    localizations: {
+      en: {
+        eyebrow: 'Community follow-ups', title: 'Calendars, wall tablets and family life',
+        intro: 'Personal calendars, protected notes and reusable lesson periods make planning easier.',
+        highlights: [
+          { id: 'personal-calendars', title: 'A calendar for each member', description: 'Personal Nextcloud calendars complement the shared family calendar.' },
+          { id: 'wall-tiles', title: 'Choose your wall tiles', description: 'Tile customization works and disabled modules stay hidden.' },
+          { id: 'task-symbols', title: 'Task emojis and zero stars', description: 'Visual cues help children; zero-star chores never award fallback points.' },
+          { id: 'private-notes', title: 'Adult-only notes', description: 'Protected pinboard notes are kept out of child and wall profiles.' },
+          { id: 'school-template', title: 'Set lesson times once', description: 'Family periods and reusable subjects speed up timetable entry.' },
+          { id: 'cosmos-android', title: 'Android and Cosmos', description: 'The app offers a proxy sign-in. Cosmos can fetch future release images using latest.' }
+        ],
+        closing: 'Existing content and credentials stay intact. Existing Cosmos installations need a one-time image-tag change.'
+      }
+    }
+  },
   '1.21.4': {
   "version": "1.21.4",
   "eyebrow": "Mehr Sprachen für die Familie",

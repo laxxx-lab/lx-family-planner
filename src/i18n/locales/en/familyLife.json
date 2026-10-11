@@ -114,6 +114,7 @@
     }
   },
   "school": {
+    "template": {"title":"Lesson times & subjects","hint":"Set these once for the family. New lessons use their period's times.","label":"Label","addPeriod":"Add period","subjects":"Subjects (comma separated)","invalidTimes":"Enter valid start and end times without overlaps.","defaultSubjects":"Maths, Language, English, Science, PE, Music, Art, Biology, History, Geography"},
     "kicker": "Everything for the school day",
     "title": "{{name}}'s school area",
     "settings": {
