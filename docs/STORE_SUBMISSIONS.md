@@ -15,6 +15,8 @@ Unraid Community Applications, Umbrel, CasaOS and Cosmos.
   [azukaar/cosmos-servapps-official#267](https://github.com/azukaar/cosmos-servapps-official/pull/267).
   The 1.21.4 patch update was merged in
   [azukaar/cosmos-servapps-official#312](https://github.com/azukaar/cosmos-servapps-official/pull/312).
+  The update-compatible `latest` image and temporary-storage correction are
+  submitted in [azukaar/cosmos-servapps-official#321](https://github.com/azukaar/cosmos-servapps-official/pull/321).
 
 Store submissions and updates require a maintainer to approve and publish the
 package after automated checks have passed. A published LX Family GitHub
