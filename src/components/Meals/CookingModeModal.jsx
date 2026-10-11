@@ -37,12 +37,18 @@ export default function CookingModeModal({ recipe, onClose }) {
 
   const scaleIngredientStr = (ingStr) => {
     if (typeof ingStr !== 'string') return String(ingStr || '');
-    return ingStr.replace(/(\d+(?:[.,]\d+)?)/g, (match) => {
-      const num = parseFloat(match.replace(',', '.'));
-      if (isNaN(num)) return match;
-      const scaled = Math.round(num * portionMultiplier * 10) / 10;
-      return scaled.toString().replace('.', ',');
-    });
+    if (portionMultiplier === 1) return ingStr;
+    // Scale only a leading decimal quantity or range, never package sizes
+    // or other digits in the description. Imported fractions are normalized.
+    return ingStr.replace(
+      /^(\d+(?:[.,]\d+)?)(?:\s*([-–])\s*(\d+(?:[.,]\d+)?))?(?=\s|[a-zA-Zµμ]|$)/u,
+      (_match, first, separator, last) => {
+        const scale = amount => String(Number(
+          (Number(amount.replace(',', '.')) * portionMultiplier).toFixed(6)
+        )).replace('.', ',');
+        return last ? scale(first) + separator + scale(last) : scale(first);
+      }
+    );
   };
 
   const rawIngredients = Array.isArray(recipe.ingredients)
