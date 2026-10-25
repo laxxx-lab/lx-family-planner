@@ -520,12 +520,36 @@ function structuredText(value, maxLength = 240) {
   return cleanText([amount, unit, name].filter(Boolean).join(' '), '', maxLength);
 }
 
+
+// Decode HTML entities from JSON-LD before quantity parsing.
+// Convert leading Unicode fractions to decimals for LX's portion scaler.
+function normalizeImportedIngredient(value) {
+  const decoded = cheerio.load(
+    String(value).replace(/</g, '&lt;').replace(/>/g, '&gt;'),
+    null,
+    false
+  ).text().replace(/\s+/g, ' ').trim();
+  const fractions = {
+    '¼': 1/4, '½': 1/2, '¾': 3/4,
+    '⅐': 1/7, '⅑': 1/9, '⅒': 1/10,
+    '⅓': 1/3, '⅔': 2/3, '⅕': 1/5, '⅖': 2/5,
+    '⅗': 3/5, '⅘': 4/5, '⅙': 1/6, '⅚': 5/6,
+    '⅛': 1/8, '⅜': 3/8, '⅝': 5/8, '⅞': 7/8
+  };
+  return decoded.replace(
+    /^(\d+\s*)?([¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞])(?=\s|[a-zA-Zµμ]|$)/u,
+    (_match, whole, fraction) =>
+      String(Number(((whole ? Number(whole.trim()) : 0) + fractions[fraction]).toFixed(6)))
+        .replace('.', ',')
+  );
+}
+
 function ingredientList(value) {
   const values = Array.isArray(value) ? value : [value];
   return values
     .flatMap(entry => {
       if (entry?.itemListElement) return ingredientList(entry.itemListElement);
-      return structuredText(entry, 280);
+      return normalizeImportedIngredient(structuredText(entry, 280));
     })
     .filter(Boolean);
 }
