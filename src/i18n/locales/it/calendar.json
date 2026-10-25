@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Importa calendario",
+    "description": "L’anteprima non modifica i dati. Massimo 4 MB e 2.000 eventi o serie.",
+    "count": "{{count}} eventi / serie",
+    "series": "Le ricorrenze rimangono serie. Gli eventi esistenti non cambiano; importare di nuovo aggiunge altre voci.",
+    "more": "Altre {{count}} voci",
+    "groups": "Gestisci importazioni",
+    "legacy": "Le vecchie importazioni senza gruppo non possono essere identificate con certezza. Non verranno eliminate automaticamente.",
+    "remove": "Rimuovi importazione {{name}}",
+    "removeButton": "Sposta nel cestino",
+    "removeConfirm": "Spostare {{count}} eventi / serie di «{{name}}» nel cestino? Gli altri rimangono. Ripristino disponibile per 30 giorni.",
+    "confirm": "Importa ora",
+    "preview": "Anteprima",
+    "invalid": "Questo file ICS non può essere importato in sicurezza. Controlla formato, dimensione (max. 4 MB), UID e regole di ricorrenza.",
+    "failed": "Modifica non riuscita. Nessun dato non confermato è stato eliminato. Riprova.",
+    "scheduleLocked": "La pianificazione importata è protetta. Modifica date o ricorrenze nel file originale e importalo di nuovo. Testo, categoria e promemoria LX si applicano a tutta la serie.",
+    "category": "Categoria",
+    "warnings": {
+      "alarms": "Alcuni allarmi sono conservati ma non possono attivarsi in LX (email, dopo la fine o oltre una settimana prima).",
+      "otherComponents": "Altri elementi come le attività non vengono importati. Conserva il file originale."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Tempo in famiglia",

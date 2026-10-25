@@ -45,6 +45,7 @@ function formState(event, t) {
     memberIds: eventAudienceIds(event),
     location: displayEvent.location,
     notes: displayEvent.notes,
+    category: event?.category || '',
     reminders: normalizeEventReminders(event?.reminders),
     recurrenceRule: event?.recurrenceRule || 'none',
     recurrenceInterval: Math.max(1, Number(event?.recurrenceInterval) || 1),
@@ -121,7 +122,16 @@ export default function CalendarEventDialog({
         recurrenceRule: form.recurrenceRule,
         recurrenceInterval: Number(form.recurrenceInterval),
         recurrenceUnit: form.recurrenceUnit,
-        recurrenceUntil: form.recurrenceUntil
+        recurrenceUntil: form.recurrenceUntil,
+        category: form.category.trim(),
+        ...(event.icsSource ? {
+          date: event.seriesStartDate || event.date,
+          time: event.seriesStartTime ?? event.time,
+          endDate: event.seriesStartEndDate || event.endDate,
+          endTime: event.seriesStartEndTime ?? event.endTime,
+          allDay: event.allDay,
+          recurrenceRule: 'none'
+        } : {})
       });
       if (result) onClose();
     } finally {
@@ -238,7 +248,7 @@ export default function CalendarEventDialog({
             <input
               type="checkbox"
               checked={form.allDay}
-              disabled={!editable}
+              disabled={!editable || Boolean(event.icsSource)}
               onChange={change => patch({
                 allDay: change.target.checked,
                 endTime: change.target.checked ? '' : form.endTime
@@ -255,7 +265,7 @@ export default function CalendarEventDialog({
             <input
               type="date"
               value={form.date}
-              disabled={!editable}
+              disabled={!editable || Boolean(event.icsSource)}
               onChange={change => patch({ date: change.target.value })}
               required
             />
@@ -266,7 +276,7 @@ export default function CalendarEventDialog({
               <input
                 type="time"
                 value={form.time}
-                disabled={!editable}
+                disabled={!editable || Boolean(event.icsSource)}
                 onChange={change => patch({ time: change.target.value })}
                 required
               />
@@ -282,7 +292,7 @@ export default function CalendarEventDialog({
               type="date"
               min={form.date}
               value={form.endDate}
-              disabled={!editable}
+              disabled={!editable || Boolean(event.icsSource)}
               onChange={change => patch({ endDate: change.target.value })}
             />
           </label>
@@ -292,13 +302,13 @@ export default function CalendarEventDialog({
               <input
                 type="time"
                 value={form.endTime}
-                disabled={!editable}
+                disabled={!editable || Boolean(event.icsSource)}
                 onChange={change => patch({ endTime: change.target.value })}
               />
             </label>
           )}
 
-          <section className="calendar-editor-recurrence is-wide">
+          {event.icsSource ? <p className="is-wide">{t('fileImport.scheduleLocked')}</p> : <section className="calendar-editor-recurrence is-wide">
             <div className="calendar-editor-recurrence-heading">
               <span><Repeat2 size={15} /> {t('editor.recurrence.title')}</span>
               <small>{t('editor.recurrence.hint')}</small>
@@ -374,7 +384,13 @@ export default function CalendarEventDialog({
                 {t('editor.recurrence.seriesNote')}
               </p>
             )}
-          </section>
+          </section>}
+
+          <label className="calendar-editor-field is-wide">
+            <span>{t('fileImport.category')}</span>
+            <input value={form.category} maxLength={80} disabled={!editable}
+              onChange={change => patch({ category: change.target.value })} />
+          </label>
 
           <div className="is-wide">
             <EventAudiencePicker

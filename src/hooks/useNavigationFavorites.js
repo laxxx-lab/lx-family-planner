@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useFamily } from '../context/FamilyContext';
+import i18n from '../i18n/index.js';
 
 const MAX_FAVORITES = 5;
 const PINNED_FAVORITE_ID = 'dashboard';
@@ -34,7 +35,7 @@ function sameIds(left, right) {
 /** Per-profile quick links stay on the current device, so each person can keep
  * the main bar short without changing the navigation for the whole family. */
 export function useNavigationFavorites(visibleTabs) {
-  const { activeFamilyId, activeMember } = useFamily();
+  const { activeFamilyId, activeMember, showToast } = useFamily();
   const visibleIds = useMemo(
     () => visibleTabs.map(tab => tab.id),
     [visibleTabs]
@@ -84,6 +85,11 @@ export function useNavigationFavorites(visibleTabs) {
 
   const toggleFavorite = useCallback(id => {
     if (!visibleIds.includes(id)) return;
+    if (!favoriteIds.includes(id) && favoriteIds.length >= MAX_FAVORITES) {
+      showToast(i18n.t('chrome:navigation.favorites'),
+        i18n.t('chrome:navigation.favoritesLimit', { count: MAX_FAVORITES }), 'info');
+      return;
+    }
     setFavoriteIds(previous => {
       if (id === PINNED_FAVORITE_ID) return previous;
       if (previous.includes(id)) {
@@ -93,7 +99,7 @@ export function useNavigationFavorites(visibleTabs) {
       }
       return previous.length >= MAX_FAVORITES ? previous : [...previous, id];
     });
-  }, [visibleIds]);
+  }, [visibleIds, favoriteIds, showToast]);
 
   const favoriteTabs = useMemo(
     () => favoriteIds

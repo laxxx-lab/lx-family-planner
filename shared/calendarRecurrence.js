@@ -1,3 +1,6 @@
+import { expandImportedCalendarEvent, importedCalendarHasReminders } from './icsImport.js';
+import { normalizeEventReminders } from './eventReminders.js';
+
 const DAY_MS = 86_400_000;
 
 export const CALENDAR_REPEAT_RULES = new Set([
@@ -174,12 +177,28 @@ function occurrenceFrom(event, occurrenceDate) {
 export function expandCalendarEventSeries(events, {
   rangeStart = '2000-01-01',
   rangeEnd = '2100-12-31',
-  maxOccurrences = 12_000
+  maxOccurrences = 12_000,
+  remindersOnly = false
 } = {}) {
+  if (remindersOnly) {
+    return (Array.isArray(events) ? events : [])
+      .filter(event => event.icsSource
+        ? importedCalendarHasReminders(event)
+        : normalizeEventReminders(event.reminders).length)
+      .flatMap(event => expandCalendarEventSeries([event], { rangeStart, rangeEnd, maxOccurrences }));
+  }
   const result = [];
   const from = validDate(rangeStart) ? rangeStart : '2000-01-01';
   const to = validDate(rangeEnd) ? rangeEnd : '2100-12-31';
   for (const event of Array.isArray(events) ? events : []) {
+    if (event?.icsSource) {
+      result.push(...expandImportedCalendarEvent(event, {
+        rangeStart: from, rangeEnd: to,
+        maxOccurrences: Math.max(0, maxOccurrences - result.length)
+      }));
+      if (result.length >= maxOccurrences) return result;
+      continue;
+    }
     const recurrence = normalizeCalendarRecurrence(event);
     if (!validDate(event?.date) || recurrence.recurrenceRule === 'none') {
       result.push(event);

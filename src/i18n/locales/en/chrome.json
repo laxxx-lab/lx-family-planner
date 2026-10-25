@@ -3,6 +3,7 @@
     "loading": "Getting your family space ready …"
   },
   "navigation": {
+    "favoritesLimit": "The limit of {{count}} favorites has been reached. Remove a star before pinning another section.",
     "favorites": "Favorites",
     "favoritesAria": "Favorite areas",
     "allAreas": "All areas",

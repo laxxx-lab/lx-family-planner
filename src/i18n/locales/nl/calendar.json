@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Kalenderbestand importeren",
+    "description": "Het voorbeeld wijzigt geen gegevens. Maximaal 4 MB en 2.000 afspraken of reeksen.",
+    "count": "{{count}} afspraken / reeksen",
+    "series": "Herhalingen blijven reeksen. Bestaande afspraken blijven ongewijzigd; opnieuw importeren voegt extra items toe.",
+    "more": "Nog {{count}} items",
+    "groups": "Bestandsimports beheren",
+    "legacy": "Oude imports zonder groep zijn niet betrouwbaar te herkennen. Ze worden niet automatisch verwijderd.",
+    "remove": "Import {{name}} verwijderen",
+    "removeButton": "Naar prullenbak",
+    "removeConfirm": "{{count}} afspraken / reeksen uit ‘{{name}}’ naar de prullenbak verplaatsen? Andere afspraken blijven behouden. Herstellen kan 30 dagen lang.",
+    "confirm": "Nu importeren",
+    "preview": "Voorbeeld",
+    "invalid": "Dit ICS-bestand kan niet veilig worden geïmporteerd. Controleer formaat, grootte (max. 4 MB), UID’s en herhalingsregels.",
+    "failed": "De wijziging is mislukt. Er zijn geen onbevestigde gegevens verwijderd. Probeer opnieuw.",
+    "scheduleLocked": "Het geïmporteerde schema is beschermd. Wijzig datums of herhalingen in het oorspronkelijke bestand en importeer opnieuw. Tekst, categorie en LX-herinneringen gelden voor de hele reeks.",
+    "category": "Categorie",
+    "warnings": {
+      "alarms": "Sommige alarmen blijven behouden maar kunnen in LX niet afgaan (e-mail, na afloop of meer dan een week vooraf).",
+      "otherComponents": "Andere onderdelen zoals taken worden niet geïmporteerd. Bewaar het oorspronkelijke bestand."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Gezinstijd",

@@ -6,6 +6,17 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.22.1] — 2026-10-25
+
+- Apply targeted security updates without major upgrades: Capacitor 8.4.3, undici 7.30.1, Vite 8.1.6 and patched transitive dependencies. npm audit reports no known vulnerabilities at release verification.
+
+- Preview ICS file imports and preserve recurrence rules, exceptions, categories and nested alarms. Store one series instead of materialising historical occurrences.
+- Move a file import batch into the 30-day recycle bin; never automatically change legacy events without a reliable import identity.
+- Protect imported schedules while allowing series-wide text, category and LX reminder edits. Export stored masters rather than expanded views.
+- Preserve imported series through Nextcloud/CalDAV write sync and distinguish transport metadata from actual changes.
+- Explain the five navigation favorites limit in all eight interface languages.
+- Include a newly signed Android APK using the existing update signing key.
+
 ## [1.22.0] — 2026-10-11
 
 - Add personal Nextcloud calendar targets alongside the shared family calendar, with encrypted app passwords and safe target transfers.

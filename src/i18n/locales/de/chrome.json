@@ -3,6 +3,7 @@
     "loading": "Dein Familienraum wird vorbereitet …"
   },
   "navigation": {
+    "favoritesLimit": "Das Limit von {{count}} Favoriten ist erreicht. Entferne zuerst einen Stern, um einen anderen Bereich anzupinnen.",
     "favorites": "Favoriten",
     "favoritesAria": "Favorisierte Bereiche",
     "allAreas": "Alle Bereiche",

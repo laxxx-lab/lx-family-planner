@@ -1,4 +1,5 @@
 const DAY_MS = 86_400_000;
+export { parseDateProperty as parseIcsDateProperty };
 const WEEKDAY_INDEX = {
   SU: 0,
   MO: 1,

@@ -114,6 +114,8 @@
     "reminderBody": "Odbiór {{lead}}. Wystaw na czas."
   },
   "errors": {
+    "calendarImportInvalid": "Plik kalendarza jest nieprawidłowy lub zawiera nieobsługiwane dane.",
+    "calendarImportedScheduleLocked": "Harmonogramu zaimportowanej serii ICS nie można tutaj zmienić.",
     "insufficientStars": "Za mało gwiazdek",
     "tooManyLoginAttempts": "Zbyt wiele prób logowania. Odczekaj chwilę.",
     "loginRequired": "Najpierw się zaloguj.",

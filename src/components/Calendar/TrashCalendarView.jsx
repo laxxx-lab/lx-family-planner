@@ -19,7 +19,7 @@ import {
 } from '../../../shared/eventReminders.js';
 import { useFamily } from '../../context/FamilyContext';
 import { formatDate } from '../../utils/formatting';
-import { parseICSContent } from '../../utils/icsUtils';
+import { parseICalendar } from '../../../shared/icsCalendar.js';
 import { canManageFamily } from '../../constants/roles';
 import { groupTrashEventsByDate, trashGroupTitle } from '../../../shared/trashSchedule.js';
 import { useViewportScrollLock } from '../../hooks/useViewportScrollLock';
@@ -149,7 +149,7 @@ export default function TrashCalendarView() {
 
     const reader = new FileReader();
     reader.onload = async loadEvent => {
-      const parsed = parseICSContent(loadEvent.target.result);
+      const parsed = parseICalendar(loadEvent.target.result, { maxEvents: 1000 });
       if (!parsed.length) {
         showToast(
           t('trash.toast.importFailedTitle'),

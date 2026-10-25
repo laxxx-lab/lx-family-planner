@@ -3,6 +3,7 @@
     "loading": "Preparando tu espacio familiar …"
   },
   "navigation": {
+    "favoritesLimit": "Se alcanzó el límite de {{count}} favoritos. Quita una estrella antes de fijar otra sección.",
     "favorites": "Favoritos",
     "favoritesAria": "Áreas favoritas",
     "allAreas": "Todas las áreas",

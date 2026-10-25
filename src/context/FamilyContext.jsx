@@ -7,7 +7,8 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { exportEventsToICS, parseICSContent } from '../utils/icsUtils';
+import { exportEventsToICS } from '../utils/icsUtils';
+import { calendarImportGroups } from '../../shared/icsImport.js';
 import {
   canManageFamily,
   isPetProfile,
@@ -1663,40 +1664,31 @@ export function FamilyProvider({ children }) {
       withActionError
     ]);
 
-  const importICS = useCallback(file => {
-    const reader = new FileReader();
-    reader.onload = async event => {
-      const parsed = parseICSContent(event.target.result);
-      if (!parsed.length) {
-        showToast(
-          i18n.t('context:toasts.icsImportFailed.title'),
-          i18n.t('context:toasts.icsImportFailed.message'),
-          'warning'
-        );
-        return;
-      }
-      await withActionError(async () => {
-        const records = parsed.map(item => ({
-          ...item,
-          id: item.id || makeId('evt'),
-          household: activeHouseholdState
-        }));
-        await bulkCreateResources('events', records);
+  const importICS = useCallback(preview => withActionError(async () => {
+        const data = await apiRequest('/api/calendar/import', {
+          method: 'POST',
+          body: JSON.stringify({ ...preview, household: activeHouseholdState })
+        });
+        await refreshBootstrap({ silent: true });
         showToast(
           i18n.t('context:toasts.icsImported.title'),
           i18n.t('context:toasts.icsImported.message', {
-            count: records.length
+            count: data.records.length
           }),
           'success'
         );
-      });
-    };
-    reader.readAsText(file);
-  }, [activeHouseholdState, bulkCreateResources, showToast, withActionError]);
+        return data;
+  }), [activeHouseholdState, refreshBootstrap, showToast, withActionError]);
+
+  const removeCalendarImport = useCallback(batchId => withActionError(async () => {
+    const data = await apiRequest(`/api/calendar/imports/${encodeURIComponent(batchId)}`, { method: 'DELETE' });
+    await refreshBootstrap({ silent: true });
+    return data;
+  }), [refreshBootstrap, withActionError]);
 
   const exportICS = useCallback(() => {
     exportEventsToICS(
-      calendarEvents,
+      resources.events,
       familyAccount?.familyName || i18n.t('context:defaults.familyName')
     );
     showToast(
@@ -1704,7 +1696,7 @@ export function FamilyProvider({ children }) {
       i18n.t('context:toasts.icsExported.message'),
       'info'
     );
-  }, [calendarEvents, familyAccount?.familyName, showToast]);
+  }, [resources.events, familyAccount?.familyName, showToast]);
 
   const addShoppingItem = useCallback(item =>
     withActionError(async () => {
@@ -3631,6 +3623,8 @@ export function FamilyProvider({ children }) {
     updateEvent,
     deleteEvent,
     importICS,
+    calendarImports: calendarImportGroups(resources.events),
+    removeCalendarImport,
     exportICS,
     meals: resources.meals,
     updateMeal,

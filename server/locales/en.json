@@ -114,6 +114,8 @@
     "reminderBody": "Collection {{lead}}. Please put it out in time."
   },
   "errors": {
+    "calendarImportInvalid": "The calendar file is invalid or contains unsupported data.",
+    "calendarImportedScheduleLocked": "The schedule of an imported ICS series cannot be changed here.",
     "insufficientStars": "Not enough stars",
     "tooManyLoginAttempts": "Too many login attempts. Please wait a moment.",
     "loginRequired": "Please sign in first.",

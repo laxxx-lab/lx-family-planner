@@ -117,6 +117,9 @@ export default function MobileNavDrawer({
             <strong>{t('navigation.allAreas')}</strong>
             <small>{t('navigation.favoritesHint', { count: maxFavorites })}</small>
           </div>
+          {favoriteIds.length >= maxFavorites && <p className="mobile-nav-favorites-limit" role="status">
+            {t('navigation.favoritesLimit', { count: maxFavorites })}
+          </p>}
           {visibleTabs.map(tab => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -138,6 +141,7 @@ export default function MobileNavDrawer({
                 <button
                   type="button"
                   className={`mobile-nav-favorite-toggle ${isFavorite ? 'is-favorite' : ''}`}
+                  aria-disabled={tab.id === 'dashboard' || (!isFavorite && favoriteIds.length >= maxFavorites)}
                   onClick={() => toggleFavorite(tab.id)}
                   aria-label={t(
                     isFavorite
@@ -145,7 +149,8 @@ export default function MobileNavDrawer({
                       : 'navigation.favoriteAddAria',
                     { name: tab.label }
                   )}
-                  title={t(
+                  title={!isFavorite && favoriteIds.length >= maxFavorites
+                    ? t('navigation.favoritesLimit', { count: maxFavorites }) : t(
                     isFavorite
                       ? 'navigation.favoriteRemoveAria'
                       : 'navigation.favoriteAddAria',

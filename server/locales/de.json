@@ -114,6 +114,8 @@
     "reminderBody": "Abholung {{lead}}. Bitte rechtzeitig rausstellen."
   },
   "errors": {
+    "calendarImportInvalid": "Die Kalenderdatei ist ungültig oder enthält nicht unterstützte Daten.",
+    "calendarImportedScheduleLocked": "Der Zeitplan einer importierten ICS-Serie kann hier nicht geändert werden.",
     "insufficientStars": "Nicht genügend Sterne",
     "tooManyLoginAttempts": "Zu viele Anmeldeversuche. Bitte kurz warten.",
     "loginRequired": "Bitte zuerst anmelden.",

@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Importer un calendrier",
+    "description": "L’aperçu ne modifie aucune donnée. Maximum 4 Mo et 2 000 événements ou séries.",
+    "count": "{{count}} événements / séries",
+    "series": "Les récurrences restent des séries. Les événements existants restent inchangés ; réimporter ajoute des entrées.",
+    "more": "{{count}} autres entrées",
+    "groups": "Gérer les imports",
+    "legacy": "Les anciens imports sans groupe ne peuvent pas être identifiés avec certitude. Ils ne seront pas supprimés automatiquement.",
+    "remove": "Supprimer l’import {{name}}",
+    "removeButton": "Mettre à la corbeille",
+    "removeConfirm": "Mettre {{count}} événements / séries de « {{name}} » à la corbeille ? Les autres restent inchangés. Restauration possible pendant 30 jours.",
+    "confirm": "Importer",
+    "preview": "Aperçu",
+    "invalid": "Ce fichier ICS ne peut pas être importé en toute sécurité. Vérifiez le format, la taille (4 Mo max.), les UID et les récurrences.",
+    "failed": "La modification a échoué. Aucune donnée non confirmée n’a été supprimée. Réessayez.",
+    "scheduleLocked": "Le planning importé est protégé. Modifiez les dates ou récurrences dans le fichier d’origine puis réimportez-le. Texte, catégorie et rappels LX s’appliquent à toute la série.",
+    "category": "Catégorie",
+    "warnings": {
+      "alarms": "Certaines alarmes sont conservées mais ne peuvent pas se déclencher dans LX (e-mail, après la fin ou plus d’une semaine avant).",
+      "otherComponents": "Les autres éléments, comme les tâches, ne sont pas importés. Conservez le fichier d’origine."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Temps en famille",

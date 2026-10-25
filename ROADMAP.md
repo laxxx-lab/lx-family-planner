@@ -49,6 +49,10 @@ Mobile, calendar and tablet improvements:
 
 ## Next
 
+- **Community follow-ups (#47, #44):** local ICS import preview, RFC recurrence and exception preservation, import-batch recycle-bin removal, and a visible favorites-limit explanation. Awaiting local owner testing; not released.
+- **Android push for self-hosters (#46):** evaluate runtime Firebase project configuration without rebuilding the official APK. Validate token lifecycle, server switching and isolated Firebase app instances before promising support.
+- **Cosmos proxy login polish (#42):** the reporter confirmed connectivity; investigate returning automatically to LX after successful proxy login without bypassing either authentication layer.
+
 - **Calendar quality release:** duplicate a local event as a starting point for
   a similar one, add recurring locally-created events, then provide a genuine
   time-based day/week view with durations and visible overlaps.

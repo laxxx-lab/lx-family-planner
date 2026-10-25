@@ -1,4 +1,32 @@
 const RELEASE_NOTES = {
+  '1.22.1': {
+    version: '1.22.1',
+    eyebrow: 'Kalenderkorrekturen & Sicherheit',
+    title: 'Serien importieren, ohne sie zu verlieren',
+    intro: 'Der ICS-Dateiimport erhält Wiederholungen und zeigt vor dem Speichern eine Vorschau.',
+    highlights: [
+      { id: 'ics-series', title: 'Serien bleiben Serien', description: 'Wiederholungen, verschobene oder ausgelassene Termine, Kategorien und Alarme bleiben beim Import und Export erhalten.' },
+      { id: 'import-groups', title: 'Importe gezielt aufräumen', description: 'Neue Dateiimporte lassen sich als Gruppe in den 30-Tage-Papierkorb verschieben. Bestehende Termine werden nicht automatisch verändert.' },
+      { id: 'calendar-sync', title: 'Nextcloud behält die Serieninformationen', description: 'Die Schreibsynchronisierung erhält Original-UIDs und unterscheidet Metadaten von echten Änderungen.' },
+      { id: 'favorites', title: 'Fünf Favoriten, klar erklärt', description: 'Ist die Favoritenleiste voll, zeigt das Menü einen verständlichen Hinweis.' },
+      { id: 'security', title: 'Aktualisierte App und Abhängigkeiten', description: 'Sicherheitsupdates für Server und Web-Oberfläche sowie eine neu signierte Android-APK.' }
+    ],
+    closing: 'Originale ICS-Dateien bitte aufbewahren. Alte verlustbehaftete Importe können nicht automatisch repariert werden; vor einem erneuten Import alte Einträge bewusst entfernen.',
+    localizations: {
+      en: {
+        eyebrow: 'Calendar fixes & security', title: 'Import series without losing their rules',
+        intro: 'ICS file imports preserve recurrence and show a preview before saving.',
+        highlights: [
+          { id: 'ics-series', title: 'Series stay series', description: 'Recurrence, moved or excluded occurrences, categories and alarms survive import and export.' },
+          { id: 'import-groups', title: 'Clean up selected imports', description: 'Move new file import groups into the 30-day recycle bin. Existing events are never changed automatically.' },
+          { id: 'calendar-sync', title: 'Nextcloud preserves series data', description: 'Write sync keeps original UIDs and distinguishes metadata from real changes.' },
+          { id: 'favorites', title: 'Five favorites, clearly explained', description: 'The menu explains when the favorites bar is full.' },
+          { id: 'security', title: 'Updated app and dependencies', description: 'Security updates for server and web dependencies, plus a newly signed Android APK.' }
+        ],
+        closing: 'Keep original ICS files. Older lossy imports cannot be repaired automatically; deliberately remove old entries before importing them again.'
+      }
+    }
+  },
   '1.22.0': {
     version: '1.22.0',
     eyebrow: 'Wünsche aus der Community',

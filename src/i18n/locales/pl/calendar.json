@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Importuj kalendarz",
+    "description": "Podgląd nie zmienia danych. Maksymalnie 4 MB i 2000 wydarzeń lub serii.",
+    "count": "{{count}} wydarzeń / serii",
+    "series": "Powtórzenia pozostają seriami. Istniejące wydarzenia nie zmieniają się; ponowny import dodaje kolejne wpisy.",
+    "more": "Jeszcze {{count}} wpisów",
+    "groups": "Zarządzaj importami",
+    "legacy": "Starszych importów bez grupy nie można bezpiecznie rozpoznać. Nie zostaną usunięte automatycznie.",
+    "remove": "Usuń import {{name}}",
+    "removeButton": "Przenieś do kosza",
+    "removeConfirm": "Przenieść {{count}} wydarzeń / serii z „{{name}}” do kosza? Pozostałe zostaną zachowane. Przywracanie jest możliwe przez 30 dni.",
+    "confirm": "Importuj teraz",
+    "preview": "Podgląd",
+    "invalid": "Tego pliku ICS nie można bezpiecznie zaimportować. Sprawdź format, rozmiar (maks. 4 MB), UID i reguły powtarzania.",
+    "failed": "Zmiana nie powiodła się. Nie usunięto niepotwierdzonych danych. Spróbuj ponownie.",
+    "scheduleLocked": "Importowany harmonogram jest chroniony. Zmień daty lub powtórzenia w oryginalnym pliku i zaimportuj ponownie. Tekst, kategoria i przypomnienia LX dotyczą całej serii.",
+    "category": "Kategoria",
+    "warnings": {
+      "alarms": "Niektóre alarmy są zachowane, ale nie zadziałają w LX (e-mail, po zakończeniu lub ponad tydzień wcześniej).",
+      "otherComponents": "Inne elementy, np. zadania, nie są importowane. Zachowaj oryginalny plik."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Czas dla rodziny",

@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Kalenderdatei importieren",
+    "description": "Die Vorschau ändert noch keine Daten. Maximal 4 MB und 2.000 Termine oder Serien.",
+    "count": "{{count}} Termine / Serien",
+    "series": "Wiederholungen bleiben als Serie erhalten. Vorhandene Termine bleiben unverändert; ein erneuter Import legt zusätzliche Einträge an.",
+    "more": "Weitere {{count}} Einträge",
+    "groups": "Dateiimporte verwalten",
+    "legacy": "Ältere Importe ohne Importgruppe lassen sich nicht sicher zuordnen. Sie werden nicht automatisch entfernt.",
+    "remove": "Import {{name}} entfernen",
+    "removeButton": "In den Papierkorb",
+    "removeConfirm": "{{count}} Termine / Serien aus „{{name}}“ in den Papierkorb verschieben? Andere Termine bleiben erhalten. Wiederherstellung ist 30 Tage lang möglich.",
+    "confirm": "Jetzt importieren",
+    "preview": "Vorschau",
+    "invalid": "Diese ICS-Datei kann nicht sicher importiert werden. Bitte Format, Größe (max. 4 MB), UIDs und Wiederholungsregeln prüfen.",
+    "failed": "Die Änderung ist fehlgeschlagen. Es wurden keine unbestätigten Daten gelöscht. Bitte erneut versuchen.",
+    "scheduleLocked": "Die Zeitregeln dieser importierten Serie bleiben geschützt. Zeitplanänderungen bitte in der ursprünglichen Kalenderdatei vornehmen und neu importieren. Text, Kategorie und LX-Erinnerungen gelten für die ganze Serie.",
+    "category": "Kategorie",
+    "warnings": {
+      "alarms": "Einige Alarme bleiben in der Datei erhalten, können in LX aber nicht auslösen (z. B. E-Mail, nach Terminende oder mehr als eine Woche vorher).",
+      "otherComponents": "Andere Kalenderelemente wie Aufgaben werden nicht importiert. Das Original bitte aufbewahren."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Familienzeit",

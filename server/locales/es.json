@@ -114,6 +114,8 @@
     "reminderBody": "Recogida {{lead}}. Sácalo a tiempo, por favor."
   },
   "errors": {
+    "calendarImportInvalid": "El archivo de calendario no es válido o contiene datos no compatibles.",
+    "calendarImportedScheduleLocked": "El horario de una serie ICS importada no se puede cambiar aquí.",
     "insufficientStars": "No hay suficientes estrellas",
     "tooManyLoginAttempts": "Demasiados intentos de inicio de sesión. Espera un momento, por favor.",
     "loginRequired": "Inicia sesión primero, por favor.",

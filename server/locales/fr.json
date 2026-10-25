@@ -114,6 +114,8 @@
     "reminderBody": "Collecte {{lead}}. Veuillez le sortir à temps."
   },
   "errors": {
+    "calendarImportInvalid": "Le fichier calendrier est invalide ou contient des données non prises en charge.",
+    "calendarImportedScheduleLocked": "Le planning d’une série ICS importée ne peut pas être modifié ici.",
     "insufficientStars": "Pas assez d’étoiles",
     "tooManyLoginAttempts": "Trop de tentatives de connexion. Veuillez patienter un instant.",
     "loginRequired": "Veuillez d'abord vous connecter.",

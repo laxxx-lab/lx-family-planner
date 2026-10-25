@@ -1202,6 +1202,35 @@ test('family flow stays isolated, authorized and internally consistent', async (
   );
   await liveReader.cancel();
 
+  const icsFile = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\n' + Array.from({ length: 601 }, (_, index) =>
+    `BEGIN:VEVENT\r\nUID:import-${index}\r\nDTSTART;VALUE=DATE:19900805\r\nSUMMARY:Geburtstag ${index}\r\nRRULE:FREQ=YEARLY\r\nEND:VEVENT\r\n`
+  ).join('') + 'END:VCALENDAR';
+  const imported = await request('/api/calendar/import', {
+    method: 'POST', headers: authenticatedHeaders,
+    body: JSON.stringify({ content: icsFile, fileName: 'birthdays.ics', batchId: '12345678-1234-4123-8123-123456789abc' })
+  }, 201);
+  assert.equal(imported.body.records.length, 601);
+  assert.equal(imported.body.records[0].importFileName, 'birthdays.ics');
+  await request(`/api/resources/events/${imported.body.records[0].id}`, {
+    method: 'PATCH', headers: authenticatedHeaders,
+    body: JSON.stringify({ title: 'Bereits korrigiert' })
+  });
+  const retryImport = await request('/api/calendar/import', {
+    method: 'POST', headers: authenticatedHeaders,
+    body: JSON.stringify({ content: icsFile, fileName: 'birthdays.ics', batchId: '12345678-1234-4123-8123-123456789abc' })
+  }, 201);
+  const retriedRecord = retryImport.body.records.find(record => record.id === imported.body.records[0].id);
+  assert.equal(retriedRecord.title, 'Bereits korrigiert');
+  const removedImport = await request('/api/calendar/imports/12345678-1234-4123-8123-123456789abc', {
+    method: 'DELETE', headers: authenticatedHeaders
+  });
+  assert.equal(removedImport.body.count, 601);
+  const remainingEvents = await request('/api/resources/events', { headers: authenticatedHeaders });
+  assert.ok(remainingEvents.body.records.some(event => event.id === 'event-one'));
+  assert.equal(remainingEvents.body.records.filter(event => event.importBatchId === '12345678-1234-4123-8123-123456789abc').length, 0);
+  const deletedImports = await request('/api/recycle-bin', { headers: authenticatedHeaders });
+  assert.ok(deletedImports.body.records.some(entry => entry.record.importBatchId === '12345678-1234-4123-8123-123456789abc'));
+
   const calendarSubscription = await request(
     '/api/calendar/subscriptions',
     {

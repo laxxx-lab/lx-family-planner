@@ -4,6 +4,17 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.22.1] – 2026-10-25
+
+- Sicherheitsaktualisierungen ohne Major-Upgrades: Capacitor 8.4.3, undici 7.30.1, Vite 8.1.6 und korrigierte transitive Abhängigkeiten. Der npm-Audit meldet bei der Release-Prüfung keine bekannten Schwachstellen.
+
+- ICS-Dateiimport mit Vorschau: Wiederholungsregeln, Ausnahmen, Kategorien und verschachtelte Alarme bleiben erhalten. Serien werden einmal gespeichert, nicht als historische Einzeltermine vervielfacht.
+- Dateiimporte lassen sich als Gruppe in den 30-Tage-Papierkorb verschieben. Ältere Einträge ohne eindeutige Importgruppe werden nicht automatisch verändert.
+- Importierte Serien behalten ihre Zeitregeln; Text, Kategorie und LX-Erinnerungen sind für die gesamte Serie bearbeitbar. Der Datei-Export verwendet gespeicherte Serien statt aufgefächerter Ansichten.
+- Nextcloud-/CalDAV-Schreibsynchronisierung erhält importierte Serieninformationen und unterscheidet Transport-Metadaten von echten Änderungen.
+- Verständlicher Hinweis beim Erreichen der fünf Navigationsfavoriten, in allen acht Oberflächensprachen.
+- Neue signierte Android-APK mit dem bisherigen Schlüssel für App-Updates.
+
 ## [1.22.0] – 2026-10-11
 
 - Persönliche Nextcloud-Kalender zusätzlich zum Familienkalender, mit verschlüsselten App-Passwörtern und abgesichertem Kalenderwechsel.

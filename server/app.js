@@ -15,6 +15,8 @@ import { isIP } from 'net';
 import BringApi from 'bring-shopping';
 import webPush from 'web-push';
 import { parseICalendar } from '../shared/icsCalendar.js';
+import { previewCalendarImport } from '../shared/icsImport.js';
+import { archiveCalendarImport } from './database.js';
 import { eventAudienceIds } from '../shared/calendarAudience.js';
 import { parseCustomThemeCss } from '../shared/customThemeCss.js';
 import {
@@ -4531,6 +4533,25 @@ function cleanTime(value, fallback = '') {
 
 function sanitizeCalendarEvent(req, value, existing = null) {
   const input = ensureObject(value);
+  if (existing?.icsSource) {
+    // Imported schedules keep their RFC rules and exception dates. Text,
+    // audience, category and LX reminders remain editable for the whole series.
+    const scheduleKeys = ['icsSource', 'date', 'time', 'endDate', 'endTime', 'allDay'];
+    if (scheduleKeys.some(key => input[key] !== undefined && input[key] !== existing[key])) {
+      const error = new Error(translate('errors.calendarImportedScheduleLocked'));
+      error.statusCode = 409;
+      throw error;
+    }
+    input.icsSource = existing.icsSource;
+  } else if (input.icsSource) {
+    const preview = previewCalendarImport(input.icsSource);
+    if (preview.records.length !== 1) {
+      const error = new Error(translate('errors.calendarImportInvalid'));
+      error.statusCode = 400;
+      throw error;
+    }
+    Object.assign(input, preview.records[0]);
+  }
   const date = cleanDate(input.date, '');
   if (!date) {
     const error = new Error(translate('errors.eventDateInvalid'));
@@ -5507,7 +5528,8 @@ export function createApp() {
             rangeEnd: new Date(now + 8 * 86_400_000)
               .toISOString()
               .slice(0, 10),
-            maxOccurrences: 600
+            maxOccurrences: 600,
+            remindersOnly: true
           }
         );
         const reminderCandidates = [
@@ -8355,6 +8377,47 @@ export function createApp() {
     });
   });
 
+  app.post('/api/calendar/import', requireAuth, requireAdult, (req, res) => {
+    const batchId = cleanText(req.body?.batchId, '', 80);
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(batchId)) {
+      return res.status(400).json({ success: false, error: translate('errors.calendarImportInvalid') });
+    }
+    let preview;
+    try { preview = previewCalendarImport(req.body?.content); }
+    catch { return res.status(400).json({ success: false, error: translate('errors.calendarImportInvalid') }); }
+    if (!preview.records.length) {
+      return res.status(400).json({ success: false, error: translate('errors.calendarImportInvalid') });
+    }
+    const contentHash = createHash('sha256').update(req.body.content).digest('hex');
+    const existing = listRecords(req.session.familyId, 'events').filter(record => record.importBatchId === batchId);
+    if (existing.length) {
+      if (existing.some(record => record.importContentHash !== contentHash)) {
+        return res.status(409).json({ success: false, error: translate('errors.calendarImportInvalid') });
+      }
+      return res.status(201).json({ success: true, records: existing, warnings: preview.warnings, version: getFamilyVersion(req.session.familyId) });
+    }
+    const records = preview.records.map((record, index) => ({
+      ...record, id: `ics-${batchId}-${index}`, importBatchId: batchId,
+      importContentHash: contentHash,
+      importFileName: cleanText(req.body?.fileName, 'calendar.ics', 200),
+      household: req.body?.household === 'oma_opa' ? 'oma_opa' : 'familie'
+    }));
+    // A retry uses the same IDs. No 500-record bulk truncation and no partial import.
+    const saved = upsertRecords(req.session.familyId, 'events', records);
+    publishFamilyChange(req.session.familyId, 'events');
+    queueNextcloudEventSync(req.session.familyId);
+    res.status(201).json({ success: true, records: saved, warnings: preview.warnings, version: getFamilyVersion(req.session.familyId) });
+  });
+
+  app.delete('/api/calendar/imports/:batchId', requireAuth, requireAdult, (req, res) => {
+    const count = archiveCalendarImport(req.session.familyId, req.params.batchId, req.session.memberId);
+    if (count) {
+      publishFamilyChange(req.session.familyId, 'events');
+      queueNextcloudEventSync(req.session.familyId);
+    }
+    res.json({ success: true, count, version: getFamilyVersion(req.session.familyId) });
+  });
+
   app.post('/api/resources/:type/bulk', requireAuth, requireResourceManager, (req, res) => {
     if (!BULK_RESOURCE_TYPES.has(req.params.type)) {
       return res.status(405).json({
@@ -8374,7 +8437,9 @@ export function createApp() {
       .map(record =>
         req.params.type === 'trashEvents'
           ? sanitizeTrashEvent(record)
-          : record
+          : req.params.type === 'events' && record.icsSource
+            ? sanitizeCalendarEvent(req, record)
+            : record
       );
     const records = upsertRecords(
       req.session.familyId,

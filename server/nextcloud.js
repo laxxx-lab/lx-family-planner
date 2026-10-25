@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'crypto';
 import { isIP } from 'net';
 import { XMLParser } from 'fast-xml-parser';
 import { parseICalendar } from '../shared/icsCalendar.js';
+import { importedCalendarComponent, importedCalendarFingerprint, previewCalendarImport } from '../shared/icsImport.js';
 import { eventAudienceIds } from '../shared/calendarAudience.js';
 import {
   calendarRecurrenceRRule,
@@ -986,6 +987,24 @@ function addOneDay(date) {
 }
 
 function serializeEvent(event, uid, timeZone) {
+  if (event.icsSource) {
+    const calendar = importedCalendarComponent(event);
+    const components = calendar.getAllSubcomponents('vevent');
+    const master = components.find(component => !component.hasProperty('recurrence-id'));
+    const originalUid = master.getFirstPropertyValue('uid');
+    for (const component of components) component.updatePropertyWithValue('uid', uid);
+    // Keep RFC recurrence, exceptions, alarms and timezone components intact.
+    // A separate marker restores the original UID on the LX side of a sync.
+    for (const [name, value] of Object.entries({
+      'x-lx-import-uid': originalUid,
+      'x-lx-family-id': event.familyId || '',
+      'x-lx-event-id': event.id || '',
+      'x-lx-member-id': event.memberId || 'all',
+      'x-lx-member-ids': JSON.stringify(eventAudienceIds(event)),
+      'x-lx-household': event.household || 'familie'
+    })) master.updatePropertyWithValue(name, value);
+    return calendar.toString() + '\r\n';
+  }
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
@@ -1058,7 +1077,8 @@ function eventContentHash(event) {
       recurrenceRule: clean(event?.recurrenceRule, 'none'),
       recurrenceInterval: Math.max(1, Number(event?.recurrenceInterval) || 1),
       recurrenceUnit: clean(event?.recurrenceUnit, 'weeks'),
-      recurrenceUntil: clean(event?.recurrenceUntil)
+      recurrenceUntil: clean(event?.recurrenceUntil),
+      icsSource: importedCalendarFingerprint(event)
     }))
     .digest('hex');
 }
@@ -1073,7 +1093,15 @@ function remoteEvent(
   provider = PROVIDER,
   sourceName = 'Nextcloud'
 ) {
-  const parsed = parseICalendar(resource.calendarData, {
+  const originalImportUid = customIcsValue(resource.calendarData, 'X-LX-IMPORT-UID');
+  let parsed;
+  if (originalImportUid) {
+    const calendar = importedCalendarComponent({ icsSource: resource.calendarData });
+    for (const component of calendar.getAllSubcomponents('vevent')) {
+      component.updatePropertyWithValue('uid', originalImportUid);
+    }
+    parsed = previewCalendarImport(calendar.toString()).records[0];
+  } else parsed = parseICalendar(resource.calendarData, {
     targetTimeZone: timeZone,
     rangeStart: Date.now() - 45 * 86_400_000,
     rangeEnd: Date.now() + 10 * 365 * 86_400_000,
@@ -1130,15 +1158,14 @@ function remoteEvent(
         : fallbackMemberIds,
     household:
       customIcsValue(resource.calendarData, 'X-LX-HOUSEHOLD') || 'familie',
-    category:
-      customIcsValue(resource.calendarData, 'CATEGORIES') ||
-      sourceName,
+    category: originalImportUid ? parsed.category :
+      customIcsValue(resource.calendarData, 'CATEGORIES') || sourceName,
     ...normalizeCalendarRecurrence(remoteRecurrence),
-    syncUid: parsed.uid,
+    syncUid: originalImportUid ? customIcsValue(resource.calendarData, 'UID') : parsed.uid,
     syncHref: resource.href,
     syncManaged: true,
     syncProvider: provider,
-    nextcloudUid: parsed.uid,
+    nextcloudUid: originalImportUid ? customIcsValue(resource.calendarData, 'UID') : parsed.uid,
     nextcloudHref: resource.href,
     nextcloudManaged: true,
     source: provider,

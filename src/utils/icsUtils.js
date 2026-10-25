@@ -1,4 +1,4 @@
-import { parseICalendar } from '../../shared/icsCalendar.js';
+import { previewCalendarImport, importedCalendarComponent } from '../../shared/icsImport.js';
 import { calendarRecurrenceRRule } from '../../shared/calendarRecurrence.js';
 import i18n from '../i18n/index.js';
 
@@ -46,6 +46,11 @@ export function exportEventsToICSContent(
   events
     .filter(event => !event.readOnly)
     .forEach(event => {
+      if (event.icsSource) {
+        const calendar = importedCalendarComponent(event);
+        icsContent.push(...calendar.getAllSubcomponents().map(component => component.toString()));
+        return;
+      }
       const eventDate = event.date || new Date().toISOString().split('T')[0];
       const formattedDate = icsDate(eventDate);
       const formattedTime = icsTime(event.time || '09:00');
@@ -84,6 +89,8 @@ export function exportEventsToICSContent(
       }
       const rrule = calendarRecurrenceRRule(event);
       if (rrule) icsContent.push(`RRULE:${rrule}`);
+      const categories = event.categories?.length ? event.categories : event.category ? [event.category] : [];
+      if (categories.length) icsContent.push(`CATEGORIES:${categories.map(escapeIcsText).join(',')}`);
       icsContent.push('END:VEVENT');
     });
 
@@ -117,13 +124,12 @@ export function exportEventsToICS(
 }
 
 export function parseICSContent(icsString) {
-  return parseICalendar(icsString, { maxEvents: 1000 }).map(
+  return previewCalendarImport(icsString).records.map(
     (event, index) => ({
       ...event,
       id: `ics-${Date.now()}-${index}-${Math.random()
         .toString(36)
         .slice(2, 6)}`,
-      category: 'Importiert',
       memberId: 'all'
     })
   );

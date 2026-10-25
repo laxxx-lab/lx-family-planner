@@ -3,6 +3,7 @@
     "loading": "正在准备家庭空间…"
   },
   "navigation": {
+    "favoritesLimit": "已达到 {{count}} 个收藏上限，请先取消一个星标再固定其他版块。",
     "favorites": "收藏",
     "favoritesAria": "收藏的版块",
     "allAreas": "全部版块",

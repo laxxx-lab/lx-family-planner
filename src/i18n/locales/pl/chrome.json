@@ -3,6 +3,7 @@
     "loading": "Przygotowywanie Twojej przestrzeni rodzinnej …"
   },
   "navigation": {
+    "favoritesLimit": "Osiągnięto limit {{count}} ulubionych. Usuń gwiazdkę przed przypięciem innej sekcji.",
     "favorites": "Ulubione",
     "favoritesAria": "Ulubione obszary",
     "allAreas": "Wszystkie obszary",

@@ -114,6 +114,8 @@
     "reminderBody": "Ophaling {{lead}}. Zet het op tijd buiten."
   },
   "errors": {
+    "calendarImportInvalid": "Het kalenderbestand is ongeldig of bevat niet-ondersteunde gegevens.",
+    "calendarImportedScheduleLocked": "Het schema van een geïmporteerde ICS-reeks kan hier niet worden gewijzigd.",
     "insufficientStars": "Niet genoeg sterren",
     "tooManyLoginAttempts": "Te veel inlogpogingen. Wacht even een moment.",
     "loginRequired": "Log eerst in.",

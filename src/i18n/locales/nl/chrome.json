@@ -3,6 +3,7 @@
     "loading": "Jouw gezinsruimte gereedmaken …"
   },
   "navigation": {
+    "favoritesLimit": "De limiet van {{count}} favorieten is bereikt. Verwijder eerst een ster om een ander onderdeel vast te zetten.",
     "favorites": "Favorieten",
     "favoritesAria": "Favoriete onderdelen",
     "allAreas": "Alle onderdelen",

@@ -114,6 +114,8 @@
     "reminderBody": "{{lead}}收运，请及时放到外面。"
   },
   "errors": {
+    "calendarImportInvalid": "日历文件无效或包含不支持的数据。",
+    "calendarImportedScheduleLocked": "无法在此修改导入的 ICS 系列时间规则。",
     "insufficientStars": "星星不足",
     "tooManyLoginAttempts": "登录尝试次数过多，请稍后再试。",
     "loginRequired": "请先登录。",

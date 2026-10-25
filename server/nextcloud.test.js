@@ -44,8 +44,55 @@ const {
   uploadNextcloudUserFile
 } = await import('./nextcloud.js');
 const { calDavRequest } = await import('./caldav.js');
+const { previewCalendarImport } = await import('../shared/icsImport.js');
+const { expandCalendarEventSeries } = await import('../shared/calendarRecurrence.js');
 
 const remoteEvents = new Map();
+async function importedRoundTrip(t) {
+  t.after(() => remoteEvents.clear());
+  remoteEvents.clear();
+  const familyId = 'family-import-roundtrip';
+  createFamily({ id: familyId, familyName: 'Imported series', password: 'test-password-only', members: [] });
+  const [imported] = previewCalendarImport(`BEGIN:VCALENDAR
+VERSION:2.0
+BEGIN:VEVENT
+UID:original-birthday
+DTSTART;VALUE=DATE:19900812
+SUMMARY:Geburtstag
+CATEGORIES:Birthday,Family
+RRULE:FREQ=YEARLY
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:Erinnerung
+END:VALARM
+END:VEVENT
+END:VCALENDAR`).records;
+  createRecord(familyId, 'events', { ...imported, id: 'imported-birthday', household: 'familie' });
+  const options = { familyId, connection, calendarHref };
+  const result = await syncNextcloudEvents(options);
+  assert.equal(result.exported, 1);
+  const [href, remote] = [...remoteEvents.entries()][0];
+  assert.match(remote.data, /RRULE:FREQ=YEARLY/);
+  assert.match(remote.data, /BEGIN:VALARM/);
+  const unchanged = await syncNextcloudEvents(options);
+  assert.equal(unchanged.updatedLocal, 0);
+  assert.equal(unchanged.conflicts, 0);
+  updateRecord(familyId, 'events', 'imported-birthday', { title: 'Lokal geändert' });
+  const localChange = await syncNextcloudEvents(options);
+  assert.equal(localChange.conflicts, 0);
+  assert.equal(localChange.updatedRemote, 1);
+  remoteEvents.set(href, { etag: `"etag-${etagCounter++}"`, data: remoteEvents.get(href).data.replace('SUMMARY:Lokal geändert', 'SUMMARY:Geändert') });
+  await syncNextcloudEvents(options);
+  const saved = getRecord(familyId, 'events', 'imported-birthday');
+  assert.equal(saved.date, '1990-08-12');
+  assert.equal(saved.uid, 'original-birthday');
+  assert.equal(saved.category, 'Birthday');
+  assert.deepEqual(saved.categories, ['Birthday', 'Family']);
+  const [occurrence] = expandCalendarEventSeries([saved], { rangeStart: '2027-01-01', rangeEnd: '2027-12-31' });
+  assert.equal(occurrence.date, '2027-08-12');
+  assert.equal(occurrence.title, 'Geändert');
+}
 const uploadedFiles = new Map();
 const createdFolders = new Set();
 const provisionedUsers = new Map();
@@ -358,6 +405,8 @@ after(async () => {
   database.close();
   fs.rmSync(directory, { recursive: true, force: true });
 });
+
+test('Nextcloud round-trip preserves imported ICS recurrence and alarm data', importedRoundTrip);
 
 test('Nextcloud discovery, WebDAV files and two-way calendar sync stay safe', async () => {
   const inspection = await inspectNextcloud(connection);

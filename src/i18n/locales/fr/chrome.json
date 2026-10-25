@@ -3,6 +3,7 @@
     "loading": "Préparation de votre espace familial…"
   },
   "navigation": {
+    "favoritesLimit": "La limite de {{count}} favoris est atteinte. Retirez une étoile avant d’ajouter une autre section.",
     "favorites": "Favoris",
     "favoritesAria": "Espaces favoris",
     "allAreas": "Tous les espaces",

@@ -1,7 +1,7 @@
 {
   "name": "lx-family-planner",
   "private": true,
-  "version": "1.22.0",
+  "version": "1.22.1",
   "description": "LX Family is a private self-hosted Family OS with dedicated spaces for parents, children, grandparents and pets.",
   "homepage": "https://github.com/laxxx-lab/lx-family-planner",
   "repository": {
@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@capacitor/app": "^8.1.1",
-    "@capacitor/core": "^8.4.2",
+    "@capacitor/core": "~8.4.3",
     "@capacitor/push-notifications": "^8.1.2",
     "bring-shopping": "^2.0.1",
     "cheerio": "^1.2.0",
@@ -51,25 +51,26 @@
     "fflate": "^0.8.3",
     "google-auth-library": "^10.9.1",
     "i18next": "^26.3.6",
+    "ical.js": "2.2.1",
     "lucide-react": "^0.453.0",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^17.0.11",
-    "undici": "^7.29.1",
+    "undici": "~7.30.1",
     "web-push": "3.6.7"
   },
   "devDependencies": {
-    "@capacitor/android": "^8.4.2",
-    "@capacitor/cli": "^8.4.2",
+    "@capacitor/android": "~8.4.3",
+    "@capacitor/cli": "~8.4.3",
     "@playwright/test": "^1.56.1",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^6.0.4",
-    "vite": "^8.1.5"
+    "vite": "~8.1.6"
   },
   "overrides": {
-    "nanoid": "3.3.17",
+    "nanoid": "3.3.18",
     "qs": "6.16.0"
   }
 }

@@ -25397,3 +25397,23 @@ body:has(.modal-backdrop) .problem-report-launcher {
   from { opacity: 0; transform: translateX(-16px) scale(0.985); }
   to { opacity: 1; transform: translateX(0) scale(1); }
 }
+/* Imported calendar files are previewed before any family data is changed. */
+.calendar-editor-dialog.calendar-import-dialog { height: auto; max-height: calc(100dvh - 36px); }
+.calendar-editor-dialog.calendar-import-dialog > header { grid-template-columns: minmax(0, 1fr) auto; }
+.calendar-editor-dialog.calendar-import-dialog > footer { grid-template-columns: 1fr 1fr; }
+.calendar-editor-dialog .calendar-import-body { display: flex; flex-direction: column; gap: 1rem; }
+.calendar-import-body > button { display: inline-flex; justify-content: center; align-items: center; gap: .5rem; min-height: 44px; border-radius: 12px; padding: .75rem; font: inherit; }
+.calendar-import-body section { min-width: 0; overflow-wrap: anywhere; }
+.calendar-import-body h3 { margin: 0 0 .5rem; }
+.calendar-import-body p { line-height: 1.5; }
+.calendar-import-body ul { padding-left: 1.25rem; }
+.calendar-import-body li { margin: .4rem 0; }
+.calendar-import-warning, .mobile-nav-favorites-limit {
+  padding: .75rem; border: 1px solid var(--border-color, #ccd5d0);
+  border-radius: .75rem; color: var(--text-main); background: var(--bg-main);
+}
+.mobile-nav-favorites-limit { font-size: .85rem; line-height: 1.5; }
+.mobile-nav-favorite-toggle[aria-disabled="true"] { opacity: .55; }
+.calendar-import-group { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; padding: .75rem 0; }
+.calendar-import-group > span { flex: 1 1 10rem; overflow-wrap: anywhere; }
+.calendar-import-group small { display: block; margin-top: .25rem; }

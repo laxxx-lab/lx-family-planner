@@ -3,6 +3,7 @@
     "loading": "Preparo lo spazio famiglia …"
   },
   "navigation": {
+    "favoritesLimit": "Raggiunto il limite di {{count}} preferiti. Rimuovi una stella prima di aggiungere un’altra sezione.",
     "favorites": "Preferiti",
     "favoritesAria": "Aree preferite",
     "allAreas": "Tutte le aree",

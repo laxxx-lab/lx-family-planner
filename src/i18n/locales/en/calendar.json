@@ -1,4 +1,26 @@
 {
+  "fileImport": {
+    "title": "Import calendar file",
+    "description": "The preview does not change any data. Maximum 4 MB and 2,000 events or series.",
+    "count": "{{count}} events / series",
+    "series": "Recurrences remain a series. Existing events are unchanged; importing again creates additional entries.",
+    "more": "{{count}} more entries",
+    "groups": "Manage file imports",
+    "legacy": "Older imports without a batch cannot be identified safely. They will not be removed automatically.",
+    "remove": "Remove import {{name}}",
+    "removeButton": "Move to trash",
+    "removeConfirm": "Move {{count}} events / series from “{{name}}” to the trash? Other events are kept. They can be restored for 30 days.",
+    "confirm": "Import now",
+    "preview": "Preview",
+    "invalid": "This ICS file cannot be imported safely. Check its format, size (max. 4 MB), UIDs and recurrence rules.",
+    "failed": "The change failed. No unconfirmed data was deleted. Please try again.",
+    "scheduleLocked": "The imported schedule is protected. Change its dates or recurrence in the original calendar file and import again. Text, category and LX reminders apply to the entire series.",
+    "category": "Category",
+    "warnings": {
+      "alarms": "Some alarms are preserved but cannot trigger in LX (for example email, after the end, or more than a week before).",
+      "otherComponents": "Other calendar components such as tasks are not imported. Please keep the original file."
+    }
+  },
   "view": {
     "hero": {
       "eyebrow": "Family time",

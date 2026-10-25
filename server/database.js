@@ -1744,7 +1744,10 @@ function purgeExpiredRecycledRecords(familyId = '') {
 export function archiveRecord(familyId, type, id, { deletedByMemberId = null } = {}) {
   assertRecordType(type);
   const now = Date.now();
-  return withTransaction(() => {
+  return withTransaction(() => archiveRecordInTransaction(familyId, type, id, deletedByMemberId, now));
+}
+
+function archiveRecordInTransaction(familyId, type, id, deletedByMemberId, now) {
     purgeExpiredRecycledRecords(familyId);
     const row = database.prepare(`
       SELECT data_json FROM family_records
@@ -1780,6 +1783,17 @@ export function archiveRecord(familyId, type, id, { deletedByMemberId = null } =
       deletedAt: now,
       expiresAt: now + RECYCLE_BIN_RETENTION_MS
     };
+}
+
+export function archiveCalendarImport(familyId, batchId, deletedByMemberId = null) {
+  if (!batchId) return 0;
+  return withTransaction(() => {
+    const records = listRecords(familyId, 'events').filter(record =>
+      record.importBatchId === batchId && !record.readOnly && !record.sharedEventId && !record.subscriptionId
+    );
+    const now = Date.now();
+    for (const record of records) archiveRecordInTransaction(familyId, 'events', record.id, deletedByMemberId, now);
+    return records.length;
   });
 }
 

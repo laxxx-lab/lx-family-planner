@@ -35,6 +35,7 @@ import { formatDate } from '../../utils/formatting';
 import CalendarSubscriptionManager from './CalendarSubscriptionManager';
 import EventReminderDialog from './EventReminderDialog';
 import CalendarEventDialog from './CalendarEventDialog';
+import CalendarImportDialog from './CalendarImportDialog';
 import {
   calendarEventColor,
   eventAudienceMembers,
@@ -481,6 +482,8 @@ export default function CalendarView() {
     calendarSubscriptions,
     exportICS,
     importICS,
+    calendarImports,
+    removeCalendarImport,
     setIsQuickAddOpen,
     setQuickAddDefaultType,
     setQuickAddEventPreset,
@@ -497,6 +500,7 @@ export default function CalendarView() {
   const [isSourcesOpen, setIsSourcesOpen] = useState(false);
   const [selectedReminderEvent, setSelectedReminderEvent] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [calendarImport, setCalendarImport] = useState(null);
   const todayKey = localDateKey();
   const canManage = canManageFamily(activeMember);
 
@@ -577,7 +581,7 @@ export default function CalendarView() {
 
   const handleFileUpload = event => {
     const file = event.target.files?.[0];
-    if (file) importICS(file);
+    if (file) setCalendarImport({ file });
     event.target.value = '';
   };
 
@@ -733,6 +737,9 @@ export default function CalendarView() {
               onChange={handleFileUpload}
             />
           </label>}
+          {canManage && calendarImports.length > 0 && <button type="button" onClick={() => setCalendarImport({})}>
+            {t('fileImport.groups')}
+          </button>}
         </div>
       </section>
 
@@ -1032,6 +1039,11 @@ export default function CalendarView() {
         isOpen={isSourcesOpen}
         onClose={() => setIsSourcesOpen(false)}
       />
+      {calendarImport && <CalendarImportDialog
+        initialFile={calendarImport.file} groups={calendarImports}
+        onImport={importICS} onRemove={removeCalendarImport}
+        onClose={() => setCalendarImport(null)}
+      />}
       <EventReminderDialog
         event={selectedReminderEvent}
         onClose={() => setSelectedReminderEvent(null)}

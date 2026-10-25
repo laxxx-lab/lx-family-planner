@@ -114,6 +114,8 @@
     "reminderBody": "Raccolta {{lead}}. Esponilo in tempo."
   },
   "errors": {
+    "calendarImportInvalid": "Il file calendario non è valido o contiene dati non supportati.",
+    "calendarImportedScheduleLocked": "La pianificazione di una serie ICS importata non può essere modificata qui.",
     "insufficientStars": "Stelle insufficienti",
     "tooManyLoginAttempts": "Troppi tentativi di accesso. Attendi un momento.",
     "loginRequired": "Accedi prima.",
