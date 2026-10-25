@@ -42,6 +42,8 @@ Nachprüfung: Der PR-Patch wurde inzwischen isoliert in `.codex-tmp/pr39-current
 - Fünf vollständige Chromium-Browserabläufe erfolgreich; der ICS-/Favoriten-Ablauf zusätzlich mit WebKit bei 440 × 956 CSS-Pixeln.
 - Ein Browserlauf überschritt während paralleler Android-Kompilierung und kalter Vite-Neuoptimierung das Zeitlimit. Der vollständige Wiederholungslauf ohne Android-Kompilierung bestand; keine Erhöhung des Test-Zeitlimits.
 - Android `:app:assembleDebug` mit Capacitor 8.4.3 erfolgreich. Das bestätigt die native Kompilierung, nicht die Installation oder Bedienung auf einem echten Gerät.
+- Release-APK 1.22.1, Versionscode 65, erfolgreich gebaut. APK-SHA-256: `055f56bc0a29071445cba78beaf73763760c967d6795981d89febafdc6da1955`. Zertifikat-SHA-256 unverändert gegenüber 1.22.0: `a76733e808ff4726e423c3ae439579879aaca3ffc5e3f519a1072742aed48ea6`.
+- Abschließender lokaler Release-Check: 194/194 Tests, i18n und Produktionsbuild grün; fünf Chromium-Abläufe mit einem Worker grün. GitHub-Qualitätslauf für `6b047cf` bestätigt Tests/Build und Browsercheck ebenfalls erfolgreich.
 - Lokale Vorschau erneut gestartet, Gesundheitsantwort `ok`; dieselbe isolierte Testdatenbank beibehalten.
 - Geräteprüfung bleibt offen; es steht kein physisches iOS-Testgerät zur Verfügung. Die Release-APK wird separat signiert und auf passenden Schlüssel, Version und Prüfsumme geprüft. Bestehende Größenwarnung des Frontend-Bundles ist kein Buildfehler. In einzelnen API-Testläufen meldet eine noch auslaufende Cloud-Provisionierung beim Test-Teardown die bereits geschlossene Testdatenbank; die Testprüfungen selbst bestehen. Dies ist keine Live-Cloud-Verifikation.
 
@@ -54,4 +56,4 @@ Beim ersten Prüflauf wurden unter anderem Warnungen für body-parser, proxy-add
 - body-parser: 2.4.0; proxy-addr: 2.0.8.
 - xmldom: 0.9.12; brace-expansion: 5.0.12; source-map-js: 1.2.2; nanoid-Override: 3.3.18.
 
-Sowohl `npm audit` als auch `npm audit --omit=dev` melden danach **0 bekannte Schwachstellen**. Das ist keine Garantie für vollständige Sicherheit. Die bereits veröffentlichte APK wird dadurch nicht nachträglich korrigiert; vor dem nächsten Release ist eine frisch signierte APK mit dem aktualisierten Android-Unterbau erforderlich.
+Sowohl `npm audit` als auch `npm audit --omit=dev` melden danach **0 bekannte Schwachstellen**. Das ist keine Garantie für vollständige Sicherheit. Frühere APKs werden dadurch nicht nachträglich korrigiert; die aktualisierten Android-Abhängigkeiten sind in der neu gebauten APK 1.22.1 enthalten.
