@@ -45,6 +45,15 @@
       "export": "Eksportuj",
       "import": "Importuj plik"
     },
+    "search": {
+      "ariaLabel": "Przeszukaj kalendarz",
+      "placeholder": "Szukaj wydarzeń",
+      "clear": "Wyczyść wyszukiwanie",
+      "kicker": "Wyszukiwanie",
+      "title": "Wyniki wyszukiwania",
+      "emptyTitle": "Brak pasujących wydarzeń",
+      "emptyDescription": "Spróbuj innych słów kluczowych."
+    },
     "layouts": {
       "ariaLabel": "Widok kalendarza",
       "agenda": "Agenda",

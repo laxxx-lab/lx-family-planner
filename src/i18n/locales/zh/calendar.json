@@ -45,6 +45,15 @@
       "export": "导出",
       "import": "导入文件"
     },
+    "search": {
+      "ariaLabel": "搜索日历",
+      "placeholder": "搜索日程",
+      "clear": "清除搜索",
+      "kicker": "搜索",
+      "title": "搜索结果",
+      "emptyTitle": "没有匹配的日程",
+      "emptyDescription": "请尝试其他搜索词。"
+    },
     "layouts": {
       "ariaLabel": "日历视图",
       "agenda": "日程",

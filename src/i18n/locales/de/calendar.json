@@ -45,6 +45,15 @@
       "export": "Export",
       "import": "Datei importieren"
     },
+    "search": {
+      "ariaLabel": "Kalender durchsuchen",
+      "placeholder": "Termin suchen",
+      "clear": "Suche löschen",
+      "kicker": "Suche",
+      "title": "Suchergebnisse",
+      "emptyTitle": "Keine passenden Termine",
+      "emptyDescription": "Versuche es mit anderen Suchbegriffen."
+    },
     "layouts": {
       "ariaLabel": "Kalenderansicht",
       "agenda": "Agenda",

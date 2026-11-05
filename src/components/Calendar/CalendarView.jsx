@@ -18,9 +18,11 @@ import {
   MapPin,
   Plus,
   Radio,
+  Search,
   Trash2,
   Upload,
-  UserRound
+  UserRound,
+  X
 } from 'lucide-react';
 import { useFamily } from '../../context/FamilyContext';
 import {
@@ -62,6 +64,7 @@ import {
   timelineAllDayEvents,
   timelineEventsForDay
 } from '../../../shared/calendarTimeline.js';
+import { eventMatchesCalendarSearch } from '../../../shared/calendarSearch.js';
 
 function localDateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -491,6 +494,7 @@ export default function CalendarView() {
   } = useFamily();
   const [selectedMemberFilter, setSelectedMemberFilter] = useState('all');
   const [showPast, setShowPast] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const [calendarView, setCalendarView] = useState(() =>
     storedCalendarView(activeHousehold, activeMember?.id)
   );
@@ -503,6 +507,7 @@ export default function CalendarView() {
   const [calendarImport, setCalendarImport] = useState(null);
   const todayKey = localDateKey();
   const canManage = canManageFamily(activeMember);
+  const isSearching = searchQuery.trim().length > 0;
 
   const chooseCalendarView = nextView => {
     if (!CALENDAR_LAYOUTS.has(nextView)) return;
@@ -531,18 +536,19 @@ export default function CalendarView() {
       const agendaEvents = nextBirthdayOccurrencesOnly(
         householdEvents,
         todayKey,
-        { includePast: showPast }
+        { includePast: showPast || isSearching }
       );
       return agendaEvents
-        .filter(event => showPast || eventLastDate(event) >= todayKey)
+        .filter(event => showPast || isSearching || eventLastDate(event) >= todayKey)
         .filter(
           event =>
             selectedMemberFilter === 'all' ||
             eventIsForMember(event, selectedMemberFilter)
         )
+        .filter(event => eventMatchesCalendarSearch(event, searchQuery))
         .sort((left, right) => eventDateValue(left) - eventDateValue(right));
     },
-    [householdEvents, selectedMemberFilter, showPast, todayKey]
+    [householdEvents, isSearching, searchQuery, selectedMemberFilter, showPast, todayKey]
   );
 
   const gridEvents = useMemo(
@@ -685,6 +691,24 @@ export default function CalendarView() {
         </div>
 
         <div className="calendar-tools">
+          <label className="calendar-search">
+            <Search size={16} aria-hidden="true" />
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={event => setSearchQuery(event.target.value)}
+              placeholder={t('view.search.placeholder')}
+              aria-label={t('view.search.ariaLabel')}
+            />
+            {isSearching && <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              aria-label={t('view.search.clear')}
+              title={t('view.search.clear')}
+            >
+              <X size={15} />
+            </button>}
+          </label>
           <div
             className="calendar-view-switcher"
             role="group"
@@ -726,11 +750,21 @@ export default function CalendarView() {
             <History size={15} />
             {showPast ? t('view.tools.hidePast') : t('view.tools.showPast')}
           </button>
-          <button type="button" onClick={exportICS}>
-            <Download size={15} /> {t('view.tools.export')}
+          <button
+            type="button"
+            className="calendar-export-action"
+            onClick={exportICS}
+            title={t('view.tools.export')}
+            aria-label={t('view.tools.export')}
+          >
+            <Download size={15} /> <span>{t('view.tools.export')}</span>
           </button>
-          {canManage && <label className="calendar-import-action">
-            <Upload size={15} /> {t('view.tools.import')}
+          {canManage && <label
+            className="calendar-import-action"
+            title={t('view.tools.import')}
+            aria-label={t('view.tools.import')}
+          >
+            <Upload size={15} /> <span>{t('view.tools.import')}</span>
             <input
               type="file"
               accept=".ics,text/calendar"
@@ -743,7 +777,7 @@ export default function CalendarView() {
         </div>
       </section>
 
-      {calendarView !== 'agenda' && (
+      {!isSearching && calendarView !== 'agenda' && (
         <section className="calendar-period-navigation">
           <button
             type="button"
@@ -777,13 +811,13 @@ export default function CalendarView() {
 
       <section
         className={`calendar-agenda ${
-          calendarView !== 'agenda' ? 'is-hidden' : ''
+          calendarView !== 'agenda' && !isSearching ? 'is-hidden' : ''
         }`}
       >
         <header className="calendar-agenda-heading">
           <div>
-            <span>{t('view.agenda.kicker')}</span>
-            <h2>{t('view.agenda.title')}</h2>
+            <span>{isSearching ? t('view.search.kicker') : t('view.agenda.kicker')}</span>
+            <h2>{isSearching ? t('view.search.title') : t('view.agenda.title')}</h2>
           </div>
           <strong>
             {t('view.agenda.count', { count: filteredEvents.length })}
@@ -793,9 +827,9 @@ export default function CalendarView() {
         {groupedEvents.length === 0 ? (
           <div className="calendar-empty-state">
             <span><CalendarPlus size={30} /></span>
-            <h3>{t('view.empty.title')}</h3>
-            <p>{t('view.empty.description')}</p>
-            {canManage && <button
+            <h3>{isSearching ? t('view.search.emptyTitle') : t('view.empty.title')}</h3>
+            <p>{isSearching ? t('view.search.emptyDescription') : t('view.empty.description')}</p>
+            {!isSearching && canManage && <button
               type="button"
               onClick={() => {
                 setQuickAddDefaultType('event');
@@ -1007,7 +1041,7 @@ export default function CalendarView() {
         )}
       </section>
 
-      {calendarView === 'week' && (
+      {!isSearching && calendarView === 'week' && (
         <CalendarTimeline
           anchorDate={calendarAnchorDate}
           events={gridEvents}
@@ -1023,7 +1057,7 @@ export default function CalendarView() {
         />
       )}
 
-      {calendarView === 'month' && (
+      {!isSearching && calendarView === 'month' && (
         <CalendarDateGrid
           anchorDate={calendarAnchorDate}
           events={gridEvents}

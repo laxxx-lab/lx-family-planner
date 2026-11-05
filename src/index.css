@@ -15913,6 +15913,46 @@ textarea {
   gap: 6px;
 }
 
+.calendar-search {
+  min-width: 190px;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  color: var(--text-muted);
+  background: var(--bg-card);
+}
+
+.calendar-search:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border-color));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.calendar-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--text-main);
+  background: transparent;
+  font: inherit;
+}
+
+.calendar-tools .calendar-search input {
+  display: block;
+}
+
+.calendar-search button {
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 .calendar-view-switcher {
   display: inline-flex;
   gap: 3px;
@@ -17303,6 +17343,10 @@ textarea {
     grid-column: span 2;
   }
 
+  .calendar-search {
+    grid-column: span 2;
+  }
+
   .calendar-source-body {
     grid-template-columns: 1fr;
     overflow-y: auto;
@@ -17331,6 +17375,16 @@ textarea {
 
   .calendar-tools .calendar-history-toggle {
     grid-column: 1 / -1;
+  }
+
+  .calendar-search {
+    min-width: 0;
+    grid-column: 1 / -1;
+  }
+
+  .calendar-export-action span,
+  .calendar-import-action span {
+    display: none;
   }
 
   .calendar-tools .calendar-import-action {
