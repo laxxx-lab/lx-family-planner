@@ -45,6 +45,15 @@
       "export": "Exporteren",
       "import": "Bestand importeren"
     },
+    "search": {
+      "ariaLabel": "Agenda doorzoeken",
+      "placeholder": "Zoek afspraken",
+      "clear": "Zoekopdracht wissen",
+      "kicker": "Zoeken",
+      "title": "Zoekresultaten",
+      "emptyTitle": "Geen passende afspraken",
+      "emptyDescription": "Probeer andere zoektermen."
+    },
     "layouts": {
       "ariaLabel": "Agendaweergave",
       "agenda": "Agenda",
