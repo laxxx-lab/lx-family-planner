@@ -20,11 +20,9 @@ test('the login screen keeps release notes out of the sign-in flow', () => {
   assert.deepEqual(
     notes.highlights.map(highlight => highlight.id),
     [
-      'ics-series',
-      'import-groups',
-      'calendar-sync',
-      'favorites',
-      'security'
+      'calendar-search',
+      'mobile-tools',
+      'reminder-delivery'
     ]
   );
 });

@@ -4,6 +4,12 @@ Alle wichtigen Änderungen am LX Family Planner werden hier festgehalten.
 
 ## [Unveröffentlicht]
 
+## [1.22.2] – 2026-11-05
+
+- Volltextsuche im Kalender über Titel, Ort und Notizen. Mehrere Suchbegriffe werden gemeinsam berücksichtigt; passende vergangene Termine bleiben auffindbar, ohne die normale Kalenderansicht zu verändern.
+- Import- und Exportwerkzeuge bleiben auf kleinen Bildschirmen kompakt und zugänglich.
+- Ein Nachhol-Lauf für Erinnerungen behält seine Zustellmarkierung und sendet dieselbe Erinnerung nicht doppelt.
+
 ## [1.22.1] – 2026-10-25
 
 - Sicherheitsaktualisierungen ohne Major-Upgrades: Capacitor 8.4.3, undici 7.30.1, Vite 8.1.6 und korrigierte transitive Abhängigkeiten. Der npm-Audit meldet bei der Release-Prüfung keine bekannten Schwachstellen.

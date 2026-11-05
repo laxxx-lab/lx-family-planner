@@ -6,6 +6,12 @@ German version: [CHANGELOG.de.md](CHANGELOG.de.md)
 
 ## [Unreleased]
 
+## [1.22.2] — 2026-11-05
+
+- Add full-text calendar search across event titles, locations and notes. Multiple terms are combined, and past matching events stay discoverable without changing the normal calendar view.
+- Keep calendar import and export controls compact on small screens while retaining accessible labels.
+- Prevent a reminder catch-up sweep from pruning its own delivery marker and sending the same reminder twice.
+
 ## [1.22.1] — 2026-10-25
 
 - Apply targeted security updates without major upgrades: Capacitor 8.4.3, undici 7.30.1, Vite 8.1.6 and patched transitive dependencies. npm audit reports no known vulnerabilities at release verification.
