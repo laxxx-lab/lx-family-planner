@@ -5674,7 +5674,7 @@ export function createApp() {
           }
         }
       }
-      pruneEventReminderDeliveries();
+      pruneEventReminderDeliveries(now - 1000 * 60 * 60 * 24 * 90);
       return { skipped: false, delivered };
     } finally {
       eventReminderSweepRunning = false;
