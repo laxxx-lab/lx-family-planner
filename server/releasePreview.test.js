@@ -15,16 +15,24 @@ test('the login screen keeps release notes out of the sign-in flow', () => {
     path.join(projectRoot, 'src', 'components', 'Auth', 'FamilyLoginScreen.jsx'),
     'utf8'
   );
+  const germanReadme = fs.readFileSync(
+    path.join(projectRoot, 'README.de.md'),
+    'utf8'
+  );
+  const serviceWorker = fs.readFileSync(
+    path.join(projectRoot, 'public', 'sw.js'),
+    'utf8'
+  );
   assert.equal(notes.version, version);
   assert.doesNotMatch(login, /ReleasePreviewCard/);
+  assert.match(germanReadme, new RegExp(`Release-${version}`));
+  assert.match(serviceWorker, new RegExp(`lx-familie-v${version}`));
   assert.deepEqual(
     notes.highlights.map(highlight => highlight.id),
     [
-      'ics-series',
-      'import-groups',
-      'calendar-sync',
-      'favorites',
-      'security'
+      'calendar-search',
+      'mobile-tools',
+      'reminder-delivery'
     ]
   );
 });

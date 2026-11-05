@@ -1,4 +1,29 @@
 const RELEASE_NOTES = {
+  '1.22.2': {
+    version: '1.22.2',
+    eyebrow: 'Kalender schneller durchsuchen',
+    title: 'Termine finden, Erinnerungen sicher nachholen',
+    intro: 'Die Kalendersuche findet auch vergangene Termine. Nachhol-Erinnerungen bleiben eindeutig.',
+    highlights: [
+      { id: 'calendar-search', title: 'Kalender gezielt durchsuchen', description: 'Titel, Ort und Notizen lassen sich mit mehreren Suchbegriffen durchsuchen.' },
+      { id: 'mobile-tools', title: 'Mehr Platz auf dem Handy', description: 'Import und Export bleiben auf kleinen Bildschirmen kompakt und zugänglich.' },
+      { id: 'reminder-delivery', title: 'Keine doppelte Erinnerung', description: 'Ein Nachhol-Lauf erkennt seine bereits zugestellten Hinweise zuverlässig.' }
+    ],
+    closing: 'Bestehende Termine, Familieninhalte und Einstellungen bleiben unverändert.',
+    localizations: {
+      en: {
+        eyebrow: 'Search calendars faster',
+        title: 'Find events, catch up reminders safely',
+        intro: 'Calendar search also finds past events. Catch-up reminders stay unique.',
+        highlights: [
+          { id: 'calendar-search', title: 'Search the calendar', description: 'Search event titles, locations and notes with several terms.' },
+          { id: 'mobile-tools', title: 'More room on phones', description: 'Import and export stay compact and accessible on small screens.' },
+          { id: 'reminder-delivery', title: 'No duplicate reminders', description: 'A catch-up sweep reliably recognises its delivered reminders.' }
+        ],
+        closing: 'Existing events, family content and settings remain unchanged.'
+      }
+    }
+  },
   '1.22.1': {
     version: '1.22.1',
     eyebrow: 'Kalenderkorrekturen & Sicherheit',
